@@ -14,7 +14,7 @@
 
 ## Step 3
 
-### fel IntelliJ a3ml chekout lel brache mte3ek w abda e5dem
+### fel IntelliJ a3ml chekout lel brache mte3ek w abda e5dem , ken bdit te5dem badel les entités mte3ek w les repositories w execute the project
 
 ## Warning 
 
@@ -45,3 +45,4 @@
 
 
 # Bon travail ness lkol <3 <3
+![good-luck-icegif-12](https://github.com/user-attachments/assets/8e59062c-3049-46a6-b256-6f35dee8d9f6)
