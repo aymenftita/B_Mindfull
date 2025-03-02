@@ -1,3 +1,24 @@
+
+# Clone Project
+## Step 1
+
+### a3ml "git clone https://github.com/aymenftita/B_Mindfull.git" 
+
+## Step 2
+
+### taw tal9aw kol we7ed 3andou branche b esmou w tal9aw el main project fi brache esmou "master"
+
+## Step 3
+
+### fel IntelliJ a3ml chekout lel brache mte3ek w abda e5dem
+
+## Warning 
+
+### rod belek ta3m execution lel application 9bal ma tbadel 5edmtek (les entités , repository) 5ater yet7atou fel base , he4oukom 7athom bech na3ml behom push (test)
+
+
+
+
 # DataSource
 ## Step 1
 
