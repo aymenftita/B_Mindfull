@@ -1,0 +1,9 @@
+package tn.esprit.mindfull.Respository.QuizzTestRepository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import tn.esprit.mindfull.entity.Quizz_Test_Game.TestQuestion;
+
+@Repository
+public interface TestQuestionRepository extends JpaRepository<TestQuestion, Integer> {
+}

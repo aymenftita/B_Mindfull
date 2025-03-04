@@ -1,29 +1,29 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Quizz {
+public class TestQuestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quizz_id;
+    private Long tq_id;
 
-    private String title;
+    private String questionText;
 
-    @OneToMany(mappedBy = "quizz", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<QuizzQuestion> questions;
+    @ManyToOne
+    @JoinColumn(name = "test", nullable = false)
+    private Test test;
 
-
+    @OneToOne(mappedBy = "testQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Response response;
 }

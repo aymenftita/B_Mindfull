@@ -1,20 +1,31 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Choice
-{
+public class Choice {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long choice_id;
 
-    public void setChoice_id(Long choiceId) {
-        this.choice_id = choiceId;
-    }
+    private String choiceText;
 
-    public Long getChoice_id() {
-        return choice_id;
-    }
+    private boolean isCorrect;
+
+    @ManyToOne
+    @JoinColumn(name = "qq_id")
+    private QuizzQuestion quizzQuestion;
+
+
+
+
 }

@@ -1,18 +1,25 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Response {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long response_id;
 
-    public void setResponse_id(Long responseId) {
-        this.response_id = responseId;
-    }
+    private String answer;
 
-    public Long getResponse_id() {
-        return response_id;
-    }
+    @OneToOne
+    @JoinColumn(name = "test_question_id", nullable = false)
+    private TestQuestion testQuestion;
 }
