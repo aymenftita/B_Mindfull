@@ -1,4 +1,4 @@
-# B_Mindfull
+# B_Mindfull project
 
 # Clone Project
 ## Step 1
