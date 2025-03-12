@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.mindfull.entity.forum.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 }

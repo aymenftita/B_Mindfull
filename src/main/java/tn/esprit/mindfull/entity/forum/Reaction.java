@@ -19,17 +19,20 @@ import java.util.Date;
 public class Reaction {
 
     @Id
-    private Long reaction_id;
+    private Long id;
 
+    @Enumerated(EnumType.STRING)
     private ReactionType type;
 
-    private LocalDateTime date;
+    private LocalDateTime cteationTime = LocalDateTime.now();
 
+    /*
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+    */
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 }

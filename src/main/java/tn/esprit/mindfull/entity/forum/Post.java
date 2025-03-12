@@ -5,6 +5,7 @@ import lombok.*;
 import tn.esprit.mindfull.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,19 +16,20 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long post_id;
+    private Long id;
 
     private String title;
-
     private String content;
-
     private String tag;
-
-    private LocalDateTime created_at;
+    private LocalDateTime creationTime = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "author_id", nullable = true)  // Allow null
     private User author;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reaction> reactions;
 }

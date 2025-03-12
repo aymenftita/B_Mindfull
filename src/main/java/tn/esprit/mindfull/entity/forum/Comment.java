@@ -1,5 +1,6 @@
 package tn.esprit.mindfull.entity.forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,18 +19,18 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long comment_id;
+    private Long id;
 
-   private String comment;
+    private String content;
+    private LocalDateTime creationTime = LocalDateTime.now();
 
-   private LocalDateTime comment_date;
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)  // Post is required
+    @JsonIgnore
+    private Post post;
 
-   @OneToOne
-   @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = true)  // Allow null
     private User author;
-
-   @ManyToOne
-   @JoinColumn(name = "post_id")
-   private Post post;
 
 }

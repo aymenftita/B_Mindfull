@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.mindfull.entity.forum.Comment;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

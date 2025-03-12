@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.mindfull.entity.forum.Reaction;
 
 @Repository
-public interface ReactionRepository extends JpaRepository<Reaction, Integer> {
+public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 
 
 }

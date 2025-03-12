@@ -1,8 +1,8 @@
 package tn.esprit.mindfull.entity.forum;
 
 public enum ReactionType {
-    UP,
-    DOWN,
+    UPVOTE,
+    DOWNVOTE,
     CELEBRATE,
     HEART,
     SAD,
