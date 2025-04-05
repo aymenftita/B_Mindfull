@@ -1,6 +1,5 @@
-package tn.esprit.mindfull.Service.QuizzTestServive;
+package tn.esprit.mindfull.Service.QuizzTestService;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.QuizzTestRepository.TestRepository;

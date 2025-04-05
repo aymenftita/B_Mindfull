@@ -4,6 +4,9 @@ import fun.mike.dmp.Diff;
 import fun.mike.dmp.DiffMatchPatch;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Test;
 
 import java.util.LinkedList;
@@ -21,6 +24,19 @@ public class MindfullApplication {
         DiffMatchPatch dmp = new DiffMatchPatch();
         LinkedList<Diff> diffs = dmp.diff_main(s1, s2);
         System.out.println(diffs);
+
+    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("*") // For development only
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("*");
+            }
+        };
     }
 
 }
