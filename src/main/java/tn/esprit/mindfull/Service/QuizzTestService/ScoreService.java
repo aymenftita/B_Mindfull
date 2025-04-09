@@ -14,27 +14,27 @@ public class ScoreService {
 
     private final ScoreRepository scoreRepository;
 
-    // Create or Update a score
+
     public Score saveScore(Score score) {
         return scoreRepository.save(score);
     }
 
-    // Get all scores
+
     public List<Score> getAllScores() {
         return scoreRepository.findAll();
     }
 
-    // Get score by ID
+
     public Optional<Score> getScoreById(Long id) {
         return scoreRepository.findById(id);
     }
 
-    // Delete a score
+
     public void deleteScore(Long id) {
         scoreRepository.deleteById(id);
     }
 
-    // Get scores by user ID
+
     public List<Score> getScoresByUserId(Long userId) {
         return scoreRepository.findByUserId(userId);
     }

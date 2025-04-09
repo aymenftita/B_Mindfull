@@ -1,18 +1,22 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 
-@Data
+// QuizzQuestion.java
+@Entity
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class QuizzQuestion {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long qq_id;
@@ -20,10 +24,12 @@ public class QuizzQuestion {
     private String questionText;
 
     @ManyToOne
-    @JoinColumn(name = "quizz_id")
+    @JsonBackReference  // Prevent serialization of the entire Quizz
     private Quizz quizz;
 
     @OneToMany(mappedBy = "quizzQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Choice> choices;
-
 }
+
+

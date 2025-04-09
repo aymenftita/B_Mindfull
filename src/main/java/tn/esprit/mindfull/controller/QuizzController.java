@@ -2,6 +2,7 @@
 package tn.esprit.mindfull.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Quizz;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.QuizzQuestion;
@@ -12,13 +13,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/quizzes")
 @RequiredArgsConstructor
+@CrossOrigin
 public class QuizzController {
     private final QuizzService quizzService;
 
     @PostMapping
-    public Quizz createQuizz(@RequestBody Quizz quizz) {
-        return quizzService.createQuizz(quizz);
+    public Quizz createQuiz(@RequestBody Quizz quiz) {
+        return quizzService.createQuizz(quiz);
     }
+
 
     @GetMapping("/{id}")
     public Quizz getQuizzById(@PathVariable Long id) {
