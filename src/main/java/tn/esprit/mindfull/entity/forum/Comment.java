@@ -25,12 +25,12 @@ public class Comment {
     private LocalDateTime creationTime = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)  // Post is required
+    @JoinColumn(name = "post_id", nullable = false)
     @JsonIgnore
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = true)  // Allow null
+    @JoinColumn(name = "author_id", nullable = true)
     private User author;
 
 }

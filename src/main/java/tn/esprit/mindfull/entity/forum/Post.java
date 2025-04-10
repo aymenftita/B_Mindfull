@@ -1,5 +1,6 @@
 package tn.esprit.mindfull.entity.forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import tn.esprit.mindfull.User;
@@ -24,12 +25,14 @@ public class Post {
     private LocalDateTime creationTime = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = true)  // Allow null
+    @JoinColumn(name = "author_id", nullable = true)
     private User author;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reaction> reactions;
 }

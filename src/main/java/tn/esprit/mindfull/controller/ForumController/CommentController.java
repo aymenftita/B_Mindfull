@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.service.ForumService.CommentService;
-import tn.esprit.mindfull.service.ForumService.PostService;
 
 import java.util.List;
 
@@ -16,7 +15,10 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping
-    public Comment createComment(@RequestBody Comment comment) {
+    public Comment createComment(@RequestBody Comment comment, @RequestParam Long postId) {
+        Post post = new Post();
+        post.setId(postId);
+        comment.setPost(post);
         return commentService.saveComment(comment);
     }
 
@@ -31,7 +33,16 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+    public Comment updateComment(
+            @PathVariable Long id,
+            @RequestBody Comment comment,
+            @RequestParam(required = false) Long postId) {
+
+        if (postId != null) {
+            Post post = new Post();
+            post.setId(postId);
+            comment.setPost(post);
+        }
         comment.setId(id);
         return commentService.saveComment(comment);
     }
@@ -39,5 +50,10 @@ public class CommentController {
     @DeleteMapping("/{id}")
     public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
+    }
+
+    @GetMapping("/byPost/{postId}")
+    public List<Comment> getCommentsByPost(@PathVariable Long postId) {
+        return commentService.getCommentsByPostId(postId);
     }
 }
