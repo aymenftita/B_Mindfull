@@ -9,7 +9,7 @@ import tn.esprit.mindfull.service.ForumService.CommentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/forum/comments")
 public class CommentController {
     @Autowired
     private CommentService commentService;

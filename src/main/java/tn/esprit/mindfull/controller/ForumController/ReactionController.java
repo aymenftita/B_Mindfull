@@ -9,7 +9,7 @@ import tn.esprit.mindfull.entity.forum.Reaction;
 import tn.esprit.mindfull.service.ForumService.ReactionService;
 
 @RestController
-@RequestMapping("/reactions")
+@RequestMapping("/forum/reactions")
 public class ReactionController {
     @Autowired
     private ReactionService reactionService;

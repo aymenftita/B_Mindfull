@@ -8,7 +8,7 @@ import tn.esprit.mindfull.service.ForumService.PostService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/forum/posts")
 public class PostController {
     @Autowired
     private PostService postService;
