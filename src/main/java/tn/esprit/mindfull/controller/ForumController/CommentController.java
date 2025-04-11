@@ -33,19 +33,15 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public Comment updateComment(
-            @PathVariable Long id,
-            @RequestBody Comment comment,
-            @RequestParam(required = false) Long postId) {
-
-        if (postId != null) {
-            Post post = new Post();
-            post.setId(postId);
-            comment.setPost(post);
+    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+        Comment existingComment = commentService.getCommentById(id);
+        if (existingComment != null) {
+            existingComment.setContent(comment.getContent());
+            return commentService.saveComment(existingComment); // Save the updated comment
         }
-        comment.setId(id);
-        return commentService.saveComment(comment);
+        return null;
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteComment(@PathVariable Long id) {
@@ -56,4 +52,10 @@ public class CommentController {
     public List<Comment> getCommentsByPost(@PathVariable Long postId) {
         return commentService.getCommentsByPostId(postId);
     }
+
+    @GetMapping("/count/{postId}")
+    public long getCommentCountByPost(@PathVariable Long postId) {
+        return commentService.countCommentsByPostId(postId);
+    }
+
 }
