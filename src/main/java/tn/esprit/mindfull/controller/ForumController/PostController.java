@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.service.ForumService.PostService;
+import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.user.UserService;
 
 import java.util.List;
 
@@ -12,9 +14,13 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public Post createPost(@RequestBody Post post) {
+        User currentUser = userService.getCurrentUser();
+        post.setAuthor(currentUser);
         return postService.savePost(post);
     }
 

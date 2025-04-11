@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tn.esprit.mindfull.User;
+import tn.esprit.mindfull.user.User;
 
 import java.time.LocalDateTime;
 

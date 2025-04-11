@@ -3,7 +3,7 @@ package tn.esprit.mindfull.entity.forum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import tn.esprit.mindfull.User;
+import tn.esprit.mindfull.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,8 +24,8 @@ public class Post {
     private String tag;
     private LocalDateTime creationTime = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id")
     private User author;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,4 +1,4 @@
-package tn.esprit.mindfull;
+package tn.esprit.mindfull.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package tn.esprit.mindfull;
+package tn.esprit.mindfull.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
