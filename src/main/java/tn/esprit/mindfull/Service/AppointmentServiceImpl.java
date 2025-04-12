@@ -10,6 +10,8 @@ import tn.esprit.mindfull.Repository.AppointmentRepository.UserRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +25,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
     private final CalendarRepository calendarRepository;
+    private final ExcelService excelService;
 
     @Autowired
     public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
                                   UserRepository userRepository,
-                                  CalendarRepository calendarRepository) {
+                                  CalendarRepository calendarRepository, ExcelService excelService) {
         this.appointmentRepository = appointmentRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
+        this.excelService = excelService;
     }
 
     @Override
@@ -115,9 +119,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
 
-
-
-
+    @Override
+    public ByteArrayInputStream exportAppointmentsToExcel() throws IOException {
+        List<Appointment> appointments = appointmentRepository.findAll();
+        return excelService.generateAppointmentsExcel(appointments);
+    }
 
 
     private void validateUserRole(User user, UserRole requiredRole, String errorMessage) {

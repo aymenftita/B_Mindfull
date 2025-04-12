@@ -2,7 +2,10 @@ package tn.esprit.mindfull.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,9 @@ import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 import tn.esprit.mindfull.validation.CreateValidation;
 import tn.esprit.mindfull.validation.UpdateValidation;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -81,5 +87,23 @@ public class AppointmentController {
     public ResponseEntity<Map<String, Long>> getAppointmentStatistics() {
         Map<String, Long> stats = appointmentService.getAppointmentStatistics();
         return ResponseEntity.ok(stats);
+    }
+
+    @GetMapping("/export/excel")
+    public ResponseEntity<InputStreamResource> exportToExcel() {
+        try {
+            ByteArrayInputStream byteArrayInputStream = appointmentService.exportAppointmentsToExcel();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "attachment; filename=appointments.xlsx");
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                    .body(new InputStreamResource(byteArrayInputStream));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
