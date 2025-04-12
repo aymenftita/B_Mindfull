@@ -25,6 +25,6 @@ public class ChoiceService {
 
     public void deleteChoice(long id) {choiceRepository.deleteById(id);}
 
-
+    public void updateChoice(Choice choice) {choiceRepository.save(choice);}
 
 }

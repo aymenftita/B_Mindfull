@@ -14,9 +14,10 @@ import lombok.*;
 public class Choice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long choice_id;
+    private int choice_id;
 
     private String text;
+
     private boolean correct;
 
     @ManyToOne

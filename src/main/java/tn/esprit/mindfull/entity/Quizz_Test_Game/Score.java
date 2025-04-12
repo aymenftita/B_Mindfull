@@ -4,7 +4,6 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import tn.esprit.mindfull.User;
-
 import java.util.Date;
 
 @Getter
@@ -22,15 +21,12 @@ public class Score {
     private Date date;
 
     @Nullable
-    private Long quizz_id;
+    private String name;
 
     @Nullable
-    private Long test_id;
+    private int result;
 
-    @Nullable
-    private Long Game_id;
-
-    private ScoreType score;
+    private String score_type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

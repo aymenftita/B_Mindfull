@@ -25,12 +25,23 @@ public class QuizzQuestionService {
         return quizzQuestionRepository.findAll();
     }
 
-    public QuizzQuestion updateQuestion(Long id, QuizzQuestion question) {
+    /*public QuizzQuestion updateQuestion(Long id, QuizzQuestion question) {
         if (quizzQuestionRepository.existsById(id)) {
             question.setQq_id(id);
             return quizzQuestionRepository.save(question);
         }
         return null;
+    }*/
+    public QuizzQuestion updateQuestion(Long id, QuizzQuestion questionUpdates) {
+        return quizzQuestionRepository.findById(id)
+                .map(existingQuestion -> {
+
+                    existingQuestion.setQuestionText(questionUpdates.getQuestionText());
+                    existingQuestion.setText(questionUpdates.isText());
+
+                    return quizzQuestionRepository.save(existingQuestion);
+                })
+                .orElse(null);
     }
 
     public void deleteQuestion(Long id) {
@@ -44,4 +55,5 @@ public class QuizzQuestionService {
             return quizzQuestionRepository.save(question);
         }).orElse(null);
     }
+
 }

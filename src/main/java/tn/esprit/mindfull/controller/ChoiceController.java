@@ -3,11 +3,10 @@ package tn.esprit.mindfull.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Service.QuizzTestService.ChoiceService;
-import tn.esprit.mindfull.Service.QuizzTestService.ScoreService;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Choice;
-import tn.esprit.mindfull.entity.Quizz_Test_Game.Score;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/choices")
@@ -34,5 +33,12 @@ public class ChoiceController {
     @DeleteMapping("/{id}")
     public void deleteChoice(@PathVariable long id) {choiceService.deleteChoice(id); }
 
+    @GetMapping("/{id}")
+    public Optional<Choice> getChoiceById(@PathVariable int id){
+        return choiceService.getChoiceById(id);
+    }
 
+    public void updateChoice(@RequestBody Choice choice,@PathVariable int id) {
+        choiceService.updateChoice(choice);
+    }
 }
