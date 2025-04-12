@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tn.esprit.mindfull.user.User;
 
 
 import java.time.LocalDateTime;
@@ -14,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(
+        name = "reaction",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"post_id", "user_id"})
+)
 public class Reaction {
 
     @Id
@@ -23,7 +28,7 @@ public class Reaction {
     @Enumerated(EnumType.STRING)
     private ReactionType type;
 
-    private LocalDateTime cteationTime = LocalDateTime.now();
+    private LocalDateTime creationTime = LocalDateTime.now();
 
     /*
     @OneToOne
@@ -32,6 +37,13 @@ public class Reaction {
     */
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+
 }
