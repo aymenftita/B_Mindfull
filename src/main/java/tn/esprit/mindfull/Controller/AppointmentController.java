@@ -12,6 +12,7 @@ import tn.esprit.mindfull.exception.ResourceNotFoundException;
 import tn.esprit.mindfull.validation.CreateValidation;
 import tn.esprit.mindfull.validation.UpdateValidation;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -74,5 +75,11 @@ public class AppointmentController {
             System.out.println("Error deleting appointment: " + e.getMessage());
             return ResponseEntity.status(500).build(); // HTTP 500 Internal Server Error on failure
         }
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<Map<String, Long>> getAppointmentStatistics() {
+        Map<String, Long> stats = appointmentService.getAppointmentStatistics();
+        return ResponseEntity.ok(stats);
     }
 }

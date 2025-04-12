@@ -11,7 +11,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

@@ -63,6 +63,7 @@ public class CalendarServiceImpl implements CalendarService {
                 .orElseThrow(() -> new ResourceNotFoundException("Calendar not found"));
     }
 
+    @Transactional
     @Override
     public Calendar updateCalendar(Integer id, Calendar updatedCalendar) {
         return calendarRepository.findById(id).map(existing -> {

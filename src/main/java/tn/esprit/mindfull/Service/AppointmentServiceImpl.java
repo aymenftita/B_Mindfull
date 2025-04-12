@@ -1,19 +1,20 @@
 package tn.esprit.mindfull.Service;
 
+import jakarta.persistence.Cacheable;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.AppointmentRepository.AppointmentRepository; // Fixed package name
 import tn.esprit.mindfull.Repository.AppointmentRepository.CalendarRepository;
 import tn.esprit.mindfull.Repository.AppointmentRepository.UserRepository;
-import tn.esprit.mindfull.entity.Appointment.Appointment;
-import tn.esprit.mindfull.entity.Appointment.Calendar;
-import tn.esprit.mindfull.entity.Appointment.User;
-import tn.esprit.mindfull.entity.Appointment.UserRole;
+import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Transactional
@@ -84,6 +85,40 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new ResourceNotFoundException("Appointment not found");
         }
     }
+
+    private final Map<String, Map<String, Long>> appointmentStatsCache = new ConcurrentHashMap<>();
+
+    @Override
+    public Map<String, Long> getAppointmentStatistics() {
+        // Use a fixed key or composite key if your caching depends on parameters.
+        final String cacheKey = "appointmentStats";
+        if (appointmentStatsCache.containsKey(cacheKey)) {
+            return appointmentStatsCache.get(cacheKey);
+        }
+
+        List<Object[]> results = appointmentRepository.countAppointmentsByStatus();
+        Map<String, Long> stats = new HashMap<>();
+        for (Object[] result : results) {
+            Object rawStatus = result[0];
+            AppointmentStatus status;
+            if (rawStatus instanceof Boolean) {
+                status = ((Boolean) rawStatus) ? AppointmentStatus.SCHEDULED : AppointmentStatus.CANCELED;
+            } else {
+                String statusStr = rawStatus.toString();
+                status = AppointmentStatus.valueOf(statusStr);
+            }
+            Long count = (Long) result[1];
+            stats.put(status.name(), count);
+        }
+        appointmentStatsCache.put(cacheKey, stats);
+        return stats;
+    }
+
+
+
+
+
+
 
     private void validateUserRole(User user, UserRole requiredRole, String errorMessage) {
         if (user.getRole() != requiredRole) {

@@ -3,6 +3,7 @@ package tn.esprit.mindfull.Service;
 import tn.esprit.mindfull.entity.Appointment.Appointment;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AppointmentService {
     Appointment createAppointment(Appointment appointment);
@@ -10,4 +11,5 @@ public interface AppointmentService {
     Appointment getAppointmentById(Integer id);
     Appointment updateAppointment(Integer id, Appointment appointment);
     void deleteAppointment(Integer id);
+    Map<String, Long> getAppointmentStatistics();
 }
