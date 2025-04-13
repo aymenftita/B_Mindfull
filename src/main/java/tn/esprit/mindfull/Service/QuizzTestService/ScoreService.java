@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.QuizzTestRepository.ScoreRepository;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Score;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,10 @@ public class ScoreService {
 
     public List<Score> getScoresByUserId(Long userId) {
         return scoreRepository.findByUserId(userId);
+    }
+
+    public List<Score> getScoresByDateRange(Date startDate, Date endDate) {
+        return scoreRepository.findByDateBetween(startDate, endDate);
     }
 
 }
