@@ -30,8 +30,12 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+    public List<Post> getAllPosts(@RequestParam(required = false) String tag) {
+        if (tag != null && !tag.isEmpty()) {
+            return postService.getPostsByTag(tag);
+        } else {
+            return postService.getAllPosts();
+        }
     }
 
     @PutMapping("/{id}")
@@ -43,6 +47,11 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
+    }
+
+    @GetMapping("/tag/{tag}")
+    public List<Post> getPostsByTag(@PathVariable String tag) {
+        return postService.getPostsByTag(tag);
     }
 
 }

@@ -40,4 +40,9 @@ public class PostService {
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
+
+    public List<Post> getPostsByTag(String tag) {
+        return postRepository.findByTag(tag);
+    }
+
 }

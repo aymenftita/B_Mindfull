@@ -27,13 +27,11 @@ public class ReactionService {
         Optional<Reaction> existingReaction = reactionRepository.findByPostAndUser(reaction.getPost(), reaction.getUser());
 
         if (existingReaction.isPresent()) {
-            // Soit tu le mets à jour (changer le type d’emoji par exemple)
             Reaction toUpdate = existingReaction.get();
             toUpdate.setType(reaction.getType());
             toUpdate.setCreationTime(LocalDateTime.now());
             return reactionRepository.save(toUpdate);
         } else {
-            // Pas de réaction existante → on peut créer
             return reactionRepository.save(reaction);
         }
     }

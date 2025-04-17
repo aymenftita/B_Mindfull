@@ -20,8 +20,13 @@ public class Post {
     private Long id;
 
     private String title;
+
+    @Column(length = 10000)
     private String content;
+
+    @Column(nullable = false)
     private String tag;
+
     private LocalDateTime creationTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.EAGER)
