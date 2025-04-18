@@ -9,7 +9,7 @@ import tn.esprit.mindfull.service.PatientNoteService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api/")
 @RequiredArgsConstructor
 public class PatientNoteController {
     private final PatientNoteService patientNoteService;
