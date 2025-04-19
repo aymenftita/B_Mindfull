@@ -77,4 +77,8 @@ public class PostController {
         return postService.incrementViewCount(id);
     }
 
+    @GetMapping("/top-posts")
+    public List<Post> getTopPosts() {
+        return postService.getTopPosts(); // Fetch top posts logic
+    }
 }

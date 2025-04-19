@@ -2,13 +2,16 @@ package tn.esprit.mindfull.service.ForumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.user.User;
 import tn.esprit.mindfull.user.UserRepository;
 import tn.esprit.mindfull.user.UserService;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -20,7 +23,8 @@ public class PostService {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private CommentRepository commentRepository;
 
     public Post savePost(Post post) {
         User staticAuthor = userService.getCurrentUser();
@@ -51,5 +55,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
+
+
+
+    public List<Post> getTopPosts() {
+        List<Post> posts = postRepository.findAll();
+
+        // Sort the posts based on the number of comments
+        return posts.stream()
+                .sorted((post1, post2) -> Long.compare(commentRepository.countByPostId(post2.getId()), commentRepository.countByPostId(post1.getId())))
+                .limit(5) // Limit to top 5 posts
+                .collect(Collectors.toList());
+    }
 
 }
