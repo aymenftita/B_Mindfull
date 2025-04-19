@@ -40,4 +40,23 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Reaction> reactions;
+
+    @Column(nullable = false)
+    private int viewCount = 0;
+
+    public int getTotalReplies() {
+        return comments != null ? comments.size() : 0;
+    }
+
+    // Add a method to get the total reactions count
+    public int getTotalReactions() {
+        if (reactions == null) {
+            return 0;
+        }
+
+        // Calculate total reactions by summing the counts for each reaction type
+        return reactions.stream()
+                .mapToInt(r -> 1)  // count each reaction once
+                .sum();
+    }
 }

@@ -45,4 +45,11 @@ public class PostService {
         return postRepository.findByTag(tag);
     }
 
+    public Post incrementViewCount(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setViewCount(post.getViewCount() + 1);
+        return postRepository.save(post);
+    }
+
+
 }
