@@ -1,6 +1,7 @@
 package tn.esprit.mindfull.Service;
 
 import tn.esprit.mindfull.entity.Appointment.Appointment;
+import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,4 +16,6 @@ public interface AppointmentService {
     void deleteAppointment(Integer id);
     Map<String, Long> getAppointmentStatistics();
     ByteArrayInputStream exportAppointmentsToExcel() throws IOException;
+    Appointment rescheduleAppointment(Integer id, String startTimeStr, String endTimeStr)
+            throws ResourceNotFoundException, IllegalArgumentException;
 }

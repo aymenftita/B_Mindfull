@@ -12,6 +12,9 @@ import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,4 +177,46 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (updated.getReminderTime() != null) existing.setReminderTime(updated.getReminderTime());
         if (updated.getReminderMessage() != null) existing.setReminderMessage(updated.getReminderMessage());
     }
+
+    @Override
+    public Appointment rescheduleAppointment(Integer id, String startTimeStr, String endTimeStr)
+            throws ResourceNotFoundException, IllegalArgumentException {
+
+        // Find the appointment by ID
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
+
+        try {
+            // Try different ISO format patterns to be more flexible
+            LocalDateTime startTime;
+            LocalDateTime endTime;
+
+            try {
+                // First try the default ISO format (most common)
+                startTime = LocalDateTime.parse(startTimeStr);
+                endTime = LocalDateTime.parse(endTimeStr);
+            } catch (DateTimeParseException e) {
+                // If that fails, try with a DateTimeFormatter
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+                startTime = LocalDateTime.parse(startTimeStr, formatter);
+                endTime = LocalDateTime.parse(endTimeStr, formatter);
+            }
+
+            // Validate the time range
+            if (endTime.isBefore(startTime)) {
+                throw new IllegalArgumentException("End time cannot be before start time");
+            }
+
+            // Update the appointment times
+            appointment.setStartTime(startTime);
+            appointment.setEndTime(endTime);
+
+            // Save and return the updated appointment
+            return appointmentRepository.save(appointment);
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Use ISO format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        }
+    }
+
 }

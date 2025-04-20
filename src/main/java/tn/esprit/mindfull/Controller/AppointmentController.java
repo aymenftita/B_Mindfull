@@ -106,4 +106,27 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PatchMapping("/{id}/reschedule")
+    public ResponseEntity<?> rescheduleAppointment(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> timeData) {
+        try {
+            // Extract the new start and end times from the request body
+            String startTimeStr = timeData.get("startTime");
+            String endTimeStr = timeData.get("endTime");
+
+            // Call the service method to update the appointment times
+            Appointment updatedAppointment = appointmentService.rescheduleAppointment(id, startTimeStr, endTimeStr);
+
+            return ResponseEntity.ok(updatedAppointment);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while rescheduling the appointment: " + e.getMessage());
+        }
+    }
 }
