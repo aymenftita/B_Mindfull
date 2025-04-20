@@ -59,4 +59,9 @@ public class Post {
                 .mapToInt(r -> 1)  // count each reaction once
                 .sum();
     }
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Report> reports;
+
 }

@@ -1,9 +1,12 @@
 package tn.esprit.mindfull.service.ForumService;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
+import tn.esprit.mindfull.Respository.ForumRepository.ReportRepository;
+import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.user.User;
 import tn.esprit.mindfull.user.UserRepository;
@@ -25,6 +28,8 @@ public class PostService {
     private UserService userService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private ReportRepository reportRepository;
 
     public Post savePost(Post post) {
         User staticAuthor = userService.getCurrentUser();
@@ -40,23 +45,42 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
-
+/*
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }*/
+public List<Post> getPostsByTag(String tag) {
+    return postRepository.findByTag(tag);
+}
+
+
+    @Transactional
+    public void deletePost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Delete all reports related to comments of this post
+        for (Comment comment : post.getComments()) {
+            reportRepository.deleteByComment(comment);
+        }
+
+        // Delete reports linked directly to post
+        reportRepository.deleteByPost(post);
+
+        // Delete all comments (safe now that reports are gone)
+        commentRepository.deleteAll(post.getComments());
+
+        // Finally, delete the post
+        postRepository.delete(post);
     }
 
-    public List<Post> getPostsByTag(String tag) {
-        return postRepository.findByTag(tag);
-    }
+
 
     public Post incrementViewCount(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
         post.setViewCount(post.getViewCount() + 1);
         return postRepository.save(post);
     }
-
-
-
 
     public List<Post> getTopPosts() {
         List<Post> posts = postRepository.findAll();

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import tn.esprit.mindfull.user.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -32,5 +33,9 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = true)
     private User author;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Report> reports;
 
 }
