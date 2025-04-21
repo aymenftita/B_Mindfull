@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.ReportRepository;
+import tn.esprit.mindfull.dto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.user.User;
@@ -90,6 +91,27 @@ public List<Post> getPostsByTag(String tag) {
                 .sorted((post1, post2) -> Long.compare(commentRepository.countByPostId(post2.getId()), commentRepository.countByPostId(post1.getId())))
                 .limit(5) // Limit to top 5 posts
                 .collect(Collectors.toList());
+    }
+
+    public List<PostStatsDTO> getPostsPerDay() {
+        List<Object[]> results = postRepository.countPostsGroupedByDate();
+        List<PostStatsDTO> stats = results.stream()
+                .map(obj -> new PostStatsDTO(
+                        obj[0].toString(),  // date as String
+                        ((Number) obj[1]).longValue()  // count as long
+                ))
+                .collect(Collectors.toList());
+
+        // Log output to verify
+        stats.forEach(stat -> System.out.println(stat.getLabel() + ": " + stat.getValue()));
+
+        return stats;
+    }
+
+
+
+    public List<PostStatsDTO> getTopActiveUsers() {
+        return postRepository.countPostsByUser();
     }
 
 }

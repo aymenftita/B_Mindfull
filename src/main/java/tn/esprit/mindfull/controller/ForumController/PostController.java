@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
+import tn.esprit.mindfull.dto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.service.ForumService.PostService;
 import tn.esprit.mindfull.user.User;
@@ -81,4 +82,17 @@ public class PostController {
     public List<Post> getTopPosts() {
         return postService.getTopPosts(); // Fetch top posts logic
     }
+
+    // In PostController.java
+    @GetMapping("/stats/posts-per-day")
+    public List<PostStatsDTO> getPostsPerDay() {
+        return postService.getPostsPerDay();
+    }
+
+    @GetMapping("/stats/top-users")
+    public List<PostStatsDTO> getTopActiveUsers() {
+        return postService.getTopActiveUsers();
+    }
+
+
 }
