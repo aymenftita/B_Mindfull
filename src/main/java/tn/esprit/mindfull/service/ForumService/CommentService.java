@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.entity.forum.Comment;
+import tn.esprit.mindfull.entity.forum.Post;
+import tn.esprit.mindfull.user.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,26 +20,34 @@ public class CommentService {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PostService postService;
+
     public Comment saveComment(Comment comment) {
         Comment saved = commentRepository.save(comment);
 
-        // Creating structured notification message
         try {
-            // Assuming "User1" as static user for now. Replace it with dynamic user data once ready.
-            String username = "User1";
-            String message = saved.getContent();
+            String username = userService.getCurrentUser().getName();  // Get static user
+            String postTitle = "Untitled";
 
-            // Create a map for structured data
+            if (saved.getPost() != null && saved.getPost().getId() != null) {
+                Post fullPost = postService.getPostById(saved.getPost().getId());
+                if (fullPost != null && fullPost.getTitle() != null) {
+                    postTitle = fullPost.getTitle();
+                }
+            }
+
             Map<String, String> notification = new HashMap<>();
             notification.put("type", "comment");
             notification.put("user", username);
-            notification.put("message", message);
+            notification.put("message", saved.getContent());
+            notification.put("postTitle", postTitle);
 
-            // Convert map to JSON string
             ObjectMapper mapper = new ObjectMapper();
             String jsonNotification = mapper.writeValueAsString(notification);
 
-            // Send notification as JSON
             notificationService.sendNotification(jsonNotification);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +55,6 @@ public class CommentService {
 
         return saved;
     }
-
     public Comment getCommentById(Long id) {
         return commentRepository.findById(id).orElse(null);
     }
