@@ -129,4 +129,84 @@ public class AppointmentController {
                     .body("An error occurred while rescheduling the appointment: " + e.getMessage());
         }
     }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<?> getAppointmentsByPatientId(@PathVariable Integer patientId) {
+        try {
+            List<Appointment> appointments = appointmentService.getAppointmentsByPatientId(patientId);
+            return ResponseEntity.ok(appointments);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/patient/{patientId}/upcoming")
+    public ResponseEntity<?> getUpcomingAppointmentsByPatientId(@PathVariable Integer patientId) {
+        try {
+            List<Appointment> appointments = appointmentService.getUpcomingAppointmentsByPatientId(patientId);
+            return ResponseEntity.ok(appointments);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/patient/{patientId}/past")
+    public ResponseEntity<?> getPastAppointmentsByPatientId(@PathVariable Integer patientId) {
+        try {
+            List<Appointment> appointments = appointmentService.getPastAppointmentsByPatientId(patientId);
+            return ResponseEntity.ok(appointments);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{appointmentId}/reschedule-request")
+    public ResponseEntity<?> requestReschedule(
+            @PathVariable Integer appointmentId,
+            @RequestBody Map<String, String> requestData) {
+        try {
+            String startTimeStr = requestData.get("startTime");
+            String endTimeStr = requestData.get("endTime");
+            String reason = requestData.get("reason");
+
+            if (startTimeStr == null || endTimeStr == null) {
+                return ResponseEntity.badRequest().body("Start time and end time are required");
+            }
+
+            Appointment updatedAppointment = appointmentService.requestReschedule(
+                    appointmentId, startTimeStr, endTimeStr, reason);
+
+            return ResponseEntity.ok(updatedAppointment);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{appointmentId}/cancel")
+    public ResponseEntity<?> cancelAppointment(@PathVariable Integer appointmentId) {
+        try {
+            Appointment canceledAppointment = appointmentService.cancelAppointment(appointmentId);
+            return ResponseEntity.ok(canceledAppointment);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + e.getMessage());
+        }
+    }
+
+
 }

@@ -34,4 +34,20 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT a.status, COUNT(a) FROM Appointment a GROUP BY a.status")
     List<Object[]> countAppointmentsByStatus();
 
+    List<Appointment> findByPatientUserIdOrderByStartTimeDesc(Integer patientUserId);
+
+    List<Appointment> findByPatientUserIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
+            Integer patientUserId,
+            LocalDateTime startTime,
+            AppointmentStatus status);
+
+    List<Appointment> findByPatientUserIdAndStartTimeBeforeOrderByStartTimeDesc(
+            Integer patientUserId,
+            LocalDateTime startTime);
+
+    List<Appointment> findByCalendar_CalendarIdAndStartTimeBetweenAndStatusNot(
+            Integer calendarId,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
+            AppointmentStatus status);
 }

@@ -87,4 +87,19 @@ public class CalendarController {
                     ));
         }
     }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<?> getAvailableTimeSlotsForPatient(@PathVariable Integer patientId) {
+        try {
+            List<Map<String, Object>> availableTimeSlots = calendarService.getAvailableTimeSlotsForPatient(patientId);
+            return ResponseEntity.ok(availableTimeSlots);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + e.getMessage());
+        }
     }
+}

@@ -18,4 +18,14 @@ public interface AppointmentService {
     ByteArrayInputStream exportAppointmentsToExcel() throws IOException;
     Appointment rescheduleAppointment(Integer id, String startTimeStr, String endTimeStr)
             throws ResourceNotFoundException, IllegalArgumentException;
+
+    List<Appointment> getAppointmentsByPatientId(Integer patientId);
+
+    List<Appointment> getUpcomingAppointmentsByPatientId(Integer patientId);
+
+    List<Appointment> getPastAppointmentsByPatientId(Integer patientId);
+
+    Appointment requestReschedule(Integer appointmentId, String startTimeStr, String endTimeStr, String reason);
+
+    Appointment cancelAppointment(Integer appointmentId);
 }

@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.AppointmentRepository.AppointmentRepository;
 import tn.esprit.mindfull.Repository.AppointmentRepository.CalendarRepository;
 import tn.esprit.mindfull.Repository.AppointmentRepository.UserRepository;
-import tn.esprit.mindfull.entity.Appointment.Appointment;
+import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
-import tn.esprit.mindfull.entity.Appointment.User;
-import tn.esprit.mindfull.entity.Appointment.UserRole;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -127,6 +127,95 @@ public class CalendarServiceImpl implements CalendarService {
 
         // Clear persistence context to ensure no stale entities remain
         entityManager.clear();
+    }
+
+    @Override
+    public List<Map<String, Object>> getAvailableTimeSlotsForPatient(Integer patientId) {
+        // Verify patient exists
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
+
+        if (patient.getRole() != UserRole.PATIENT) {
+            throw new IllegalStateException("User must have role PATIENT");
+        }
+
+        // Get all professional calendars (doctors and coaches)
+        List<User> professionals = userRepository.findByRoleIn(Arrays.asList(UserRole.DOCTOR, UserRole.COACH));
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime twoWeeksFromNow = now.plusWeeks(2);
+
+        List<Map<String, Object>> availableSlots = new ArrayList<>();
+
+        // For each professional
+        for (User professional : professionals) {
+            Calendar calendar = professional.getCalendar();
+
+            if (calendar == null) {
+                continue;
+            }
+
+            // Get professional's existing appointments in the next two weeks
+            List<Appointment> existingAppointments = appointmentRepository.findByCalendar_CalendarIdAndStartTimeBetweenAndStatusNot(
+                    calendar.getCalendarId(), now, twoWeeksFromNow, AppointmentStatus.CANCELED);
+
+            // Create a set of busy time slots
+            Set<LocalDateTime> busyTimes = existingAppointments.stream()
+                    .flatMap(appointment -> {
+                        List<LocalDateTime> slots = new ArrayList<>();
+                        LocalDateTime current = appointment.getStartTime();
+                        while (current.isBefore(appointment.getEndTime())) {
+                            slots.add(current);
+                            current = current.plusMinutes(30); // Assuming 30-minute slot increments
+                        }
+                        return slots.stream();
+                    })
+                    .collect(Collectors.toSet());
+
+            // For each day in the next two weeks
+            for (int day = 0; day < 14; day++) {
+                LocalDate date = now.plusDays(day).toLocalDate();
+
+                // Skip weekends if needed (example - adjust as needed)
+                if (date.getDayOfWeek().getValue() > 5) { // Skip Saturday and Sunday
+                    continue;
+                }
+
+                // Get working hours for this professional (example - adjust as needed)
+                // This should be retrieved from the calendar or professional settings
+                LocalTime startHour = LocalTime.of(9, 0); // 9:00 AM
+                LocalTime endHour = LocalTime.of(17, 0);  // 5:00 PM
+
+                // Create slots for this day
+                LocalDateTime slotStart = LocalDateTime.of(date, startHour);
+
+                while (slotStart.toLocalTime().isBefore(endHour)) {
+                    LocalDateTime slotEnd = slotStart.plusMinutes(30); // 30-minute slots
+
+                    // Skip if this slot is in the past
+                    if (slotStart.isBefore(now)) {
+                        slotStart = slotEnd;
+                        continue;
+                    }
+
+                    // Check if this slot is available
+                    if (!busyTimes.contains(slotStart)) {
+                        Map<String, Object> slot = new HashMap<>();
+                        slot.put("professionalId", professional.getUserId());
+                        slot.put("professionalName", professional.getFirstName() + " " + professional.getLastName());
+                        slot.put("professionalRole", professional.getRole().toString());
+                        slot.put("startTime", slotStart);
+                        slot.put("endTime", slotEnd);
+                        slot.put("calendarId", calendar.getCalendarId());
+                        availableSlots.add(slot);
+                    }
+
+                    slotStart = slotEnd;
+                }
+            }
+        }
+
+        return availableSlots;
     }
 
 }

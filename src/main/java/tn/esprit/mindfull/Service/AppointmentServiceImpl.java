@@ -219,4 +219,98 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
+    @Override
+    public List<Appointment> getAppointmentsByPatientId(Integer patientId) {
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
+        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        return appointmentRepository.findByPatientUserIdOrderByStartTimeDesc(patientId);
+    }
+
+    @Override
+    public List<Appointment> getUpcomingAppointmentsByPatientId(Integer patientId) {
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
+        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        LocalDateTime now = LocalDateTime.now();
+        return appointmentRepository.findByPatientUserIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
+                patientId, now, AppointmentStatus.CANCELED);
+    }
+
+    @Override
+    public List<Appointment> getPastAppointmentsByPatientId(Integer patientId) {
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
+        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        LocalDateTime now = LocalDateTime.now();
+        return appointmentRepository.findByPatientUserIdAndStartTimeBeforeOrderByStartTimeDesc(patientId, now);
+    }
+
+    @Override
+    public Appointment requestReschedule(Integer appointmentId, String startTimeStr, String endTimeStr, String reason) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + appointmentId));
+
+        // Convert string times to LocalDateTime
+        LocalDateTime startTime;
+        LocalDateTime endTime;
+
+        try {
+            try {
+                // First try the default ISO format
+                startTime = LocalDateTime.parse(startTimeStr);
+                endTime = LocalDateTime.parse(endTimeStr);
+            } catch (DateTimeParseException e) {
+                // If that fails, try with a DateTimeFormatter
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+                startTime = LocalDateTime.parse(startTimeStr, formatter);
+                endTime = LocalDateTime.parse(endTimeStr, formatter);
+            }
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Use ISO format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        }
+
+        // Validate the times
+        if (endTime.isBefore(startTime)) {
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
+
+        // Store reschedule request info in the notes field
+        String rescheduleNote = "Reschedule requested: " +
+                "Current: " + appointment.getStartTime() + " to " + appointment.getEndTime() + ", " +
+                "Proposed: " + startTime + " to " + endTime + ", " +
+                "Reason: " + reason + ", " +
+                "Requested at: " + LocalDateTime.now();
+
+        // Append to existing notes if any
+        if (appointment.getNotes() != null && !appointment.getNotes().isEmpty()) {
+            appointment.setNotes(appointment.getNotes() + "\n\n" + rescheduleNote);
+        } else {
+            appointment.setNotes(rescheduleNote);
+        }
+
+        // Change status to indicate reschedule is pending
+        appointment.setStatus(AppointmentStatus.RESCHEDULE_PENDING);
+
+        // Save the updated appointment
+        return appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public Appointment cancelAppointment(Integer appointmentId) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + appointmentId));
+
+        // Check if the appointment can be canceled (e.g., not in the past)
+        if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Cannot cancel past appointments");
+        }
+
+        // Update the appointment status to CANCELED
+        appointment.setStatus(AppointmentStatus.CANCELED);
+
+        // Save and return the updated appointment
+        return appointmentRepository.save(appointment);
+    }
 }
+

@@ -3,6 +3,7 @@ package tn.esprit.mindfull.Service;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CalendarService {
     Calendar createCalendar(Calendar calendar);
@@ -10,6 +11,6 @@ public interface CalendarService {
     Calendar getCalendarById(Integer id);
     Calendar updateCalendar(Integer id, Calendar calendar);
     void deleteCalendar(Integer id);
-
+    List<Map<String, Object>> getAvailableTimeSlotsForPatient(Integer patientId);
 
 }
