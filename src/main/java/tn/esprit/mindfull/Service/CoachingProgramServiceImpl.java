@@ -1,18 +1,24 @@
 package tn.esprit.mindfull.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.CoachRepository;
 import tn.esprit.mindfull.Respository.CoachingProgramRepository;
-import tn.esprit.mindfull.entity.Coach;
+import tn.esprit.mindfull.Respository.UserRepository;
 import tn.esprit.mindfull.entity.CoachingProgram;
+import tn.esprit.mindfull.entity.Role;
+import tn.esprit.mindfull.entity.User;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CoachingProgramServiceImpl implements ICoachingProgramService {
 
     private final CoachingProgramRepository repository;
-    private CoachRepository coachRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public CoachingProgramServiceImpl(CoachingProgramRepository repository) {
         this.repository = repository;
@@ -33,7 +39,7 @@ public class CoachingProgramServiceImpl implements ICoachingProgramService {
     public CoachingProgram saveProgram(CoachingProgram program) {
         CoachingProgram savedProgram = repository.save(program);
 
-        
+
 
         return savedProgram;
 
@@ -41,7 +47,11 @@ public class CoachingProgramServiceImpl implements ICoachingProgramService {
     public CoachingProgram updateProgram(Long id, CoachingProgram programDetails) {
         CoachingProgram program = repository.findById(id).orElseThrow();
         program.setTitle(programDetails.getTitle());
-        // ... autres setters
+        program.setTitle(programDetails.getTitle());
+        program.setDescription(programDetails.getDescription());
+        program.setStartDate(programDetails.getStartDate());
+        program.setEndDate(programDetails.getEndDate());
+        program.setParticipants(programDetails.getParticipants());
         return repository.save(program); // Sauvegarde explicite
     }
 
@@ -52,7 +62,18 @@ public class CoachingProgramServiceImpl implements ICoachingProgramService {
 
     @Override
     public CoachingProgram createProgramWithInitialProgress(CoachingProgram program) {
-        return null;
+        User coach = userRepository.findByRole(Role.valueOf("COACH")).stream().findFirst().orElse(null);
+        program.setCoach(coach);
+        return repository.save(program);
+    }
+
+
+    // Méthode pour compter les programmes par coach
+    public Long countProgramsByCoach(Long coachId) {
+        return repository.countByCoachId(coachId);
+    }
+    public Long getCoachWithMostPrograms() {
+        return repository.findCoachIdWithMostPrograms();
     }
 
 

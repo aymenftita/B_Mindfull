@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Set;
+import java.util.HashSet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,26 +28,37 @@ public class ProgramContent {
 
     @ManyToOne
     @JoinColumn(name = "program_id")
-    @JsonBackReference(value = "program-content")
-    private CoachingProgram coachingProgram;
+    private CoachingProgram program;
+
+
+   // @ManyToOne
+   // @JoinColumn(name = "program_id")
+  //  @JsonBackReference(value = "program-content")
+  //  private CoachingProgram coachingProgram;
+
+    private Boolean completed;  // This is the 'completed' field that the query expects
+
     @Version
-    private long version;
-    // Ajoutez ces méthodes pour gérer la sérialisation/désérialisation
-    @JsonProperty("coachingProgram")
-    public void setCoachingProgramFromId(Map<String, Long> programMap) {
-        if (programMap != null && programMap.containsKey("programId")) {
-            this.coachingProgram = new CoachingProgram();
-            this.coachingProgram.setProgramId(programMap.get("programId"));
-        }
+    private Long version;
+    @ManyToMany
+    @JoinTable(
+            name = "program_content_user",  // nom de la table de jointure
+            joinColumns = @JoinColumn(name = "content_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+
+    private Set<User> users = new HashSet<>();
+
+
+    @ManyToOne
+    private User user;
+
+
+
+    public Long getContentId() {
+        return contentId;
     }
 
-    @JsonProperty("coachingProgram")
-    public Map<String, Long> getCoachingProgramAsId() {
-        if (this.coachingProgram != null) {
-            Map<String, Long> map = new HashMap<>();
-            map.put("programId", this.coachingProgram.getProgramId());
-            return map;
-        }
-        return null;
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
     }
 }

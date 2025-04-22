@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,34 +15,41 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CoachingProgram {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long programId;
-        // Relation avec le coach
-        //@ManyToOne
-        // @JoinColumn(name = "coach_id")
-        // private User coach;
-   // private Long coachId; // ID du coach associé
+
     private String title;
     private String description;
+
     @Temporal(TemporalType.DATE)
     private Date startDate;
     private Date endDate;
+
     private int participants;
 
-    @OneToMany(mappedBy = "coachingProgram", cascade = CascadeType.ALL)
-    //@JsonManagedReference(value = "program-content")
-    @JsonIgnore // Ajoutez cette annotation pour ignorer la sérialisation
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    @JsonIgnore // Ignore la sérialisation des contenus
     private List<ProgramContent> contents;
 
+    private LocalDateTime createdAt; // Date de création du programme
 
     @ManyToOne
-    @JoinColumn(name = "coach_id")
     @JsonBackReference
-    private Coach coach;  // Ajoute cet attribut
+@JoinColumn(name = "coach_id")  // Assure-toi que cette colonne existe dans la table `coaching_program`
+    private User coach;
 
+    public void setId(Long id) {
+        this.programId = id;
+    }
 
-    @Version
-    private Long version;
+    public Long getId() {
+        return programId;
+    }
 
+    // Méthode pour associer un coach au programme
+    public void assignCoach(User coach) {
+        this.coach = coach;
+    }
 }
