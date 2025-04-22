@@ -1,6 +1,7 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,18 +13,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class TestQuestion {
-
+public class QuestionResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tq_id;
+    private int qr_id;
 
     private String questionText;
+
+    private String responseText;
 
     @ManyToOne
     @JoinColumn(name = "test", nullable = false)
     private Test test;
 
-    @OneToOne(mappedBy = "testQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Response response;
 }

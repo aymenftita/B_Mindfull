@@ -38,6 +38,7 @@ public class ChoiceController {
         return choiceService.getChoiceById(id);
     }
 
+    @PutMapping("/{id}")
     public void updateChoice(@RequestBody Choice choice,@PathVariable int id) {
         choiceService.updateChoice(choice);
     }

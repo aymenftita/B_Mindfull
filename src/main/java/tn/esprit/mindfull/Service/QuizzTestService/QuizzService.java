@@ -25,12 +25,25 @@ public class QuizzService {
         return quizzRepository.findAll();
     }
 
-    public Quizz updateQuizz(Long id, Quizz quizz) {
+    /*public Quizz updateQuizz(Long id, Quizz quizz) {
         if (quizzRepository.existsById(id)) {
             quizz.setQuizz_id(id);
             return quizzRepository.save(quizz);
         }
         return null;
+    }*/
+
+    public Quizz updateQuizz(Long id, Quizz quizzUpdates) {
+        return quizzRepository.findById(id)
+                .map(existingQuizz -> {
+
+                    existingQuizz.setTitle(quizzUpdates.getTitle());
+                    existingQuizz.setImage(quizzUpdates.getImage());
+                    existingQuizz.setDescription(quizzUpdates.getDescription());
+
+                    return quizzRepository.save(existingQuizz);
+                })
+                .orElse(null);
     }
 
     public void deleteQuizz(Long id) {

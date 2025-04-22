@@ -25,13 +25,6 @@ public class QuizzQuestionService {
         return quizzQuestionRepository.findAll();
     }
 
-    /*public QuizzQuestion updateQuestion(Long id, QuizzQuestion question) {
-        if (quizzQuestionRepository.existsById(id)) {
-            question.setQq_id(id);
-            return quizzQuestionRepository.save(question);
-        }
-        return null;
-    }*/
     public QuizzQuestion updateQuestion(Long id, QuizzQuestion questionUpdates) {
         return quizzQuestionRepository.findById(id)
                 .map(existingQuestion -> {

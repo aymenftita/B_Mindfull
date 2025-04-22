@@ -1,6 +1,7 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,8 @@ public class Test {
 
     private String name;
 
-    @OneToMany(mappedBy = "tq_id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TestQuestion> testQuestions;
+    @JsonIgnoreProperties("test")
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionResponse> question_response;
 
 }
