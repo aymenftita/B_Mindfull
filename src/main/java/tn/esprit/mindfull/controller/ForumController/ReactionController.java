@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
+import tn.esprit.mindfull.dto.ReactionStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Reaction;
 import tn.esprit.mindfull.entity.forum.ReactionType;
@@ -93,6 +94,16 @@ public class ReactionController {
 
         reactionService.removeReaction(user, post, type); // Call the removeReaction method in service
         return ResponseEntity.noContent().build(); // Return a successful response without content
+    }
+
+    @GetMapping("/reactions/stats/distribution")
+    public ResponseEntity<List<ReactionStatsDTO>> getReactionDistribution() {
+        return ResponseEntity.ok(reactionService.getReactionDistribution());
+    }
+
+    @GetMapping("/reactions/stats/most-reacted")
+    public ResponseEntity<List<ReactionStatsDTO>> getMostReactedPosts() {
+        return ResponseEntity.ok(reactionService.getMostReactedPosts());
     }
 
 }

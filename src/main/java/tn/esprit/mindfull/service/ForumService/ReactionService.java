@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.ReactionRepository;
+import tn.esprit.mindfull.dto.ReactionStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Reaction;
 import tn.esprit.mindfull.entity.forum.ReactionType;
@@ -62,7 +63,23 @@ public class ReactionService {
         });
     }
 
+    public List<ReactionStatsDTO> getReactionDistribution() {
+        return reactionRepository.countReactionsByType().stream()
+                .map(obj -> new ReactionStatsDTO(
+                        ((ReactionType) obj[0]).name(),
+                        ((Number) obj[1]).intValue(),
+                        false // Not a post
+                ))
+                .collect(Collectors.toList());
+    }
 
-
-
+    public List<ReactionStatsDTO> getMostReactedPosts() {
+        return reactionRepository.findMostReactedPosts().stream()
+                .map(obj -> new ReactionStatsDTO(
+                        (String) obj[0],
+                        ((Number) obj[1]).intValue(),
+                        true // Is a post
+                ))
+                .collect(Collectors.toList());
+    }
 }
