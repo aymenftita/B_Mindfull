@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
+import tn.esprit.mindfull.dto.CommentStatsDTO;
+import tn.esprit.mindfull.dto.PostCommentStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.user.UserService;
@@ -11,6 +13,7 @@ import tn.esprit.mindfull.user.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -74,6 +77,26 @@ public class CommentService {
 
     public long countCommentsByPostId(Long postId) {
         return commentRepository.countByPostId(postId);
+    }
+
+    public List<CommentStatsDTO> getCommentStatsOverTime() {
+        List<Object[]> results = commentRepository.countCommentsByCreationDate();
+        return results.stream()
+                .map(obj -> new CommentStatsDTO(
+                        (String) obj[0],  // date
+                        (Long) obj[1]     // count
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public List<PostCommentStatsDTO> getMostCommentedPosts() {
+        List<Object[]> results = commentRepository.findMostCommentedPosts();
+        return results.stream()
+                .map(obj -> new PostCommentStatsDTO(
+                        (String) obj[0],  // postTitle
+                        (Long) obj[1]      // commentCount
+                ))
+                .collect(Collectors.toList());
     }
 
 }

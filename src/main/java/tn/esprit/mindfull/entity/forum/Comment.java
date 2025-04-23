@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import tn.esprit.mindfull.user.User;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ public class Comment {
     private Long id;
 
     private String content;
+
+    @CreationTimestamp
+    @Column(name = "creation_time", updatable = false)
     private LocalDateTime creationTime = LocalDateTime.now();
 
     @ManyToOne
