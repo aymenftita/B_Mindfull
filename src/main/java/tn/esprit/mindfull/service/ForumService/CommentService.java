@@ -47,8 +47,9 @@ public class CommentService {
 
             ObjectMapper mapper = new ObjectMapper();
             String jsonNotification = mapper.writeValueAsString(notification);
-
+            System.out.println("Sending notification: " + jsonNotification);
             notificationService.sendNotification(jsonNotification);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
