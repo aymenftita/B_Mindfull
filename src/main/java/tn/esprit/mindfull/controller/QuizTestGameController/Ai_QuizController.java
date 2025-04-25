@@ -7,11 +7,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 
 @RestController
 @CrossOrigin(origins = "*")
-public class AiController {
+public class Ai_QuizController {
 
     private final RestTemplate restTemplate;
 
-    public AiController() {
+    public Ai_QuizController() {
         this.restTemplate = new RestTemplate();
         // Add JSON message converter
         this.restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

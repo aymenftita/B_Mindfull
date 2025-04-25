@@ -3,7 +3,7 @@ package tn.esprit.mindfull.entity.Quizz_Test_Game;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import tn.esprit.mindfull.User;
+import tn.esprit.mindfull.user.User;
 import java.util.Date;
 
 @Getter

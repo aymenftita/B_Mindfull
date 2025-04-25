@@ -11,7 +11,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/ai")
 @CrossOrigin(origins = "*")
-public class AiController {
+public class Ai_ForumController {
 
     @PostMapping("/generate-post")
     public ResponseEntity<Map<String, String>> generatePost(@RequestBody Map<String, String> payload) {
