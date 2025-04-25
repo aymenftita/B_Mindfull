@@ -64,4 +64,8 @@ public class Post {
     @JsonIgnore
     private List<Report> reports;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+
 }
