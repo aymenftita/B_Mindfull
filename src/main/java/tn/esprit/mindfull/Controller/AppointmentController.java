@@ -3,6 +3,7 @@ package tn.esprit.mindfull.Controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,9 +44,20 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Appointment>> getAllAppointments() {
-        List<Appointment> appointments = appointmentService.getAllAppointments();
-        return ResponseEntity.ok(appointments);
+    public ResponseEntity<?> getAllAppointments(
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        if (paginated) {
+            // Return paginated results
+            Page<Appointment> appointments = appointmentService.getAllAppointmentsPaginated(page, size);
+            return ResponseEntity.ok(appointments);
+        } else {
+            // Return all appointments without pagination
+            List<Appointment> appointments = appointmentService.getAllAppointments();
+            return ResponseEntity.ok(appointments);
+        }
     }
 
     @GetMapping("/{id}")
@@ -207,6 +219,9 @@ public class AppointmentController {
                     .body("An error occurred: " + e.getMessage());
         }
     }
+
+
+
 
 
 }

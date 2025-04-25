@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +45,20 @@ public class CalendarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Calendar>> getAllCalendars() {
-        return ResponseEntity.ok(calendarService.getAllCalendars());
+    public ResponseEntity<?> getAllCalendars(
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        if (paginated) {
+            // Return paginated results
+            Page<Calendar> calendars = calendarService.getAllCalendarsPaginated(page, size);
+            return ResponseEntity.ok(calendars);
+        } else {
+            // Return all calendars without pagination
+            List<Calendar> calendars = calendarService.getAllCalendars();
+            return ResponseEntity.ok(calendars);
+        }
     }
 
     @GetMapping("/{id}")

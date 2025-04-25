@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.entity.Appointment.AppointmentStatus;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,4 +52,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             LocalDateTime startTime,
             LocalDateTime endTime,
             AppointmentStatus status);
+
+    Page<Appointment> findAll(Pageable pageable);
+
 }

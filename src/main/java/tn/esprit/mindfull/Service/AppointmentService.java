@@ -1,5 +1,6 @@
 package tn.esprit.mindfull.Service;
 
+import org.springframework.data.domain.Page;
 import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 
@@ -28,4 +29,5 @@ public interface AppointmentService {
     Appointment requestReschedule(Integer appointmentId, String startTimeStr, String endTimeStr, String reason);
 
     Appointment cancelAppointment(Integer appointmentId);
+    Page<Appointment> getAllAppointmentsPaginated(int page, int size);
 }
