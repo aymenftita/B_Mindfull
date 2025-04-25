@@ -1,20 +1,36 @@
 package tn.esprit.mindfull.entity.Quizz_Test_Game;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table
 public class Quizz {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizz_id;
 
-    public void setQuizz_id(Long quizzId) {
-        this.quizz_id = quizzId;
-    }
+    @Column(nullable = false)  // Make title mandatory
+    private String title;
 
-    public Long getQuizz_id() {
-        return quizz_id;
-    }
+    private String description;
+
+    private String image;
+
+    @OneToMany(mappedBy = "quizz", cascade = CascadeType.ALL, orphanRemoval = true)
+      // Add this to break the circular reference
+    private List<QuizzQuestion> questions;
 }
+
+
+
