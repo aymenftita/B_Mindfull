@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.controller.QuizTestGameController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

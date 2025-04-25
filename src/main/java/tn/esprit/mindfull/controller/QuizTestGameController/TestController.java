@@ -1,7 +1,6 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.controller.QuizTestGameController;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Service.QuizzTestService.TestService;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Test;
