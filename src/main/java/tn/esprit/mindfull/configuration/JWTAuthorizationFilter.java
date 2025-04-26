@@ -45,23 +45,25 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         String token = header.substring(7);
         String username = jwtUtils.extractUsername(token);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() ==
-                null) {
-            UserDetails userDetails = userService.loadUserByUsername(username);
 
-            if (jwtUtils.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken auth = new
-                        UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-                System.out.println("Authenticated user: " + username + " with roles: " +
-                        userDetails.getAuthorities());
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userService.loadUserByUsername(username);
+
+                // Validate token and session
+                if (jwtUtils.validateToken(token, userDetails) && userService.isSessionValid(username, token)) {
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    System.out.println("Authenticated user: " + username + " with roles: " + userDetails.getAuthorities());
+                } else {
+                    System.out.println("Token or session validation failed for user: " + username);
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or outdated session");
+                    return;
+                }
             } else {
-                System.out.println("Token validation failed for user: " + username);
+                System.out.println("Username is null or context already has authentication.");
             }
-        } else {
-            System.out.println("Username is null or context already has authentication.");
-        }
 
         filterChain.doFilter(request, response);
     }

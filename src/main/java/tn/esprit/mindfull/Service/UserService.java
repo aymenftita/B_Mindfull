@@ -65,19 +65,35 @@ public class UserService implements UserDetailsService {
     // New loginUser method
     public String loginUser(String username, String password) {
         // Load user from the database
-        UserDetails userDetails = loadUserByUsername(username);
-        System.out.println("Username: " + userDetails.getUsername());
-        System.out.println("Roles: " + userDetails.getAuthorities());
-        // Validate password (fixed missing parenthesis)
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        // Validate password
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
-        System.out.println("Username: " + userDetails.getUsername());
-        System.out.println("Roles: " + userDetails.getAuthorities());
-        // Generate JWT token with username
-        return jwtUtils.generateToken(userDetails);
-    }
 
+        // Invalidate previous session (if any)
+        user.setSessionToken(null);
+        userRepository.save(user);
+
+        // Generate new JWT token
+        String token = jwtUtils.generateToken(user);
+
+        // Store new session token
+        user.setSessionToken(token);
+        userRepository.save(user);
+
+        return token;
+    }
+    public boolean isSessionValid(String username, String token) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return token.equals(user.getSessionToken()) && !jwtUtils.isTokenExpired(token);
+        }
+        return false;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -22,6 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Optional<User> findByResetToken(String token);
     long countByRole(String role);
     long countByAccountStatus(String accountStatus);
+    Optional<User> findBySessionToken(String sessionToken);
     List<User> findByUsernameContainingOrEmailContainingOrFirstnameContainingOrLastnameContaining(
             String username, String email, String firstname, String lastname);
 

@@ -20,30 +20,49 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email") // Ensure this exists
+        @UniqueConstraint(columnNames = "email")
 })
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //common attributes
     private Long id;
     private String firstname;
     private String lastname;
     private  String username;
-    private Date birth;
     private String email;
-    private Integer reference;
-    private Integer calenderId;
     private String password;
-    private String avatarUrl;
     @Column(name = "account_status")
-    private String accountStatus;     private Date lastSessionDate;
-    private String primaryCarePhysician;
-    private Date nextAppointment;
+    private String accountStatus;
+    private String avatarUrl;
     @Column(unique = true)
     private String resetToken;
     private Date resetTokenExpiry;
     @Column(name = "role", nullable = false)
-    private String role; // Store role as a string (e.g., "ROLE_ADMIN")
+    private String role;
+    private String sessionToken;
+
+
+
+
+
+
+
+    //  patient attributes
+    private Date birth;
+    private Integer calenderId;
+    private Date lastSessionDate;
+    private String primaryCarePhysician;
+    private Date nextAppointment;
+
+
+//doctor attributes
+    private String workingHours;
+    private String contactNumber;
+    private Boolean profileVerified;
+    private String Specializations;
+    private String experienceYears;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -83,7 +102,6 @@ public class User implements UserDetails {
     }
 
     public void setRole(String role) {
-        // Ensure role starts with ROLE_
         this.role = role.startsWith("ROLE_") ? role : "ROLE_" + role;
     }
     public String getResetToken() { return resetToken; }
@@ -100,5 +118,14 @@ public class User implements UserDetails {
 
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
-    }}
+    }
+    public String getSessionToken() {
+        return sessionToken;
+    }
+
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
+    }
+
+}
 

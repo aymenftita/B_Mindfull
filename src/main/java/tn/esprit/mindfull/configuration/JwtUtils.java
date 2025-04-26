@@ -91,4 +91,6 @@ public class JwtUtils {
                 .build()
                 .parseClaimsJws(token);             // Parses and validates the token
     }
+    public record TokenAndExpiry(String token, Date expiry) {}
+
 }
