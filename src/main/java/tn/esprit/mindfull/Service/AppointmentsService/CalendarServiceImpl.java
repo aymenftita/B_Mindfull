@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -6,13 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Repository.AppointmentRepository.AppointmentRepository;
-import tn.esprit.mindfull.Repository.AppointmentRepository.CalendarRepository;
-import tn.esprit.mindfull.Repository.AppointmentRepository.UserRepository;
+import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepository;
+import tn.esprit.mindfull.Repository.AppointmentsRepository.CalendarRepository;
+import tn.esprit.mindfull.Repository.AppointmentsRepository.UserRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;

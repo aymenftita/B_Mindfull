@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,9 +6,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import tn.esprit.mindfull.dto.WebRTCMessage;
+import tn.esprit.mindfull.dto.Appointmentsdto.WebRTCMessage;
 import tn.esprit.mindfull.entity.Appointment.VideoStatus;
-import tn.esprit.mindfull.Service.VideoCallService;
+import tn.esprit.mindfull.Service.AppointmentsService.VideoCallService;
 
 @Controller
 @RequiredArgsConstructor

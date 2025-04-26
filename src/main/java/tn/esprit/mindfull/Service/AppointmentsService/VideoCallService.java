@@ -1,16 +1,16 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tn.esprit.mindfull.dto.VideoRoomDTO;
+import tn.esprit.mindfull.dto.Appointmentsdto.VideoRoomDTO;
 import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.entity.Appointment.VideoCall;
 import tn.esprit.mindfull.entity.Appointment.VideoStatus;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
-import tn.esprit.mindfull.Repository.AppointmentRepository.AppointmentRepository;
-import tn.esprit.mindfull.Repository.AppointmentRepository.VideoCallRepository;
+import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepository;
+import tn.esprit.mindfull.Repository.AppointmentsRepository.VideoCallRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

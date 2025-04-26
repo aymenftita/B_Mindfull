@@ -1,8 +1,8 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Service.AiDoctorNoteService;
+import tn.esprit.mindfull.Service.AppointmentsService.AiDoctorNoteService;
 
 @RestController
 @RequestMapping("/api/notes")

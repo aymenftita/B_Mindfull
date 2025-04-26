@@ -1,11 +1,7 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import org.springframework.data.domain.Page;
-import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;

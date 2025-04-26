@@ -1,8 +1,6 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Service.CalendarService;
-import tn.esprit.mindfull.entity.Appointment.Appointment;
+import tn.esprit.mindfull.Service.AppointmentsService.CalendarService;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
 

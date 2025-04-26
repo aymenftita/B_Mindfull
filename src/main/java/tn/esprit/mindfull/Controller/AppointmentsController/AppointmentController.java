@@ -1,6 +1,5 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -8,13 +7,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Service.AppointmentService;
+import tn.esprit.mindfull.Service.AppointmentsService.AppointmentService;
 import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
-import tn.esprit.mindfull.validation.CreateValidation;
-import tn.esprit.mindfull.validation.UpdateValidation;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

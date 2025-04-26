@@ -1,13 +1,13 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.dto.VideoRoomDTO;
+import tn.esprit.mindfull.dto.Appointmentsdto.VideoRoomDTO;
 import tn.esprit.mindfull.entity.Appointment.VideoCall;
 import tn.esprit.mindfull.entity.Appointment.VideoStatus;
-import tn.esprit.mindfull.Service.VideoCallService;
+import tn.esprit.mindfull.Service.AppointmentsService.VideoCallService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

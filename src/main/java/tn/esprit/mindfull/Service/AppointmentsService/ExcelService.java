@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

@@ -1,9 +1,8 @@
-package tn.esprit.mindfull.Repository.AppointmentRepository;
+package tn.esprit.mindfull.Repository.AppointmentsRepository;
 
 import tn.esprit.mindfull.entity.Appointment.User; // Correct import
 import tn.esprit.mindfull.entity.Appointment.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.mindfull.entity.Appointment.UserRole;
 
 import java.util.List;
 import java.util.Optional;

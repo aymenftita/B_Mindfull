@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import org.springframework.data.domain.Page;
 import tn.esprit.mindfull.entity.Appointment.Appointment;

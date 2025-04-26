@@ -1,9 +1,8 @@
-package tn.esprit.mindfull.Repository.AppointmentRepository;
+package tn.esprit.mindfull.Repository.AppointmentsRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import tn.esprit.mindfull.entity.Appointment.Appointment;
 import tn.esprit.mindfull.entity.Appointment.VideoCall;
 import tn.esprit.mindfull.entity.Appointment.VideoStatus;
 

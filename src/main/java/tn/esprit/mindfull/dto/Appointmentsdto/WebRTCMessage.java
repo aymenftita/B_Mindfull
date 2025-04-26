@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.dto;
+package tn.esprit.mindfull.dto.Appointmentsdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

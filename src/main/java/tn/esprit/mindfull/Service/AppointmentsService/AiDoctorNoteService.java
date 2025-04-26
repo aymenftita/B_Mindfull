@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.AppointmentsService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
