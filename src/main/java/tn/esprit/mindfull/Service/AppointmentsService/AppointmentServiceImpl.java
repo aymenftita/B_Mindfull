@@ -8,9 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepository; // Fixed package name
 import tn.esprit.mindfull.Repository.AppointmentsRepository.CalendarRepository;
-import tn.esprit.mindfull.Repository.AppointmentsRepository.UserRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
+import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.user.UserRepository;
+import tn.esprit.mindfull.user.UserRole;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

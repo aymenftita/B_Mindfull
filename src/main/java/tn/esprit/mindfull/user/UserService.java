@@ -22,7 +22,7 @@ public class UserService {
         staticUser.setName("Chiha");
         staticUser.setLastname("DevUser");
         staticUser.setEmail("chiha@example.com");
-        staticUser.setRole("user");
+        staticUser.setRole(UserRole.PATIENT);
         return userRepository.save(staticUser); // Let the DB assign the ID
     }
 

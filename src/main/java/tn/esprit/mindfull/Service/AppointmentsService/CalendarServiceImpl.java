@@ -11,10 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepository;
 import tn.esprit.mindfull.Repository.AppointmentsRepository.CalendarRepository;
-import tn.esprit.mindfull.Repository.AppointmentsRepository.UserRepository;
+import tn.esprit.mindfull.user.UserRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
+import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.user.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -135,7 +137,7 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public List<Map<String, Object>> getAvailableTimeSlotsForPatient(Integer patientId) {
         // Verify patient exists
-        User patient = userRepository.findById(patientId)
+        tn.esprit.mindfull.user.User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
 
         if (patient.getRole() != UserRole.PATIENT) {
@@ -143,7 +145,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
 
         // Get all professional calendars (doctors and coaches)
-        List<User> professionals = userRepository.findByRoleIn(Arrays.asList(UserRole.DOCTOR, UserRole.COACH));
+        List<tn.esprit.mindfull.user.User> professionals = userRepository.findByRoleIn(Arrays.asList(UserRole.DOCTOR, UserRole.COACH));
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime twoWeeksFromNow = now.plusWeeks(2);

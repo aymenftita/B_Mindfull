@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.entity.Appointment;
+package tn.esprit.mindfull.user;
 
 public enum UserRole {
     ADMIN,

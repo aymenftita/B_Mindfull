@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.user.UserRole;
 import tn.esprit.mindfull.validation.CreateValidation;
 import tn.esprit.mindfull.validation.UpdateValidation;
 import java.time.LocalDateTime;

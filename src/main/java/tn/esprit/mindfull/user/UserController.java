@@ -32,7 +32,7 @@ public class UserController {
     // Update a user
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Integer id, @RequestBody User user) {
-        user.setId(id); // Ensure the ID matches the path variable
+        user.setUserId(id); // Ensure the ID matches the path variable
         return userService.updateUser(user);
     }
 

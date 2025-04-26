@@ -1,43 +1,46 @@
 package tn.esprit.mindfull.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import tn.esprit.mindfull.entity.Appointment.Calendar;
 
-import java.time.Instant;
-
+@Entity
+@Data
 @Getter
 @Setter
-@Entity
-@Table(name = "user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer userId;
 
-    @Column(name = "birth")
-    private Instant birth;
-
-    @Column(name = "calender_id")
-    private Integer calenderId;
-
-    @Column(name = "email")
+    private String firstName;
+    private String lastName;
     private String email;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Role is required") // Ensure role is never null
+    private UserRole role;
 
-    @Column(name = "name")
-    private String name;
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @EqualsAndHashCode.Exclude  // Exclude from hashCode and equals
+    @ToString.Exclude           // Exclude from toString
+    private Calendar calendar;
 
-    @Column(name = "password")
-    private String password;
 
-    @Column(name = "reference")
-    private Integer reference;
+    public String getName() {
+        return this.firstName ;
+    }
 
-    @Lob
-    @Column(name = "role")
-    private String role;
+    public void setName(String name) {
+        this.firstName = name;
+    }
 
+    public void setLastname(String devUser) {
+        this.lastName = devUser;
+    }
 }

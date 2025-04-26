@@ -42,7 +42,7 @@ public class ReactionController {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         // Fetch the user by username
-        User user = userRepository.findByName(username)
+        User user = userRepository.findByFirstName(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Set the post and user on the reaction
@@ -65,7 +65,7 @@ public class ReactionController {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        User user = userRepository.findByName(username)
+        User user = userRepository.findByFirstName(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         System.out.println("Looking for user: " + username);
         System.out.println("Looking for post with ID: " + postId);
@@ -89,7 +89,7 @@ public class ReactionController {
             @RequestParam String type
     ) {
         Post post = postRepository.findById(postId).orElseThrow();
-        User user = userRepository.findByName(username).orElseThrow();
+        User user = userRepository.findByFirstName(username).orElseThrow();
 
         reactionService.removeReaction(user, post, type); // Call the removeReaction method in service
         return ResponseEntity.noContent().build(); // Return a successful response without content

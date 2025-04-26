@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ScoreRepository extends JpaRepository<Score,Long> {
-    List<Score> findByUserId(Long userId);
+    List<Score> findByUserUserId(Long userId);
     List<Score> findByDateBetween(Date startDate, Date endDate);
 }
