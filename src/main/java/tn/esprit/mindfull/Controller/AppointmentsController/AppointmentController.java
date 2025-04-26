@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller.AppointmentsController;
+package tn.esprit.mindfull.controller.AppointmentsController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;

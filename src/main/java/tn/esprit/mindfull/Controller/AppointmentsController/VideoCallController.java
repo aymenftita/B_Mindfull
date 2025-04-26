@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller.AppointmentsController;
+package tn.esprit.mindfull.controller.AppointmentsController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
