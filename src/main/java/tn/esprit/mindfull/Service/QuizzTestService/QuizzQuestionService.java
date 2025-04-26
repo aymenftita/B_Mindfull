@@ -2,7 +2,7 @@ package tn.esprit.mindfull.Service.QuizzTestService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.QuizzTestRepository.QuizzQuestionRepository;
+import tn.esprit.mindfull.Repository.QuizzTestRepository.QuizzQuestionRepository;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.Choice;
 import tn.esprit.mindfull.entity.Quizz_Test_Game.QuizzQuestion;
 

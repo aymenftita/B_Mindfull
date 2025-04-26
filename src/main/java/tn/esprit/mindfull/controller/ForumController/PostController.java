@@ -3,7 +3,7 @@ package tn.esprit.mindfull.controller.ForumController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
+import tn.esprit.mindfull.Repository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.dto.Forumdto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.Service.ForumService.PostService;

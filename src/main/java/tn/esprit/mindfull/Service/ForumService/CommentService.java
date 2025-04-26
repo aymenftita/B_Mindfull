@@ -3,7 +3,7 @@ package tn.esprit.mindfull.Service.ForumService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
+import tn.esprit.mindfull.Repository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.dto.Forumdto.CommentStatsDTO;
 import tn.esprit.mindfull.dto.Forumdto.PostCommentStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;

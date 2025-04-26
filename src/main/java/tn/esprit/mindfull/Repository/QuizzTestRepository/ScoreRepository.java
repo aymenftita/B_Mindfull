@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Respository.QuizzTestRepository;
+package tn.esprit.mindfull.Repository.QuizzTestRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
