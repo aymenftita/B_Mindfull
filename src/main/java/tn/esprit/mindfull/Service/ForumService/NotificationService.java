@@ -1,14 +1,10 @@
-package tn.esprit.mindfull.service.ForumService;
+package tn.esprit.mindfull.Service.ForumService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class NotificationService {

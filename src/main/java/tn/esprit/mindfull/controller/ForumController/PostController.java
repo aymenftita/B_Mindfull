@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
-import tn.esprit.mindfull.dto.PostStatsDTO;
+import tn.esprit.mindfull.dto.Forumdto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
-import tn.esprit.mindfull.service.ForumService.PostService;
+import tn.esprit.mindfull.Service.ForumService.PostService;
 import tn.esprit.mindfull.user.User;
 import tn.esprit.mindfull.user.UserService;
 
