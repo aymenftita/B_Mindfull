@@ -5,13 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Getter
 @Setter
 @Entity
-public class Prescription {
+public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +31,15 @@ public class Prescription {
     private String authorName;
     private String diagnosis;
 
-    @OneToMany(mappedBy = "prescription", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Medication> listMedicaton;
+    @Column(length = 1000)
+    private String notes; // Visible only to doctor
 
     @Column(length = 1000)
-    private String notes;
+    private String guidance;
 
     private LocalDate creationDate;
     private LocalDate updateDate;
     private LocalDate expirationDate;
 
+    // Getters and Setters
 }

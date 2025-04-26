@@ -1,11 +1,14 @@
 package tn.esprit.mindfull.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,27 +19,41 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private int id;
 
-    private String name;
+    private String fullName;
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    private Role role;  // doctor or patient
+    private Role role;
 
-    // Prescriptions created by this doctor
+    // Doctor or Coach Notes & Prescriptions
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<Prescription> createdPrescriptions;
+    @JsonIgnore
+    private List<Note> doctorNotes= new ArrayList<>();;;
 
-    // Prescriptions belonging to this patient
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Note> coachNotes= new ArrayList<>();;;
+
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<Prescription> prescriptions;
+    @JsonIgnore
+    private List<Note> patientNotes= new ArrayList<>();;;
 
-    // Notes written by this doctor
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<PatientNote> writtenNotes;
+    @JsonIgnore
+    private List<Prescription> doctorPrescriptions = new ArrayList<>();;
 
-    // Notes about this patient
+    private LocalDate dateDeNaissance;
+
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Prescription> coachPrescriptions = new ArrayList<>();;
+
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<PatientNote> receivedNotes;
+    @JsonIgnore
+    private List<Prescription> patientPrescriptions = new ArrayList<>();;
+
+
 
 }

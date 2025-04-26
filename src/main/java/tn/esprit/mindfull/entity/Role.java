@@ -1,5 +1,8 @@
 package tn.esprit.mindfull.entity;
 
 public enum Role {
-    doctor,patient
+    DOCTOR,
+    COACH,
+    PATIENT,
+    ADMIN
 }

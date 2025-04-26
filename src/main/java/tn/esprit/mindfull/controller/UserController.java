@@ -1,56 +1,51 @@
 package tn.esprit.mindfull.controller;
 
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.entity.User;
+import tn.esprit.mindfull.entity.Role;
 import tn.esprit.mindfull.service.UserService;
-
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200") // Angular
 public class UserController {
 
     private final UserService userService;
 
-
-    // Create a new user (doctor or patient)
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.addUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-    }
-
-    // Get all users
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
-    // Get user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public User getUserById(@PathVariable int id) {
+        return userService.getUserById(id);
     }
 
-    // Update a user by ID
+    @GetMapping("/role/{role}")
+    public List<User> getUsersByRole(@PathVariable Role role) {
+        return userService.getUsersByRole(role);
+    }
+
+    // ✅ Add POST
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+
+    // ✅ Add PUT
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User user = userService.updateUser(id, updatedUser);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
-    // Delete a user by ID
+    // ✅ Add DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
