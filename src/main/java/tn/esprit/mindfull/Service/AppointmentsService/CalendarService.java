@@ -1,0 +1,22 @@
+package tn.esprit.mindfull.Service.AppointmentsService;
+
+import org.springframework.data.domain.Page;
+import tn.esprit.mindfull.entity.Appointment.Calendar;
+
+import java.util.List;
+import java.util.Map;
+
+public interface CalendarService {
+    Calendar createCalendar(Calendar calendar);
+    List<Calendar> getAllCalendars();
+    Calendar getCalendarById(Integer id);
+    Calendar updateCalendar(Integer id, Calendar calendar);
+    void deleteCalendar(Integer id);
+    List<Map<String, Object>> getAvailableTimeSlotsForPatient(Integer patientId);
+
+    Page<Calendar> getAllCalendarsPaginated(int page, int size);
+
+
+
+
+}
