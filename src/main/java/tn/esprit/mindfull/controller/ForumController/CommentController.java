@@ -3,11 +3,11 @@ package tn.esprit.mindfull.controller.ForumController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.dto.CommentStatsDTO;
-import tn.esprit.mindfull.dto.PostCommentStatsDTO;
+import tn.esprit.mindfull.dto.Forumdto.CommentStatsDTO;
+import tn.esprit.mindfull.dto.Forumdto.PostCommentStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
-import tn.esprit.mindfull.service.ForumService.CommentService;
+import tn.esprit.mindfull.Service.ForumService.CommentService;
 
 import java.util.List;
 

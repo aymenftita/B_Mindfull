@@ -1,10 +1,10 @@
-package tn.esprit.mindfull.service.ForumService;
+package tn.esprit.mindfull.Service.ForumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.ReactionRepository;
-import tn.esprit.mindfull.dto.ReactionStatsDTO;
+import tn.esprit.mindfull.dto.Forumdto.ReactionStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Reaction;
 import tn.esprit.mindfull.entity.forum.ReactionType;

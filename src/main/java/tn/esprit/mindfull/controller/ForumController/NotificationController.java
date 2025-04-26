@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import tn.esprit.mindfull.service.ForumService.NotificationService;
+import tn.esprit.mindfull.Service.ForumService.NotificationService;
 
 @RestController
 @RequestMapping("/api/notifications")

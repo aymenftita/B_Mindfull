@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.dto;
+package tn.esprit.mindfull.dto.Forumdto;
 
 public class ReactionStatsDTO {
     private String reactionType;

@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.service.ForumService;
+package tn.esprit.mindfull.Service.ForumService;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,18 +6,15 @@ import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Respository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.Respository.ForumRepository.ReportRepository;
-import tn.esprit.mindfull.dto.PostStatsDTO;
+import tn.esprit.mindfull.dto.Forumdto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.user.User;
 import tn.esprit.mindfull.user.UserRepository;
 import tn.esprit.mindfull.user.UserService;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class PostService {

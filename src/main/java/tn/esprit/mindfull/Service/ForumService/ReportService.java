@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.service.ForumService;
+package tn.esprit.mindfull.Service.ForumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

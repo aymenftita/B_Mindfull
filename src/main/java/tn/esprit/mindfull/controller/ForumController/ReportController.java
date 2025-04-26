@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Report;
-import tn.esprit.mindfull.service.ForumService.CommentService;
-import tn.esprit.mindfull.service.ForumService.PostService;
-import tn.esprit.mindfull.service.ForumService.ReportService;
+import tn.esprit.mindfull.Service.ForumService.CommentService;
+import tn.esprit.mindfull.Service.ForumService.PostService;
+import tn.esprit.mindfull.Service.ForumService.ReportService;
 import tn.esprit.mindfull.user.User;
 import tn.esprit.mindfull.user.UserService;
 
