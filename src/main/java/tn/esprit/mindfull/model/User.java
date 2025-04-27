@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -50,7 +48,6 @@ public class User implements UserDetails {
 
     //  patient attributes
     private Date birth;
-    private Integer calenderId;
     private Date lastSessionDate;
     private String primaryCarePhysician;
     private Date nextAppointment;
@@ -59,7 +56,6 @@ public class User implements UserDetails {
 //doctor attributes
     private String workingHours;
     private String contactNumber;
-    private Boolean profileVerified;
     private String Specializations;
     private String experienceYears;
 

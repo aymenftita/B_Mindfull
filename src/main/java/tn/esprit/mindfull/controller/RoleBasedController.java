@@ -15,10 +15,7 @@ import tn.esprit.mindfull.model.User;
 
 import java.net.ContentHandler;
 import java.nio.file.AccessDeniedException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -80,6 +77,11 @@ public class RoleBasedController {
                 response.put("primaryCarePhysician", user.getPrimaryCarePhysician());
                 response.put("nextAppointment", user.getNextAppointment());
                 response.put("birth", user.getBirth());
+                response.put("workingHours", user.getWorkingHours());
+                response.put("contactNumber", user.getContactNumber());
+                response.put("Specializations", user.getSpecializations());
+                response.put("experienceYears", user.getExperienceYears());
+
 
                 return ResponseEntity.ok(response);
             } else {

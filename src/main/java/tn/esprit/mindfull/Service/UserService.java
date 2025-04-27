@@ -144,40 +144,58 @@ public class UserService implements UserDetailsService {
     }
 
    public User updateUser(String username, UserUpdateRequest updateRequest, @Nullable AppRole newRole) throws AccessDeniedException {
-        // Get the current authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
 
-        // Fetch the target user
         User targetUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        // Authorization check
-      //  if (!currentUserRole.equals("ROLE_ADMIN") && !currentUserRole.equals("ROLE_DOCTOR") && !currentUsername.equals(username)) {
-         //   throw new AccessDeniedException("You can only update your own account");
-       // }
+
 
         // Update basic fields (non-admin users cannot change role)
-        if (updateRequest.getEmail() != null) {
-            targetUser.setEmail(updateRequest.getEmail());
-        }
-        if (updateRequest.getFirstName() != null) {
-            targetUser.setFirstname(updateRequest.getFirstName());
-        }
-        if (updateRequest.getLastName() != null) {
-            targetUser.setLastname(updateRequest.getLastName());
-        }
-        if (updateRequest.getPassword() != null) {
-            targetUser.setPassword(passwordEncoder.encode(updateRequest.getPassword())); // Encode new password
-        }
-        if (updateRequest.getUsername() != null) {
-            targetUser.setUsername(updateRequest.getUsername());
-        }
+       if (updateRequest.getEmail() != null) {
+           targetUser.setEmail(updateRequest.getEmail());
+       }
+       if (updateRequest.getFirstName() != null) {
+           targetUser.setFirstname(updateRequest.getFirstName());
+       }
+       if (updateRequest.getLastName() != null) {
+           targetUser.setLastname(updateRequest.getLastName());
+       }
+       if (updateRequest.getPassword() != null) {
+           targetUser.setPassword(passwordEncoder.encode(updateRequest.getPassword()));
+       }
+       if (updateRequest.getUsername() != null) {
+           targetUser.setUsername(updateRequest.getUsername());
+       }
+
+       if (updateRequest.getAvatarUrl() != null) {
+           targetUser.setAvatarUrl(updateRequest.getAvatarUrl());
+       }
+
+       if (updateRequest.getPrimaryCarePhysician() != null) {
+           targetUser.setPrimaryCarePhysician(updateRequest.getPrimaryCarePhysician());
+       }
+
+       if (updateRequest.getBirth() != null) {
+           targetUser.setBirth(updateRequest.getBirth());
+       }
+       if (updateRequest.getWorkingHours() != null) {
+           targetUser.setWorkingHours(updateRequest.getWorkingHours());
+       }
+       if (updateRequest.getContactNumber() != null) {
+           targetUser.setContactNumber(updateRequest.getContactNumber());
+       }
+       if (updateRequest.getSpecializations() != null) {
+           targetUser.setSpecializations(updateRequest.getSpecializations().toString());
+       }
+       if (updateRequest.getExperienceYears() != null) {
+           targetUser.setExperienceYears(String.valueOf(updateRequest.getExperienceYears()));
+       }
 
         // Only admins can update roles via the newRole parameter
         if (currentUserRole.equals("ROLE_ADMIN") && newRole != null) {
-            targetUser.setRole(newRole.toSpringRole()); // Use newRole, not updateRequest
+            targetUser.setRole(newRole.toSpringRole());
         }
 
         return userRepository.save(targetUser);
@@ -215,39 +233,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-  /* @Transactional
-   public User updateUser(String currentUsername, UserUpdateRequest updateRequest, AppRole newRole) {
-       User targetUser = userRepository.findByUsername(currentUsername)
-               .orElseThrow(() -> new UsernameNotFoundException("User not found: " + currentUsername));
 
-       // Handle username change first
-       if (updateRequest.getUsername() != null && !updateRequest.getUsername().equals(currentUsername)) {
-           if (userRepository.existsByUsername(updateRequest.getUsername())) {
-               throw new IllegalArgumentException("Username already exists");
-           }
-           targetUser.setUsername(updateRequest.getUsername());
-       }
-
-       // Update other fields
-       if (updateRequest.getEmail() != null) {
-           targetUser.setEmail(updateRequest.getEmail());
-       }
-       if (updateRequest.getFirstName() != null) {
-           targetUser.setFirstname(updateRequest.getFirstName());
-       }
-       if (updateRequest.getLastName() != null) {
-           targetUser.setLastname(updateRequest.getLastName());
-       }
-       if (updateRequest.getPassword() != null) {
-           targetUser.setPassword(passwordEncoder.encode(updateRequest.getPassword()));
-       }
-       if (newRole != null) {
-           targetUser.setRole("ROLE_" + newRole.name());
-       }
-
-       return userRepository.save(targetUser);
-   }*/
-    // In UserService.java
 
     public Map<String, Integer> getUserStats() {
         Map<String, Integer> stats = new HashMap<>();
