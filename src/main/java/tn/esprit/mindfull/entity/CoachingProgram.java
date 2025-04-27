@@ -2,6 +2,7 @@ package tn.esprit.mindfull.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,13 +34,15 @@ public class CoachingProgram {
     @JsonIgnore // Ignore la sérialisation des contenus
     private List<ProgramContent> contents;
 
-    private LocalDateTime createdAt; // Date de création du programme
+
 
     @ManyToOne
     @JsonBackReference
-@JoinColumn(name = "coach_id")  // Assure-toi que cette colonne existe dans la table `coaching_program`
-    private User coach;
+    @JoinColumn(name = "user_id",nullable = false)  // Assure-toi que cette colonne existe dans la table `coaching_program`
+    private User user;
 
+    @Version
+    private Long version;
     public void setId(Long id) {
         this.programId = id;
     }
@@ -48,8 +51,23 @@ public class CoachingProgram {
         return programId;
     }
 
+    // --- NOUVEAU getter pour exposer coachId ---
+    @JsonProperty("coachId")
+    public Long getCoachId() {
+
+        return (user != null) ? user.getId() : null;
+    }
+
+
     // Méthode pour associer un coach au programme
     public void assignCoach(User coach) {
-        this.coach = coach;
+        this.user = coach;
+    }
+
+
+    public void setCoachId(Long coachId) {
+    }
+
+    public void setCoach(User coach) {
     }
 }

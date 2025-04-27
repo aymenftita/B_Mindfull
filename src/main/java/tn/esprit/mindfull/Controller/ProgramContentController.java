@@ -2,16 +2,20 @@ package tn.esprit.mindfull.Controller;
 
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.mindfull.Respository.CoachingProgramRepository;
 import tn.esprit.mindfull.Respository.ProgramContentRepository;
 import tn.esprit.mindfull.Respository.UserRepository;
 import tn.esprit.mindfull.Service.EmailService;
 import tn.esprit.mindfull.Service.IProgramContentService;
 import tn.esprit.mindfull.Service.UserService;
+import tn.esprit.mindfull.entity.CoachingProgram;
 import tn.esprit.mindfull.entity.ProgramContent;
-import tn.esprit.mindfull.entity.Role;
 import tn.esprit.mindfull.entity.User;
 
 import java.util.List;
@@ -31,7 +35,8 @@ public class ProgramContentController {
     private EmailService emailService; // Injecting the EmailService
     @Autowired
     private UserService userService; // Injecting the UserService
-
+    @Autowired
+    private CoachingProgramRepository coachingProgramRepository;
     public ProgramContentController(ProgramContentRepository programContentRepository) {
         this.programContentRepository = programContentRepository;
     }
@@ -53,13 +58,11 @@ public class ProgramContentController {
         ProgramContent saved = iProgramContentService.saveContent(programContent);
         System.out.println("Content ID généré : " + saved.getContentId());
 
-
-
-        // Récupérer l'utilisateur ayant le rôle 'PATIENT' (vous pouvez filtrer par ID ou d'autres critères si nécessaire)
+        // Récupérer l'utilisateur ayant le rôle 'PATIENT'
         List<User> patients = userService.findUserByRole("PATIENT");
 
-        if (patients.isEmpty()) {
-            User patient = patients.get(0);
+        if (!patients.isEmpty()) { // Vérifier que la liste n'est pas vide
+            User patient = patients.get(0); // Maintenant c'est sûr qu'il y a au moins un patient
             String patientEmail = patient.getEmail(); // Récupérer l'email du patient
             String subject = "Nouveau contenu ajouté";
             String content = "Bonjour, un nouveau contenu a été ajouté à votre programme. Veuillez vérifier les détails.";
@@ -74,28 +77,40 @@ public class ProgramContentController {
         } else {
             System.out.println("Aucun patient trouvé avec ce rôle.");
         }
+
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
 
+
+    // Pour mettre à jour un contenu
     // Pour mettre à jour un contenu
     @PutMapping("/programcontent/{contentId}")
     public ProgramContent updateContent(@PathVariable Long contentId, @RequestBody ProgramContent programContent) {
         return iProgramContentService.updateContent(contentId, programContent);
     }
+
     @DeleteMapping("/programcontent/{id}")
     public void deleteContent(@PathVariable Long id) {
 
         iProgramContentService.deleteContent(id);
     }
-    // API pour ajouter un patient à un programme et envoyer un email
-   /* @PostMapping("/add")
-    public String addPatientToProgram(@RequestParam Long contentId) {
-        try {
-            iProgramContentService.addProgramContent(contentId);
-            return "Patient ajouté au programme et email envoyé.";
-        } catch (MessagingException e) {
-            return "Erreur lors de l'envoi de l'email : " + e.getMessage();
-        }
-    }*/
+    @GetMapping("/{contentId}/users")
+    public ResponseEntity<Object> getUsersByContent(@PathVariable Long contentId) {
+        Optional<ProgramContent> content = programContentRepository.findById(contentId);
+        return content.map(value -> ResponseEntity.ok(value.getUsers()))
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping  // Change the URL to avoid the ambiguity
+    public Page<ProgramContent> getProgramContents(@RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return programContentRepository.findAll(pageable);
+    }
+    @GetMapping("/search")
+    public List<ProgramContent> searchContents(@RequestParam String keyword) {
+        return programContentRepository.searchContents(keyword);
+    }
+
+
+
 }

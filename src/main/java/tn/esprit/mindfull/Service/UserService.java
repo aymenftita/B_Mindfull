@@ -30,6 +30,9 @@ public class UserService {
         Role roleEnum = Role.valueOf(role);  // Convertir la chaîne en énumération
         return userRepository.findByRole(roleEnum);  // Passer l'énumération Role à la méthode
     }
+    public User findByRole(String role) {
+        return (User) userRepository.findByRole(Role.valueOf(role));  // La méthode findByRole pourrait être définie comme suit dans votre repository
+    }
 
 
 }

@@ -66,15 +66,31 @@ public class CoachingProgramServiceImpl implements ICoachingProgramService {
         program.setCoach(coach);
         return repository.save(program);
     }
+    public CoachingProgram createProgram(CoachingProgram program) {
+        // Récupérer l'utilisateur avec le rôle "coach"
+        User user = (User) userRepository.findByRole(Role.COACH);
+
+        if (user != null) {
+            program.setCoach(user);  // Assigner le coach au programme de coaching
+        } else {
+            throw new IllegalArgumentException("Aucun coach disponible pour ce programme.");
+        }
+
+        // Sauvegarder le programme de coaching
+        return repository.save(program);
+    }
+
 
 
     // Méthode pour compter les programmes par coach
     public Long countProgramsByCoach(Long coachId) {
         return repository.countByCoachId(coachId);
     }
-    public Long getCoachWithMostPrograms() {
+   /* public Long getCoachWithMostPrograms() {
         return repository.findCoachIdWithMostPrograms();
-    }
+    }*/
+
+
 
 
 }

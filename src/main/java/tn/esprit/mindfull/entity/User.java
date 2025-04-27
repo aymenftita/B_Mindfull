@@ -19,33 +19,42 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
-
+    @Enumerated(EnumType.STRING)
+    private Role role; // Correct: uses your custom enum
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long user_id;
+    private Long userId;
 
     private String fullName;
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Role role; // Correct: uses your custom enum
+
 
 
     public void setId(Long id) {
-        this.user_id = id;
+        this.userId = id;
     }
 
     // Getter pour id
     public Long getId() {
-        return user_id;
+        return userId;
     }
 
-    @OneToMany(mappedBy = "coach")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<CoachingProgram> coachingProgram;
     @ManyToMany(mappedBy = "users")
-    private Set<ProgramContent> programContents = new HashSet<>();
+    private Set<ProgramContent> programContents ;
 
 
+
+
+    public Long getUserId() {
+
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+    }
 }

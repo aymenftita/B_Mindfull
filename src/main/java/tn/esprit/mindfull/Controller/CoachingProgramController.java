@@ -1,13 +1,17 @@
 package tn.esprit.mindfull.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Respository.CoachingProgramRepository;
+import tn.esprit.mindfull.Respository.UserRepository;
 import tn.esprit.mindfull.entity.CoachingProgram;
 import tn.esprit.mindfull.Service.ICoachingProgramService;
+import tn.esprit.mindfull.entity.User;
 
 import java.util.List;
 
@@ -18,8 +22,10 @@ public class CoachingProgramController {
     @Autowired
     private ICoachingProgramService iCoachingProgramService;
     private  final CoachingProgramRepository repository;
-    public CoachingProgramController(CoachingProgramRepository repository) {
+    private  final UserRepository userRepository;
+    public CoachingProgramController(CoachingProgramRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/coachingPrograms")
@@ -36,8 +42,10 @@ public class CoachingProgramController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CoachingProgram> createProgram(
-            @RequestBody CoachingProgram program // Reçoit directement l'entité
+            @RequestBody CoachingProgram program, @RequestParam Long userId // Reçoit directement l'entité
     ) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        program.setUser(user);
         CoachingProgram savedProgram = repository.save(program);
         return ResponseEntity.ok(savedProgram);
     }
@@ -49,21 +57,37 @@ public class CoachingProgramController {
 
         return repository.findById(id)
                 .map(program -> {
+
+                    program.setCoachId(programDetails.getCoachId()); // ✅ ligne à ajouter
                     program.setTitle(programDetails.getTitle());
                     program.setDescription(programDetails.getDescription());
                     program.setParticipants(programDetails.getParticipants());
+                    program.setStartDate(programDetails.getStartDate());
+                    program.setEndDate(programDetails.getEndDate());
 
 
-                    // autres mises à jour...
                     CoachingProgram updated = repository.save(program);
                     return ResponseEntity.ok(updated);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @DeleteMapping("/coachingProgram/{id}")
     public void deleteProgram (@PathVariable Long id) {
 
         iCoachingProgramService.deleteProgram(id);
+    }
+    // Endpoint pour récupérer les programmes avec la pagination
+    // Récupère les programmes de coaching avec pagination
+    @GetMapping
+    public Page<CoachingProgram> getCoachingPrograms(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable);
+    }
+    // 🔍 Recherche avec paramètre
+    @GetMapping("/search")
+    public List<CoachingProgram> searchPrograms(@RequestParam String keyword) {
+        return repository.searchPrograms(keyword);
     }
 
 }

@@ -1,6 +1,7 @@
 package tn.esprit.mindfull.Service;
 
 import jakarta.mail.MessagingException;
+import org.springframework.data.domain.Page;
 import tn.esprit.mindfull.entity.ProgramContent;
 
 import java.util.List;
@@ -12,11 +13,7 @@ public interface IProgramContentService {
     ProgramContent saveContent(ProgramContent programContent);
     void deleteContent(Long id);
 
-   // ProgramContent save(ProgramContent programContent);
+    Page<ProgramContent> getPaginatedContents(Long id, int page, int size);
 
 
-    // void addProgramContent(Long contentId)throws MessagingException;
-
-    // Méthode pour ajouter un ProgramContent et envoyer un email au patient
-    //void addProgramContent(Long contentId, Long userId)throws MessagingException;;
 }
