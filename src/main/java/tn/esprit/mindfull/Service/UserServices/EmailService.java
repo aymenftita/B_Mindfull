@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.UserServices;
 
 
 import jakarta.mail.MessagingException;

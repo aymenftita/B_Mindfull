@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.configuration;
+package tn.esprit.mindfull.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tn.esprit.mindfull.Service.UserService;
+import tn.esprit.mindfull.Service.UserServices.UserService;
 
 import java.util.List;
 

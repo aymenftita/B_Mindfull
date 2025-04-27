@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.model;
+package tn.esprit.mindfull.entity.User;
 
 public enum Mood {
     HAPPY,

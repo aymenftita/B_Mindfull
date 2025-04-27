@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,13 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.Service.UserService;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.Service.UserServices.UserService;
 import tn.esprit.mindfull.dto.UserUpdateRequest;
-import tn.esprit.mindfull.model.AppRole;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.AppRole;
+import tn.esprit.mindfull.entity.User.User;
 
-import java.net.ContentHandler;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
 

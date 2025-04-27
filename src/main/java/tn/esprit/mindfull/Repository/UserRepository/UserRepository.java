@@ -1,13 +1,10 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.UserRepository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.User;
 
-import java.net.ContentHandler;
 import java.util.List;
 import java.util.Optional;
 

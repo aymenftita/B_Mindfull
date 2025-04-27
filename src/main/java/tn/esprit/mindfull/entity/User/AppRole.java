@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.model;
+package tn.esprit.mindfull.entity.User;
 
 public enum AppRole {
     ADMIN, PATIENT, DOCTOR, COACH;

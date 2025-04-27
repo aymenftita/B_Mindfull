@@ -1,16 +1,16 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.UserServices;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.JournalRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository.JournalRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.dto.JournalRequest;
-import tn.esprit.mindfull.model.Journal;
-import tn.esprit.mindfull.model.Mood;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.Journal;
+import tn.esprit.mindfull.entity.User.Mood;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.configuration;
+package tn.esprit.mindfull.config;
 
 import java.security.SecureRandom;
 import java.util.Base64;

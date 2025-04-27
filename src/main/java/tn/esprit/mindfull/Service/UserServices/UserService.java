@@ -1,13 +1,9 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.UserServices;
 
 
 import jakarta.annotation.Nullable;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,14 +12,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.configuration.JwtUtils;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.config.JwtUtils;
 import tn.esprit.mindfull.dto.UserRegistrationRequest;
 import tn.esprit.mindfull.dto.UserUpdateRequest;
-import tn.esprit.mindfull.model.AppRole;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.AppRole;
+import tn.esprit.mindfull.entity.User.User;
 
-import java.net.ContentHandler;
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

@@ -1,9 +1,9 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.UserRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.mindfull.model.Journal;
-import tn.esprit.mindfull.model.Mood;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.Journal;
+import tn.esprit.mindfull.entity.User.Mood;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.List;
 

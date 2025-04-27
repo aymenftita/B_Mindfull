@@ -2,11 +2,7 @@ package tn.esprit.mindfull.dto;
 
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
-import tn.esprit.mindfull.model.AppRole;
-
-import java.time.LocalDate;
-import java.util.Set;
+import tn.esprit.mindfull.entity.User.AppRole;
 
 @Data
 public class UserRegistrationRequest {

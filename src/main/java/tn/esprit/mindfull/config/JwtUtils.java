@@ -1,16 +1,14 @@
-package tn.esprit.mindfull.configuration;
+package tn.esprit.mindfull.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User.User;
 
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
