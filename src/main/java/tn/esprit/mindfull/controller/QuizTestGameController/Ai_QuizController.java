@@ -19,7 +19,7 @@ public class Ai_QuizController {
 
     @PostMapping("/ai")
     public ResponseEntity<String> generateResponse(@RequestBody OllamaRequest request) {
-        String url = "http://localhost:3000/api/generate";
+        String url = "http://localhost:11434/api/generate";
 
         // Set headers
         HttpHeaders headers = new HttpHeaders();

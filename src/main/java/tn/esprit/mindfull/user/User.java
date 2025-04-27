@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
+import tn.esprit.mindfull.entity.Quizz_Test_Game.Score;
+
+import java.util.Collection;
 
 @Entity
 @Data
@@ -15,6 +18,7 @@ import tn.esprit.mindfull.entity.Appointment.Calendar;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer userId;
 
     private String firstName;
@@ -43,4 +47,5 @@ public class User {
     public void setLastname(String devUser) {
         this.lastName = devUser;
     }
+
 }

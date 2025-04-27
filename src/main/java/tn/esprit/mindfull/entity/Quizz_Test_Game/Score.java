@@ -24,12 +24,12 @@ public class Score {
     private String name;
 
     @Nullable
-    private int result;
+    private String result;
 
     private String score_type;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="id")
     private User user;
 
 
