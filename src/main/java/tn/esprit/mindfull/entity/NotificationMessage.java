@@ -1,7 +1,7 @@
 package tn.esprit.mindfull.entity;
 
 import java.time.LocalDateTime;
-
+// a websocket payload here
 public class NotificationMessage {
     private int id;
     private String message;
