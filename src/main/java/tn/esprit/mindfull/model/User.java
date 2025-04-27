@@ -36,8 +36,9 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String resetToken;
     private Date resetTokenExpiry;
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
     private String sessionToken;
 
 
@@ -62,10 +63,8 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Return the role as a Spring Security authority
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name())); // Directly use role name
     }
-
     @Override
     public String getPassword() {
         return this.password;
@@ -73,7 +72,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username; // Verify this is correctly implemented
+        return this.username;
     }
 
 
@@ -97,9 +96,15 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setRole(String role) {
-        this.role = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+    public void setRole(Role role) {
+        this.role = role;
+        if (role != null) {
+            System.out.println("Role assigned: " + role.toString());
+        } else {
+            System.out.println("Warning: Tried to assign a null role!");
+        }
     }
+
     public String getResetToken() { return resetToken; }
     public void setResetToken(String resetToken) { this.resetToken = resetToken; }
 

@@ -1,13 +1,11 @@
 package tn.esprit.mindfull.Respository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+import tn.esprit.mindfull.model.Role;
 import tn.esprit.mindfull.model.User;
 
-import java.net.ContentHandler;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     boolean existsByUsername(String username);
 
     Optional<User> findByResetToken(String token);
-    long countByRole(String role);
+    long countByRole(Role role);
     long countByAccountStatus(String accountStatus);
     Optional<User> findBySessionToken(String sessionToken);
     List<User> findByUsernameContainingOrEmailContainingOrFirstnameContainingOrLastnameContaining(

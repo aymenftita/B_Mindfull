@@ -33,7 +33,7 @@ public class JournalService {
         User patient = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        if(!currentUserRole.equals("ROLE_PATIENT")) {
+        if(!currentUserRole.equals("PATIENT")) {
           throw new AccessDeniedException("Only patients can create journal entries");
        }
 
@@ -72,7 +72,7 @@ public class JournalService {
 
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
 
-        if(!currentUserRole.equals("ROLE_PATIENT")) {
+        if(!currentUserRole.equals("PATIENT")) {
             throw new AccessDeniedException("Only patients can create journal entries");
         }
 
@@ -95,7 +95,7 @@ public class JournalService {
     public void deleteJournal(Long id, Authentication authentication) throws AccessDeniedException {
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
 
-        if(!currentUserRole.equals("ROLE_PATIENT")) {
+        if(!currentUserRole.equals("PATIENT")) {
             throw new AccessDeniedException("Only patients can create journal entries");
         }
         Journal journal = getJournalById(id);

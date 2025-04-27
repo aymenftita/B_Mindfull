@@ -37,7 +37,7 @@ public class JournalController {
         }
     }*/
    @PostMapping("journal/create/{id}")
-   @PreAuthorize("hasRole('PATIENT')")
+   @PreAuthorize("hasAuthority('PATIENT')")
    public ResponseEntity<?> createJournalEntry(
            @Validated @RequestBody JournalRequest request,
            Authentication authentication, @PathVariable Long id
@@ -53,7 +53,7 @@ public class JournalController {
 
 
     @GetMapping("journal/all")
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> getAllJournalEntries(Authentication authentication) {
         try {
             String username = authentication.getName();
@@ -65,7 +65,7 @@ public class JournalController {
     }
 
     @GetMapping("journal/get/{id}")
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> getJournalEntryById(
             @PathVariable Long id,
             Authentication authentication
@@ -81,7 +81,7 @@ public class JournalController {
     }
 
     @PutMapping("journal/update/{id}")
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> updateJournalEntry(
             @PathVariable Long id,
             @Validated @RequestBody JournalRequest request,
@@ -98,7 +98,7 @@ public class JournalController {
     }
 
     @DeleteMapping("journal/delete/{id}")
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> deleteJournalEntry(
             @PathVariable Long id,
             Authentication authentication
@@ -114,7 +114,7 @@ public class JournalController {
     }
 
     @GetMapping("journal/filter/mood")
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> getEntriesByMood(
             @RequestParam Mood mood,
             Authentication authentication
@@ -128,7 +128,7 @@ public class JournalController {
         }
     }
     @GetMapping("journal/user/{userId}")
-   // @PreAuthorize("hasRole('PATIENT')")
+   // @PreAuthorize("hasAuthority('PATIENT')")
     public ResponseEntity<?> getJournalsByUserId(@PathVariable Long userId) {
         try {
             List<Journal> journals = journalService.getJournalsByUserId(userId);

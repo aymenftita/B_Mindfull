@@ -36,10 +36,10 @@ public class JwtUtils {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
-        // Add roles to claims
         claims.put("roles", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
+                .map(GrantedAuthority::getAuthority) // Directly "ADMIN", "DOCTOR", etc.
                 .collect(Collectors.toList()));
+
 
         // Add user ID to claims (cast UserDetails to your custom User class)
         if (userDetails instanceof User) { // Replace 'User' with your actual class

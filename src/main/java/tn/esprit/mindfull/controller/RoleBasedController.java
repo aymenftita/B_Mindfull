@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Respository.UserRepository;
 import tn.esprit.mindfull.Service.UserService;
 import tn.esprit.mindfull.dto.UserUpdateRequest;
-import tn.esprit.mindfull.model.AppRole;
+import tn.esprit.mindfull.model.Role;
 import tn.esprit.mindfull.model.User;
 
-import java.net.ContentHandler;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
 
@@ -27,12 +26,12 @@ public class RoleBasedController {
     private final UserRepository userRepository;
 
     @GetMapping("/shared_D_A/getAllUsers")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public ResponseEntity<List<User>> getAllUsers() throws AccessDeniedException {
         return ResponseEntity.ok(userService.getAllUsers());
     }
     @DeleteMapping("/shared_D_A/deleteUserById/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         try {
             String message = userService.deleteUser(userId);
@@ -93,14 +92,13 @@ public class RoleBasedController {
     }
 
     @PutMapping("/shared_D_A/updateUser/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
 
     public ResponseEntity<?> updateUser(
             @PathVariable String username,
             @Validated @RequestBody UserUpdateRequest updateRequest
     ) {
         try {
-            // Pass null for newRole (non-admin users can't change roles)
             User updatedUser = userService.updateUser(username, updateRequest, null);
             return ResponseEntity.ok(updatedUser);
         } catch (UsernameNotFoundException | AccessDeniedException e) {
@@ -111,10 +109,10 @@ public class RoleBasedController {
 
 
     @PutMapping("/shared_D_A/updateRole/{username}/role")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public ResponseEntity<?> updateUserRole(
             @PathVariable String username,
-            @RequestParam AppRole newRole,
+            @RequestParam Role newRole,
             @Validated @RequestBody UserUpdateRequest updateRequest
 
     ) {
@@ -127,7 +125,8 @@ public class RoleBasedController {
     }
 
     @GetMapping("/admin/analytics/user-stats")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+
     public ResponseEntity<Map<String, Integer>> getUserStats() {
         return ResponseEntity.ok(Map.of(
                 "totalUsers", userService.countUsers(),
@@ -139,7 +138,7 @@ public class RoleBasedController {
     }
 
     @GetMapping("/shared_D_A/search")
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
         return ResponseEntity.ok(userService.searchUsers(query));
     }

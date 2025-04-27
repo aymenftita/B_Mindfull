@@ -4,10 +4,6 @@ package tn.esprit.mindfull.Service;
 import jakarta.annotation.Nullable;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +16,9 @@ import tn.esprit.mindfull.Respository.UserRepository;
 import tn.esprit.mindfull.configuration.JwtUtils;
 import tn.esprit.mindfull.dto.UserRegistrationRequest;
 import tn.esprit.mindfull.dto.UserUpdateRequest;
-import tn.esprit.mindfull.model.AppRole;
+import tn.esprit.mindfull.model.Role;
 import tn.esprit.mindfull.model.User;
 
-import java.net.ContentHandler;
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -55,7 +50,7 @@ public class UserService implements UserDetailsService {
         user.setLastname(registrationRequest.getLastName());
         user.setEmail(registrationRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        user.setRole(registrationRequest.getRole().toSpringRole()); // Ensure role is prefixed with "ROLE_"
+        user.setRole(registrationRequest.getRole());
 
         userRepository.save(user);
 
@@ -104,16 +99,15 @@ public class UserService implements UserDetailsService {
     public Optional<User> loadUserById(Long id) {
         return userRepository.findById(id);
     }
+    // In UserService.java (getAllUsers method)
     public List<User> getAllUsers() throws AccessDeniedException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
+        String currentUserAuthority = authentication.getAuthorities().iterator().next().getAuthority();
 
-
-        if (currentUserRole.equals("ROLE_ADMIN") || currentUserRole.equals("ROLE_DOCTOR") ) {
-            return userRepository.findAll();}
-        else
-        {
-            throw new AccessDeniedException("Unauthorized role. Only ADMIN or DOCTOR can get users."); // General error
+        if (currentUserAuthority.equals("ADMIN") || currentUserAuthority.equals("DOCTOR")) {
+            return userRepository.findAll();
+        } else {
+            throw new AccessDeniedException("Unauthorized role. Only ADMIN or DOCTOR can get users.");
         }
     }
 
@@ -126,24 +120,24 @@ public class UserService implements UserDetailsService {
         // Fetch the target user to delete
         User targetUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
+      System.out.println(currentUserRole);
         // Check permissions and return messages
-        if (currentUserRole.equals("ROLE_ADMIN")) {
+        if (currentUserRole.equals("ADMIN")) {
             userRepository.deleteById(userId);
             return "User deleted successfully."; // Success message for ADMIN
-        } else if (currentUserRole.equals("ROLE_DOCTOR")) {
-            if (targetUser.getRole().equals("ROLE_PATIENT")) {
+        } else
+            if (currentUserRole.equals("DOCTOR")) {
+            System.out.println("hi");
+
+                System.out.println(targetUser.getRole());
                 userRepository.deleteById(userId);
-                return "Patient deleted successfully."; // Success message for DOCTOR
-            } else {
-                throw new AccessDeniedException("Doctors can only delete patients."); // Error for non-patient
-            }
+                return "Patient deleted successfully.";
         } else {
             throw new AccessDeniedException("Unauthorized role. Only ADMIN or DOCTOR can delete users."); // General error
         }
     }
 
-   public User updateUser(String username, UserUpdateRequest updateRequest, @Nullable AppRole newRole) throws AccessDeniedException {
+   public User updateUser(String username, UserUpdateRequest updateRequest, @Nullable Role newRole) throws AccessDeniedException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
 
@@ -194,8 +188,8 @@ public class UserService implements UserDetailsService {
        }
 
         // Only admins can update roles via the newRole parameter
-        if (currentUserRole.equals("ROLE_ADMIN") && newRole != null) {
-            targetUser.setRole(newRole.toSpringRole());
+        if (currentUserRole.equals("ADMIN") && newRole != null) {
+            targetUser.setRole(newRole);
         }
 
         return userRepository.save(targetUser);
@@ -240,8 +234,8 @@ public class UserService implements UserDetailsService {
         stats.put("totalUsers", (int) userRepository.count());
         stats.put("activeUsers", (int) userRepository.countByAccountStatus("ACTIVE"));
         stats.put("inactiveUsers", (int) userRepository.countByAccountStatus("INACTIVE"));
-        stats.put("doctors", (int) userRepository.countByRole("ROLE_DOCTOR"));
-        stats.put("patients", (int) userRepository.countByRole("ROLE_PATIENT"));
+        stats.put("doctors", (int) userRepository.countByRole(Role.DOCTOR));
+        stats.put("patients", (int) userRepository.countByRole(Role.PATIENT));
         return stats;
     }
 
@@ -254,11 +248,11 @@ public class UserService implements UserDetailsService {
     }
 
     public int countDoctors() {
-        return (int) userRepository.countByRole("ROLE_DOCTOR");
+        return (int) userRepository.countByRole(Role.DOCTOR);
     }
 
     public int countPatients() {
-        return (int) userRepository.countByRole("ROLE_PATIENT");
+        return (int) userRepository.countByRole(Role.PATIENT);
     }
     public List<User> searchUsers(String query) {
         return userRepository.findByUsernameContainingOrEmailContainingOrFirstnameContainingOrLastnameContaining(

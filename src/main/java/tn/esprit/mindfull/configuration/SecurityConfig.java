@@ -52,17 +52,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
-                        .requestMatchers("/api/patient/**").hasRole("PATIENT")
-                        .requestMatchers("/api/coach/**").hasRole("COACH")
-                      //  .requestMatchers("/api/shared_D_A/**").hasAnyRole("DOCTOR","ADMIN")
+                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/doctor/**").hasAuthority("DOCTOR")
+                        .requestMatchers("/api/patient/**").hasAuthority("PATIENT")
+                        .requestMatchers("/api/coach/**").hasAuthority("COACH")
+                        .requestMatchers("/api/shared_D_A/**").hasAnyAuthority("ADMIN", "DOCTOR")
                         .requestMatchers("/api/shared_All/**").permitAll()
-                        .requestMatchers("/api/shared_D_A/**").permitAll()
-
-
-
-
 
 
                         .anyRequest().authenticated()
