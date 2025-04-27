@@ -1,10 +1,10 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import tn.esprit.mindfull.model.Role;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.Role;
+import tn.esprit.mindfull.entity.User;
 
 import java.util.List;
 import java.util.Optional;

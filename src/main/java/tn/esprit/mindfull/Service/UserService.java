@@ -12,12 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.configuration.JwtUtils;
+import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.config.JwtUtils;
 import tn.esprit.mindfull.dto.UserRegistrationRequest;
 import tn.esprit.mindfull.dto.UserUpdateRequest;
-import tn.esprit.mindfull.model.Role;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.Role;
+import tn.esprit.mindfull.entity.User;
 
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;

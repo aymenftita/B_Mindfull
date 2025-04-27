@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -7,12 +7,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository;
 import tn.esprit.mindfull.Service.UserService;
-import tn.esprit.mindfull.configuration.JwtUtils;
+import tn.esprit.mindfull.config.JwtUtils;
 import tn.esprit.mindfull.dto.LoginRequest;
 import tn.esprit.mindfull.dto.UserRegistrationRequest;
-import tn.esprit.mindfull.model.User;
+import tn.esprit.mindfull.entity.User;
 
 import java.util.Collections;
 import java.util.Map;
@@ -57,7 +57,7 @@ public class authController {
             String token = authHeader.substring(7);
             JwtUtils jwtUtils = new JwtUtils();
             String username = jwtUtils.extractUsername(token);
-            Optional<tn.esprit.mindfull.model.User> userOpt = userRepository.findByUsername(username);
+            Optional<tn.esprit.mindfull.entity.User> userOpt = userRepository.findByUsername(username);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
                 user.setSessionToken(null);

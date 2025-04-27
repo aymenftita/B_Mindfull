@@ -2,7 +2,7 @@ package tn.esprit.mindfull.dto;
 
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
-import tn.esprit.mindfull.model.Role;
+import tn.esprit.mindfull.entity.Role;
 
 @Data
 public class UserRegistrationRequest {

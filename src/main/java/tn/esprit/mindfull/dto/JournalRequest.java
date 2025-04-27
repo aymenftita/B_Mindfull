@@ -1,7 +1,7 @@
 package tn.esprit.mindfull.dto;
 
 import lombok.Data;
-import tn.esprit.mindfull.model.Mood;
+import tn.esprit.mindfull.entity.Mood;
 
 @Data
 public class JournalRequest {

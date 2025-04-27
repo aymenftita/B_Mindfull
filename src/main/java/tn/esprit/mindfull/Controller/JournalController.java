@@ -1,18 +1,17 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Service.JournalService;
 import tn.esprit.mindfull.dto.JournalRequest;
-import tn.esprit.mindfull.model.Journal;
-import tn.esprit.mindfull.model.Mood;
+import tn.esprit.mindfull.entity.Journal;
+import tn.esprit.mindfull.entity.Mood;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
