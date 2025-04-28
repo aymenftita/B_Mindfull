@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import tn.esprit.mindfull.entity.AppUser;
+import tn.esprit.mindfull.entity.User;
 import tn.esprit.mindfull.entity.Program;
 import tn.esprit.mindfull.entity.UserActivity;
 import tn.esprit.mindfull.entity.Goal;
@@ -42,11 +42,11 @@ public class MoodTrackerController {
             @RequestParam String mood,
             @RequestParam Integer intensity,
             @RequestParam(required = false) String notes) {
-        AppUser appUser = userRepository.findById(userId)
+        User User = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
         UserActivity userActivity = new UserActivity();
-        userActivity.setAppUser(appUser);
+        userActivity.setUser(User);
         userActivity.setMood(mood);
         userActivity.setIntensity(intensity);
         userActivity.setNotes(notes);
@@ -57,12 +57,12 @@ public class MoodTrackerController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<UserActivity>> getMoodEntries(@PathVariable Long userId) {
-        return ResponseEntity.ok(userActivityRepository.findByAppUserId(userId));
+        return ResponseEntity.ok(userActivityRepository.findByUserId(userId));
     }
 
     @GetMapping("/recommend/{userId}")
     public ResponseEntity<Program> recommendProgram(@PathVariable Long userId) {
-        List<UserActivity> activities = userActivityRepository.findByAppUserId(userId);
+        List<UserActivity> activities = userActivityRepository.findByUserId(userId);
         if (activities.isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -87,7 +87,7 @@ public class MoodTrackerController {
         String recommendation = (String) response.get("recommendation");
         String predictedTrend = (String) response.get("predicted_trend");
 
-        List<Goal> goals = goalRepository.findByAppUserIdAndCompleted(userId, false);
+        List<Goal> goals = goalRepository.findByUserIdAndCompleted(userId, false);
         for (Goal goal : goals) {
             int priority = 3;
             if ("negative".equals(predictedTrend)) {
@@ -127,11 +127,11 @@ public class MoodTrackerController {
     public ResponseEntity<Goal> setGoal(
             @RequestParam Long userId,
             @RequestParam String description) {
-        AppUser appUser = userRepository.findById(userId)
+        User User = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
         Goal goal = new Goal();
-        goal.setAppUser(appUser);
+        goal.setUser(User);
         goal.setDescription(description);
         goal.setCreatedAt(LocalDateTime.now());
         goal.setCompleted(false);
@@ -142,7 +142,7 @@ public class MoodTrackerController {
 
     @GetMapping("/goals/{userId}")
     public ResponseEntity<List<Goal>> getGoals(@PathVariable Long userId) {
-        List<Goal> goals = goalRepository.findByAppUserId(userId);
+        List<Goal> goals = goalRepository.findByUserId(userId);
         goals.sort((g1, g2) -> {
             int priorityCompare = Integer.compare(g1.getPriority(), g2.getPriority());
             if (priorityCompare != 0) {

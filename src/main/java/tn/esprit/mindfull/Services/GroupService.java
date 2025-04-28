@@ -2,7 +2,7 @@ package tn.esprit.mindfull.Services;
 
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Dto.GroupAssignmentDTO;
-import tn.esprit.mindfull.entity.AppUser;
+import tn.esprit.mindfull.entity.User;
 import tn.esprit.mindfull.Respository.UserRepository;
 
 import java.util.HashMap;

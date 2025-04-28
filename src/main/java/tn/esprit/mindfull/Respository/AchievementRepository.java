@@ -5,5 +5,5 @@ import tn.esprit.mindfull.entity.Achievement;
 import java.util.List;
 
 public interface AchievementRepository extends JpaRepository<Achievement, Long> {
-    List<Achievement> findByAppUserId(Long userId);
+    List<Achievement> findByUserId(Long userId);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserActivityRepository extends JpaRepository<UserActivity, Long> {
 
-    List<UserActivity> findByAppUserId(Long userId);
+    List<UserActivity> findByUserId(Long userId);
 
-    List<UserActivity> findByAppUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end);
+    List<UserActivity> findByUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end);
 }

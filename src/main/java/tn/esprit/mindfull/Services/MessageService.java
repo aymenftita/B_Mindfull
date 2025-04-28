@@ -2,7 +2,7 @@ package tn.esprit.mindfull.Services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.AppUser;
+import tn.esprit.mindfull.entity.User;
 import tn.esprit.mindfull.entity.GroupMembership;
 import tn.esprit.mindfull.entity.Message;
 import tn.esprit.mindfull.Respository.GroupMembershipRepository;

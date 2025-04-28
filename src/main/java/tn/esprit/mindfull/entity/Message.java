@@ -20,11 +20,11 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private AppUser sender;
+    private User sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    private AppUser receiver;
+    private User receiver;
 
     private String groupName;
 

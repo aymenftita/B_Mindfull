@@ -2,7 +2,7 @@ package tn.esprit.mindfull.Services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.AppUser;
+import tn.esprit.mindfull.entity.User;
 import tn.esprit.mindfull.entity.UserActivity;
 import tn.esprit.mindfull.entity.Achievement;
 import tn.esprit.mindfull.Respository.UserActivityRepository;
@@ -31,7 +31,7 @@ public class UserActivityService {
     @Transactional
     public UserActivity logMoodEntry(Long userId, String mood, Integer intensity, String notes) {
         logger.info("Logging mood entry for user ID: {}", userId);
-        AppUser user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
         UserActivity activity = new UserActivity();
@@ -39,7 +39,7 @@ public class UserActivityService {
         activity.setIntensity(intensity);
         activity.setNotes(notes);
         activity.setTimestamp(LocalDateTime.now());
-        activity.setAppUser(user);
+        activity.setUser(user);
 
         UserActivity saved = userActivityRepository.save(activity);
         logger.info("Mood entry saved with ID: {}", saved.getId());
@@ -53,9 +53,9 @@ public class UserActivityService {
     @Transactional
     public List<UserActivity> getUserMoodHistory(Long userId) {
         logger.info("Fetching mood history for user ID: {}", userId);
-        AppUser user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
-        List<UserActivity> activities = userActivityRepository.findByAppUserId(userId);
+        List<UserActivity> activities = userActivityRepository.findByUserId(userId);
         logger.info("Found {} activities for user ID: {}", activities.size(), userId);
         logger.info("Activities timestamps: {}", activities.stream().map(UserActivity::getTimestamp).collect(Collectors.toList()));
         logger.info("Calling checkAchievements for user ID: {}", userId);
@@ -63,11 +63,11 @@ public class UserActivityService {
         return activities;
     }
 
-    private void checkAchievements(AppUser user) { // Removed @Transactional
+    private void checkAchievements(User user) { // Removed @Transactional
         try {
             logger.info("Starting checkAchievements for user ID: {}", user.getId());
-            List<UserActivity> activities = userActivityRepository.findByAppUserId(user.getId());
-            List<Achievement> existingAchievements = achievementRepository.findByAppUserId(user.getId());
+            List<UserActivity> activities = userActivityRepository.findByUserId(user.getId());
+            List<Achievement> existingAchievements = achievementRepository.findByUserId(user.getId());
 
             logger.info("User ID: {}. Number of activities: {}, Existing achievements: {}",
                     user.getId(), activities.size(), existingAchievements.size());
@@ -76,7 +76,7 @@ public class UserActivityService {
             if (activities.size() >= 1) {
                 if (!existingAchievements.stream().anyMatch(a -> a.getTitle().equals("First Mood Log"))) {
                     Achievement achievement = new Achievement();
-                    achievement.setAppUser(user);
+                    achievement.setUser(user);
                     achievement.setTitle("First Mood Log");
                     achievement.setDescription("Logged your first mood!");
                     achievement.setAchievedAt(LocalDateTime.now());
@@ -97,7 +97,7 @@ public class UserActivityService {
                 int finalI = i;
                 if (streak >= streakThresholds[i] && !existingAchievements.stream().anyMatch(a -> a.getTitle().equals(streakAchievements[finalI]))) {
                     Achievement achievement = new Achievement();
-                    achievement.setAppUser(user);
+                    achievement.setUser(user);
                     achievement.setTitle(streakAchievements[i]);
                     achievement.setDescription("Logged moods for " + streakThresholds[i] + " consecutive days!");
                     achievement.setAchievedAt(LocalDateTime.now());
@@ -162,7 +162,7 @@ public class UserActivityService {
     @Transactional
     public List<Achievement> getAchievements(Long userId) {
         logger.info("Fetching achievements for user ID: {}", userId);
-        List<Achievement> achievements = achievementRepository.findByAppUserId(userId);
+        List<Achievement> achievements = achievementRepository.findByUserId(userId);
         logger.info("Found {} achievements for user ID: {}", achievements.size(), userId);
         return achievements;
     }

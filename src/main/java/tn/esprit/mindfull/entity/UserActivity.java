@@ -23,5 +23,5 @@ public class UserActivity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private AppUser appUser;
+    private User user;
 }

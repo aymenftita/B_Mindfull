@@ -1,8 +1,8 @@
 package tn.esprit.mindfull.Respository;
 
-import tn.esprit.mindfull.entity.AppUser;
+import tn.esprit.mindfull.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<AppUser, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 }
