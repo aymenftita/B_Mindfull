@@ -10,9 +10,9 @@ import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepositor
 import tn.esprit.mindfull.Repository.AppointmentsRepository.CalendarRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
-import tn.esprit.mindfull.user.User;
-import tn.esprit.mindfull.user.UserRepository;
-import tn.esprit.mindfull.user.UserRole;
+import tn.esprit.mindfull.entity.User.User;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.entity.User.Role;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -47,13 +47,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment createAppointment(Appointment appointment) {
         // Fetch and override patient with fully loaded entity
-        User patient = userRepository.findById(appointment.getPatient().getUserId())
+        User patient = userRepository.findById(appointment.getPatient().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
-        validateUserRole(patient, UserRole.PATIENT, "Patient must have role PATIENT");
+        validateUserRole(patient, Role.PATIENT, "Patient must have role PATIENT");
         appointment.setPatient(patient); // Critical fix
 
         // Fetch and override professional with fully loaded entity
-        User professional = userRepository.findById(appointment.getProfessional().getUserId())
+        User professional = userRepository.findById(appointment.getProfessional().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Professional not found"));
         validateProfessionalRole(professional);
         appointment.setProfessional(professional); // Critical fix
@@ -133,14 +133,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
 
-    private void validateUserRole(User user, UserRole requiredRole, String errorMessage) {
+    private void validateUserRole(User user, Role requiredRole, String errorMessage) {
         if (user.getRole() != requiredRole) {
             throw new IllegalStateException(errorMessage);
         }
     }
 
     private void validateProfessionalRole(User professional) {
-        if (!Set.of(UserRole.DOCTOR, UserRole.COACH).contains(professional.getRole())) {
+        if (!Set.of(Role.DOCTOR, Role.COACH).contains(professional.getRole())) {
             throw new IllegalStateException("Professional must be DOCTOR or COACH");
         }
     }
@@ -156,16 +156,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     private void updatePatientIfChanged(Appointment updated, Appointment existing) {
         if (updated.getPatient() != null) {
-            User newPatient = (User) userRepository.findById(updated.getPatient().getUserId())
+            User newPatient = (User) userRepository.findById(updated.getPatient().getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
-            validateUserRole(newPatient, UserRole.PATIENT, "Invalid patient role");
+            validateUserRole(newPatient, Role.PATIENT, "Invalid patient role");
             existing.setPatient(newPatient);
         }
     }
 
     private void updateProfessionalIfChanged(Appointment updated, Appointment existing) {
         if (updated.getProfessional() != null) {
-            User newProfessional = (User) userRepository.findById(updated.getProfessional().getUserId())
+            User newProfessional = (User) userRepository.findById(updated.getProfessional().getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Professional not found"));
             validateProfessionalRole(newProfessional);
             existing.setProfessional(newProfessional);
@@ -225,17 +225,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(patientId)
+        User patient = userRepository.findById(Long.valueOf(patientId))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
-        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
         return appointmentRepository.findByPatientUserIdOrderByStartTimeDesc(patientId);
     }
 
     @Override
     public List<Appointment> getUpcomingAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(patientId)
+        User patient = userRepository.findById(Long.valueOf(patientId))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
-        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
         LocalDateTime now = LocalDateTime.now();
         return appointmentRepository.findByPatientUserIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
                 patientId, now, AppointmentStatus.CANCELED);
@@ -243,9 +243,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getPastAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(patientId)
+        User patient = userRepository.findById(Long.valueOf(patientId))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
-        validateUserRole(patient, UserRole.PATIENT, "User must have role PATIENT");
+        validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
         LocalDateTime now = LocalDateTime.now();
         return appointmentRepository.findByPatientUserIdAndStartTimeBeforeOrderByStartTimeDesc(patientId, now);
     }

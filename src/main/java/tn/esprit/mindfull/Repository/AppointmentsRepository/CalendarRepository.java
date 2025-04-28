@@ -28,14 +28,14 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
     // Owner-focused fetch
     @Query("SELECT c FROM Calendar c " +
             "LEFT JOIN FETCH c.owner " +
-            "WHERE c.owner.userId = :userId")
+            "WHERE c.owner.id = :userId")
     Optional<Calendar> findByOwnerUserId(@Param("userId") Integer userId);
 
     // Professional appointments with calendar data
     @Query("SELECT c FROM Calendar c " +
             "JOIN FETCH c.appointments a " +
             "JOIN FETCH a.professional " +
-            "WHERE a.professional.userId = :professionalId " +
+            "WHERE a.professional.id = :professionalId " +
             "AND a.startTime BETWEEN :start AND :end")
     List<Calendar> findProfessionalCalendarsWithAppointments(
             @Param("professionalId") Integer professionalId,
@@ -45,7 +45,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     // Exists check with index optimization
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END " +
-            "FROM Calendar c WHERE c.owner.userId = :userId")
+            "FROM Calendar c WHERE c.owner.id = :userId")
     boolean existsByOwnerUserId(@Param("userId") Integer userId);
 
     @Query("SELECT DISTINCT c FROM Calendar c LEFT JOIN FETCH c.appointments")

@@ -65,15 +65,15 @@ public class ExcelService {
                 row.createCell(5).setCellValue(appointment.getNotes() != null ? appointment.getNotes() : "");
 
                 if (appointment.getPatient() != null) {
-                    row.createCell(6).setCellValue(appointment.getPatient().getUserId());
-                    row.createCell(7).setCellValue(appointment.getPatient().getFirstName() + " " +
-                            appointment.getPatient().getLastName());
+                    row.createCell(6).setCellValue(appointment.getPatient().getId());
+                    row.createCell(7).setCellValue(appointment.getPatient().getFirstname() + " " +
+                            appointment.getPatient().getLastname());
                 }
 
                 if (appointment.getProfessional() != null) {
-                    row.createCell(8).setCellValue(appointment.getProfessional().getUserId());
-                    row.createCell(9).setCellValue(appointment.getProfessional().getFirstName() + " " +
-                            appointment.getProfessional().getLastName());
+                    row.createCell(8).setCellValue(appointment.getProfessional().getId());
+                    row.createCell(9).setCellValue(appointment.getProfessional().getFirstname() + " " +
+                            appointment.getProfessional().getLastname());
                 }
 
                 if (appointment.getReminderTime() != null) {

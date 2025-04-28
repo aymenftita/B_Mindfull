@@ -66,8 +66,8 @@ public class VideoCallService {
                 .roomId(videoCall.getRoomId())
                 .appointmentId(appointment.getAppointmentId())
                 .status(videoCall.getStatus())
-                .patientId(appointment.getPatient().getUserId().toString())
-                .professionalId(appointment.getProfessional().getUserId().toString())
+                .patientId(appointment.getPatient().getId().toString())
+                .professionalId(appointment.getProfessional().getId().toString())
                 .build();
     }
 

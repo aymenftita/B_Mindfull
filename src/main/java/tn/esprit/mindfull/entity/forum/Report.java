@@ -2,7 +2,7 @@ package tn.esprit.mindfull.entity.forum;
 
 import jakarta.persistence.*;
 import lombok.*;
-import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDateTime;
 

@@ -8,7 +8,7 @@ import tn.esprit.mindfull.dto.Forumdto.CommentStatsDTO;
 import tn.esprit.mindfull.dto.Forumdto.PostCommentStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
-import tn.esprit.mindfull.user.UserService;
+import tn.esprit.mindfull.Service.UserService.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +32,7 @@ public class CommentService {
         Comment saved = commentRepository.save(comment);
 
         try {
-            String username = userService.getCurrentUser().getName();  // Get static user
+            String username = userService.getCurrentUser().getUsername();  // Get static user
             String postTitle = "Untitled";
 
             if (saved.getPost() != null && saved.getPost().getId() != null) {

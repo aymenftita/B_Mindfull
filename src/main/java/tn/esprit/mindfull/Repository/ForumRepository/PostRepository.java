@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT FUNCTION('DATE', p.creationTime) AS date, COUNT(p) FROM Post p GROUP BY FUNCTION('DATE', p.creationTime)")
     List<Object[]> countPostsGroupedByDate();
 
-    @Query("SELECT new tn.esprit.mindfull.dto.Forumdto.PostStatsDTO(p.author.firstName, COUNT(p)) " +
-            "FROM Post p GROUP BY p.author.firstName ORDER BY COUNT(p) DESC")
+    @Query("SELECT new tn.esprit.mindfull.dto.Forumdto.PostStatsDTO(p.author.firstname, COUNT(p)) " +
+            "FROM Post p GROUP BY p.author.firstname ORDER BY COUNT(p) DESC")
     List<PostStatsDTO> countPostsByUser();
 }

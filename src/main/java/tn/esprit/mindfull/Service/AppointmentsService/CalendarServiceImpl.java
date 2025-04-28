@@ -11,12 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.AppointmentsRepository.AppointmentRepository;
 import tn.esprit.mindfull.Repository.AppointmentsRepository.CalendarRepository;
-import tn.esprit.mindfull.user.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.entity.Appointment.*;
 import tn.esprit.mindfull.entity.Appointment.Calendar;
 import tn.esprit.mindfull.exception.ResourceNotFoundException;
-import tn.esprit.mindfull.user.User;
-import tn.esprit.mindfull.user.UserRole;
+import tn.esprit.mindfull.entity.User.User;
+import tn.esprit.mindfull.entity.User.Role;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,7 +46,7 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public Calendar createCalendar(Calendar calendar) {
         // Fetch the user from the database
-        User owner = userRepository.findById(calendar.getOwner().getUserId())
+        User owner = userRepository.findById(calendar.getOwner().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         // Set the validated user as the owner
@@ -74,9 +74,9 @@ public class CalendarServiceImpl implements CalendarService {
         return calendarRepository.findById(id).map(existing -> {
             // Update owner (if changed)
             if (updatedCalendar.getOwner() != null) {
-                User newOwner = (User) userRepository.findById(updatedCalendar.getOwner().getUserId())
+                User newOwner = (User) userRepository.findById(updatedCalendar.getOwner().getId())
                         .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
-                if (!Set.of(UserRole.DOCTOR, UserRole.COACH).contains(newOwner.getRole())) {
+                if (!Set.of(Role.DOCTOR, Role.COACH).contains(newOwner.getRole())) {
                     throw new IllegalStateException("Invalid owner role");
                 }
                 existing.setOwner(newOwner);
@@ -137,15 +137,15 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public List<Map<String, Object>> getAvailableTimeSlotsForPatient(Integer patientId) {
         // Verify patient exists
-        tn.esprit.mindfull.user.User patient = userRepository.findById(patientId)
+        User patient = userRepository.findById(Long.valueOf(patientId))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
 
-        if (patient.getRole() != UserRole.PATIENT) {
+        if (patient.getRole() != Role.PATIENT) {
             throw new IllegalStateException("User must have role PATIENT");
         }
 
         // Get all professional calendars (doctors and coaches)
-        List<tn.esprit.mindfull.user.User> professionals = userRepository.findByRoleIn(Arrays.asList(UserRole.DOCTOR, UserRole.COACH));
+        List<User> professionals = userRepository.findByRoleIn(Arrays.asList(Role.DOCTOR, Role.COACH));
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime twoWeeksFromNow = now.plusWeeks(2);
@@ -206,8 +206,8 @@ public class CalendarServiceImpl implements CalendarService {
                     // Check if this slot is available
                     if (!busyTimes.contains(slotStart)) {
                         Map<String, Object> slot = new HashMap<>();
-                        slot.put("professionalId", professional.getUserId());
-                        slot.put("professionalName", professional.getFirstName() + " " + professional.getLastName());
+                        slot.put("professionalId", professional.getId());
+                        slot.put("professionalName", professional.getFirstname() + " " + professional.getLastname());
                         slot.put("professionalRole", professional.getRole().toString());
                         slot.put("startTime", slotStart);
                         slot.put("endTime", slotEnd);

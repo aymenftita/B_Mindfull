@@ -7,8 +7,8 @@ import tn.esprit.mindfull.Repository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.dto.Forumdto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.Service.ForumService.PostService;
-import tn.esprit.mindfull.user.User;
-import tn.esprit.mindfull.user.UserService;
+import tn.esprit.mindfull.entity.User.User;
+import tn.esprit.mindfull.Service.UserService.UserService;
 
 import java.util.List;
 import java.util.Optional;

@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import tn.esprit.mindfull.user.User;
-import tn.esprit.mindfull.user.UserRole;
+import tn.esprit.mindfull.entity.User.User;
+import tn.esprit.mindfull.entity.User.Role;
 import tn.esprit.mindfull.validation.CreateValidation;
 import tn.esprit.mindfull.validation.UpdateValidation;
 import java.time.LocalDateTime;
@@ -64,6 +64,7 @@ public class Appointment {
 
 
 
+
     @PrePersist
     @PreUpdate
     private void validate() {
@@ -76,12 +77,12 @@ public class Appointment {
 
         private void validateRoles() {
             // Ensure patient is not null and has the PATIENT role
-            if (patient == null || patient.getRole() != UserRole.PATIENT) {
+            if (patient == null || patient.getRole() != Role.PATIENT) {
                 throw new IllegalStateException("Invalid patient role");
             }
 
             // Ensure professional is a DOCTOR or COACH
-            if (professional == null || !Set.of(UserRole.DOCTOR, UserRole.COACH).contains(professional.getRole())) {
+            if (professional == null || !Set.of(Role.DOCTOR, Role.COACH).contains(professional.getRole())) {
                 throw new IllegalStateException("Invalid professional role");
             }
         }

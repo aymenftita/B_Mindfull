@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDateTime;
 import java.util.*;

@@ -8,8 +8,8 @@ import tn.esprit.mindfull.entity.forum.Report;
 import tn.esprit.mindfull.Service.ForumService.CommentService;
 import tn.esprit.mindfull.Service.ForumService.PostService;
 import tn.esprit.mindfull.Service.ForumService.ReportService;
-import tn.esprit.mindfull.user.User;
-import tn.esprit.mindfull.user.UserService;
+import tn.esprit.mindfull.entity.User.User;
+import tn.esprit.mindfull.Service.UserService.UserService;
 
 import java.util.List;
 

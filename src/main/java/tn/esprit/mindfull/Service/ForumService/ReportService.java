@@ -6,7 +6,7 @@ import tn.esprit.mindfull.Repository.ForumRepository.ReportRepository;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Report;
-import tn.esprit.mindfull.user.User;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ReportService {
         Report savedReport = reportRepository.save(report);
 
         // Send notification
-        sendReportNotification(user.getName(), post.getTitle(), true);
+        sendReportNotification(user.getUsername(), post.getTitle(), true);
 
         return savedReport;
     }
@@ -50,7 +50,7 @@ public class ReportService {
         Report savedReport = reportRepository.save(report);
 
         // Send notification
-        sendReportNotification(user.getName(), null, false);
+        sendReportNotification(user.getUsername(), null, false);
 
         return savedReport;
     }
