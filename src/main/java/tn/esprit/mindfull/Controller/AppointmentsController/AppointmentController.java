@@ -139,7 +139,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<?> getAppointmentsByPatientId(@PathVariable Integer patientId) {
+    public ResponseEntity<?> getAppointmentsByPatientId(@PathVariable Long patientId) {
         try {
             List<Appointment> appointments = appointmentService.getAppointmentsByPatientId(patientId);
             return ResponseEntity.ok(appointments);
@@ -151,7 +151,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/patient/{patientId}/upcoming")
-    public ResponseEntity<?> getUpcomingAppointmentsByPatientId(@PathVariable Integer patientId) {
+    public ResponseEntity<?> getUpcomingAppointmentsByPatientId(@PathVariable Long patientId) {
         try {
             List<Appointment> appointments = appointmentService.getUpcomingAppointmentsByPatientId(patientId);
             return ResponseEntity.ok(appointments);
@@ -163,7 +163,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/patient/{patientId}/past")
-    public ResponseEntity<?> getPastAppointmentsByPatientId(@PathVariable Integer patientId) {
+    public ResponseEntity<?> getPastAppointmentsByPatientId(@PathVariable Long patientId) {
         try {
             List<Appointment> appointments = appointmentService.getPastAppointmentsByPatientId(patientId);
             return ResponseEntity.ok(appointments);

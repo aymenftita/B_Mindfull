@@ -224,30 +224,39 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(Long.valueOf(patientId))
+    public List<Appointment> getAppointmentsByPatientId(Long patientId) {
+        if (patientId == null) {
+            throw new IllegalArgumentException("Patient ID cannot be null");
+        }
+        User patient =userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
         validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
-        return appointmentRepository.findByPatientUserIdOrderByStartTimeDesc(patientId);
+        return appointmentRepository.findByPatientIdOrderByStartTimeDesc(patientId);
     }
 
     @Override
-    public List<Appointment> getUpcomingAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(Long.valueOf(patientId))
+    public List<Appointment> getUpcomingAppointmentsByPatientId(Long patientId) {
+        if (patientId == null) {
+            throw new IllegalArgumentException("Patient ID cannot be null");
+        }
+        User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
         validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
         LocalDateTime now = LocalDateTime.now();
-        return appointmentRepository.findByPatientUserIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
+        return appointmentRepository.findByPatientIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
                 patientId, now, AppointmentStatus.CANCELED);
     }
 
     @Override
-    public List<Appointment> getPastAppointmentsByPatientId(Integer patientId) {
-        User patient = userRepository.findById(Long.valueOf(patientId))
+    public List<Appointment> getPastAppointmentsByPatientId(Long patientId) {
+        if (patientId == null) {
+            throw new IllegalArgumentException("Patient ID cannot be null");
+        }
+        User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + patientId));
         validateUserRole(patient, Role.PATIENT, "User must have role PATIENT");
         LocalDateTime now = LocalDateTime.now();
-        return appointmentRepository.findByPatientUserIdAndStartTimeBeforeOrderByStartTimeDesc(patientId, now);
+        return appointmentRepository.findByPatientIdAndStartTimeBeforeOrderByStartTimeDesc(patientId, now);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ScoreService {
 
 
     public List<Score> getScoresByUserId(Long userId) {
-        return scoreRepository.findByUserUserId(userId);
+        return scoreRepository.findByUserId(userId);
     }
 
     public List<Score> getScoresByDateRange(Date startDate, Date endDate) {

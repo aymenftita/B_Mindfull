@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/coach/**").hasAuthority("COACH")
                         .requestMatchers("/api/shared_D_A/**").hasAnyAuthority("ADMIN", "DOCTOR")
                         .requestMatchers("/api/shared_All/**").permitAll()
+                        .requestMatchers("/api/*").permitAll()
 
 
                         .anyRequest().authenticated()

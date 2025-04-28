@@ -44,14 +44,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
     private String sessionToken;
-    @Column(
-            name = "created_at",
-            nullable = false,
-            updatable = false,
-            columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP"
-    )
-    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
+
+
 
 
 

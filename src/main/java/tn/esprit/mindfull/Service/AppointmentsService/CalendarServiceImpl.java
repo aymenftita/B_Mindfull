@@ -162,7 +162,7 @@ public class CalendarServiceImpl implements CalendarService {
 
             // Get professional's existing appointments in the next two weeks
             List<Appointment> existingAppointments = appointmentRepository.findByCalendar_CalendarIdAndStartTimeBetweenAndStatusNot(
-                    calendar.getCalendarId(), now, twoWeeksFromNow, AppointmentStatus.CANCELED);
+                    Long.valueOf(calendar.getCalendarId()), now, twoWeeksFromNow, AppointmentStatus.CANCELED);
 
             // Create a set of busy time slots
             Set<LocalDateTime> busyTimes = existingAppointments.stream()

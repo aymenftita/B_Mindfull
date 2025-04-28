@@ -18,7 +18,6 @@ import java.util.Set;
 @Table(name = "appointment")
 @Getter
 @Setter
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

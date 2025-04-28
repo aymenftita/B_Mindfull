@@ -14,10 +14,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    Optional<User> findByName(String name);
+    Optional<User> findByFirstname(String firstname);
 
 
-    Optional<User> findByUserIdAndRole(Integer userId, Role role);
+
+    Optional<User> findByidAndRole(Long id, Role role);
     List<User> findByRoleIn(List<Role> roles);
 
 

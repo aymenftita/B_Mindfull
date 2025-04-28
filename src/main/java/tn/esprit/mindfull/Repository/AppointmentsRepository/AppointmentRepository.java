@@ -17,7 +17,7 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
 
-    void deleteByCalendar(Calendar calendar);
+   /*void deleteByCalendar(Calendar calendar);
     List<Appointment> findByCalendarCalendarId(Integer calendarId);
     List<Appointment> findByStatus(AppointmentStatus status);
     List<Appointment> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
@@ -29,26 +29,22 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             @Param("calendarId") Integer calendarId,
             @Param("startTime") LocalDateTime startTime,
             @Param("endTime") LocalDateTime endTime
-    );
-    List<Appointment> findByPatientUserId(Integer patientId);
-    List<Appointment> findByProfessionalUserId(Integer professionalId);
+    );*/
+    /*List<Appointment> findByPatientUserId(Integer patientId);
+    List<Appointment> findByProfessionalUserId(Integer professionalId);*/
 
     @Query("SELECT a.status, COUNT(a) FROM Appointment a GROUP BY a.status")
     List<Object[]> countAppointmentsByStatus();
 
-    List<Appointment> findByPatientUserIdOrderByStartTimeDesc(Integer patientUserId);
+    List<Appointment> findByPatientIdOrderByStartTimeDesc(Long id);
 
-    List<Appointment> findByPatientUserIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
-            Integer patientUserId,
-            LocalDateTime startTime,
-            AppointmentStatus status);
+    List<Appointment> findByPatientIdAndStartTimeAfterAndStatusNotOrderByStartTimeAsc(
+            Long id, LocalDateTime startTime, AppointmentStatus status);
 
-    List<Appointment> findByPatientUserIdAndStartTimeBeforeOrderByStartTimeDesc(
-            Integer patientUserId,
-            LocalDateTime startTime);
+    List<Appointment> findByPatientIdAndStartTimeBeforeOrderByStartTimeDesc(Long id, LocalDateTime startTime);
 
     List<Appointment> findByCalendar_CalendarIdAndStartTimeBetweenAndStatusNot(
-            Integer calendarId,
+            Long calendarId,
             LocalDateTime startTime,
             LocalDateTime endTime,
             AppointmentStatus status);
