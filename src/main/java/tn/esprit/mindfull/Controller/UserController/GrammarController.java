@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.UserController;
+package tn.esprit.mindfull.Controller.UserController;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

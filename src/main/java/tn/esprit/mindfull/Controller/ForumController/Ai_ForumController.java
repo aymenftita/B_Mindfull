@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.ForumController;
+package tn.esprit.mindfull.Controller.ForumController;
 
 import org.json.JSONObject;
 import org.springframework.http.*;

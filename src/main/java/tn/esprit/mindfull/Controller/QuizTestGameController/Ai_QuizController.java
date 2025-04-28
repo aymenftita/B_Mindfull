@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.QuizTestGameController;
+package tn.esprit.mindfull.Controller.QuizTestGameController;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

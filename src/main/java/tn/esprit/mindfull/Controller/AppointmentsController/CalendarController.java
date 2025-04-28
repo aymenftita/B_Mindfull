@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.AppointmentsController;
+package tn.esprit.mindfull.Controller.AppointmentsController;
 
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;

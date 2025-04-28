@@ -1,5 +1,5 @@
 // ScoreController.java
-package tn.esprit.mindfull.controller.QuizTestGameController;
+package tn.esprit.mindfull.Controller.QuizTestGameController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

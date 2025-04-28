@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.ForumController;
+package tn.esprit.mindfull.Controller.ForumController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

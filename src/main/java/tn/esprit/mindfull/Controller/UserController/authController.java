@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.controller.UserController;
+package tn.esprit.mindfull.Controller.UserController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
