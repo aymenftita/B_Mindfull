@@ -20,26 +20,21 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private final MedicationRepository medicationRepository;
     @Override
     public Prescription createPrescription(Prescription prescription) {
-        List<Medication> medications = prescription.getListMedicaton();
-
         // ensure medication list is not null
-        if (medications == null || medications.isEmpty()) {
+        if (prescription.getListMedicaton() == null || prescription.getListMedicaton().isEmpty()) {
             throw new IllegalArgumentException("Prescription must contain at least one medication.");
         }
 
-        prescription.setExpirationDate(getPrescriptionExpirationDate(medications));
+        prescription.setExpirationDate(getPrescriptionExpirationDate(prescription.getListMedicaton()));
         prescription.setCreationDate(LocalDate.now());
 
-        // save prescription first to get the ID
-        Prescription savedPrescription = prescriptionRepository.save(prescription);
-
-        // assign prescription and save medications
-        for (Medication m : medications) {
-            m.setPrescription(savedPrescription);
+        // Set bidirectional relationship properly
+        for (Medication medication : prescription.getListMedicaton()) {
+            medication.setPrescription(prescription);
         }
-        medicationRepository.saveAll(medications); // saveAll is more efficient than individual saves
 
-        return savedPrescription;
+        // Save the prescription with its medications
+        return prescriptionRepository.save(prescription);
     }
 
     @Override
@@ -64,17 +59,25 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             existing.setDiagnosis(updated.getDiagnosis());
             existing.setNotes(updated.getNotes());
 
-            // update medication list if needed
+            // Properly handle the medication list update
             if (updated.getListMedicaton() != null) {
-                existing.setListMedicaton(updated.getListMedicaton());
-                existing.setExpirationDate(getPrescriptionExpirationDate(updated.getListMedicaton()));
-            } else {
+                // Clear existing medications and add the new ones
+                // This properly maintains the bidirectional relationship
+                existing.getListMedicaton().clear();
+
+                // Set the prescription reference for each medication and add to list
+                for (Medication medication : updated.getListMedicaton()) {
+                    medication.setPrescription(existing);
+                    existing.getListMedicaton().add(medication);
+                }
+
                 existing.setExpirationDate(getPrescriptionExpirationDate(existing.getListMedicaton()));
             }
 
             return prescriptionRepository.save(existing);
         }).orElse(null);
     }
+
 
 
     public LocalDate getPrescriptionExpirationDate(List<Medication> medicationList) {
