@@ -1,12 +1,15 @@
 package tn.esprit.mindfull.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +43,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
     private String sessionToken;
+    @Column(
+            name = "created_at",
+            nullable = false,
+            updatable = false,
+            columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP"
+    )
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
 
 
 
@@ -57,7 +69,7 @@ public class User implements UserDetails {
 //doctor attributes
     private String workingHours;
     private String contactNumber;
-    private String Specializations;
+    private String specializations;
     private String experienceYears;
 
 

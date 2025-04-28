@@ -78,7 +78,7 @@ public class RoleBasedController {
                 response.put("birth", user.getBirth());
                 response.put("workingHours", user.getWorkingHours());
                 response.put("contactNumber", user.getContactNumber());
-                response.put("Specializations", user.getSpecializations());
+                response.put("specializations", user.getSpecializations());
                 response.put("experienceYears", user.getExperienceYears());
 
 
@@ -133,6 +133,7 @@ public class RoleBasedController {
                 "activeUsers", userService.countByAccountStatus("ACTIVE"),
                 "inactiveUsers", userService.countByAccountStatus("INACTIVE"),
                 "doctors", userService.countDoctors(),
+                "coashs", userService.countCoash(),
                 "patients", userService.countPatients()
         ));
     }
@@ -142,5 +143,30 @@ public class RoleBasedController {
     public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
         return ResponseEntity.ok(userService.searchUsers(query));
     }
+    @GetMapping("/admin/analytics/appointments")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Map<String, Integer>> upcomingAppointments(
+            @RequestParam(defaultValue = "7") int daysAhead) {
+        Map<String, Integer> stats = userService.getUpcomingAppointmentStats(daysAhead);
+        return ResponseEntity.ok(stats);
+    }
+    @GetMapping("/admin/analytics/registrations")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Map<String, Integer>> registrationStats(
+            @RequestParam(defaultValue="7") int daysBack) {
+        return ResponseEntity.ok(userService.getRegistrationStats(daysBack));
+    }
 
+    @GetMapping("/admin/doctors")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<String> getDoctors() {
+        return userService.getAllDoctors();  // Implement this method in your service
+    }
+
+    // Get patients for a specific doctor
+    @GetMapping("/admin/patients-per-doctor")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<User> getPatientsPerDoctor(@RequestParam String doctorName) {
+        return userService.getPatientsForDoctor(doctorName);  // Implement this method in your service
+    }
 }

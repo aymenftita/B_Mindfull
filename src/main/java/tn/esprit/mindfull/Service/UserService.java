@@ -21,8 +21,11 @@ import tn.esprit.mindfull.entity.User;
 
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -258,5 +261,74 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsernameContainingOrEmailContainingOrFirstnameContainingOrLastnameContaining(
                 query, query, query, query);
     }
+    public Map<String, Integer> getUpcomingAppointmentStats(int daysAhead) {
+        LocalDate today = LocalDate.now();
+        LocalDate end = today.plusDays(daysAhead);
 
+        // find all patients with an appointment in the window
+        List<User> patients = userRepository
+                .findAllByRole(Role.PATIENT)
+                .stream()
+                .filter(u -> u.getNextAppointment() != null)
+                .collect(Collectors.toList());
+
+        // initialize map with 0 counts for each date
+        Map<String, Integer> stats = new LinkedHashMap<>();
+        for (LocalDate date = today; !date.isAfter(end); date = date.plusDays(1)) {
+            stats.put(date.toString(), 0);
+        }
+
+        // increment counts
+        for (User u : patients) {
+            LocalDate apptDate = u.getNextAppointment().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (!apptDate.isBefore(today) && !apptDate.isAfter(end)) {
+                String key = apptDate.toString();
+                stats.put(key, stats.get(key) + 1);
+            }
+        }
+        return stats;
+    }
+    public List<String> getAllDoctors() {
+        // You should have a method to get all doctors. This could be a hardcoded list or fetched from a database.
+        // Here is an example where it's fetched from a database.
+        return userRepository.findAllDoctors();
+    }
+
+    // Get patients for a specific doctor
+    public List<User> getPatientsForDoctor(String doctorName) {
+        // You would query the database for patients by the doctorName
+        return userRepository.findPatientsByDoctorName(doctorName);
+    }
+
+    public Map<String, Integer> getRegistrationStats(int daysBack) {
+        LocalDate today = LocalDate.now();
+        LocalDate start = today.minusDays(daysBack - 1);
+
+        // Run the repo query
+        List<Object[]> rows = userRepository.countRegistrationsByDate();
+
+        // Build a LinkedHashMap with every date in range initialized to 0
+        Map<String, Integer> stats = new LinkedHashMap<>();
+        for (LocalDate d = start; !d.isAfter(today); d = d.plusDays(1)) {
+            stats.put(d.toString(), 0);
+        }
+
+        // Fill in actual counts
+        for (Object[] row : rows) {
+            LocalDate regDate = ((java.sql.Date)row[0]).toLocalDate();
+            long cnt = (Long)row[1];
+            if (!regDate.isBefore(start) && !regDate.isAfter(today)) {
+                stats.put(regDate.toString(), (int) cnt);
+            }
+        }
+        return stats;
+    }
+
+    public Integer countCoash() {
+        {
+            return (int) userRepository.countByRole(Role.COACH);
+        }
+    }
 }

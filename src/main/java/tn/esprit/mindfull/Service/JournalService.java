@@ -29,7 +29,6 @@ public class JournalService {
 
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();
 
-        // Fetch the target user to delete
         User patient = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 

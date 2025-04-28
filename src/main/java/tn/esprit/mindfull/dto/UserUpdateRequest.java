@@ -22,7 +22,7 @@ public class UserUpdateRequest {
     private Date birth;
     private String workingHours;
     private String contactNumber;
-    private List<String> specializations;
+    private String specializations;
     private Integer experienceYears;
 
 
