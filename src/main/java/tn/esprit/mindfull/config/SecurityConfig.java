@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/shared_D_A/**").hasAnyAuthority("ADMIN", "DOCTOR")
                         .requestMatchers("/api/shared_All/**").permitAll()
                         .requestMatchers("/api/*").permitAll()
+                        .requestMatchers("/forum/**").permitAll()
 
 
                         .anyRequest().authenticated()
