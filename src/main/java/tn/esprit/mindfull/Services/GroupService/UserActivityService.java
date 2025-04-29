@@ -1,13 +1,11 @@
-package tn.esprit.mindfull.Services;
+package tn.esprit.mindfull.Services.GroupService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.UserActivity;
-import tn.esprit.mindfull.entity.Achievement;
-import tn.esprit.mindfull.Respository.UserActivityRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.Respository.AchievementRepository;
+import tn.esprit.mindfull.entity.Group.UserActivity;
+import tn.esprit.mindfull.entity.Group.Achievement;
+import tn.esprit.mindfull.Repository.GroupRepository.UserActivityRepository;
+import tn.esprit.mindfull.Repository.GroupRepository.AchievementRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

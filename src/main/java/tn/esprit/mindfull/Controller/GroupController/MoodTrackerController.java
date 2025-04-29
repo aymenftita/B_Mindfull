@@ -1,20 +1,18 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.GroupController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.Program;
-import tn.esprit.mindfull.entity.UserActivity;
-import tn.esprit.mindfull.entity.Goal;
-import tn.esprit.mindfull.entity.Achievement;
-import tn.esprit.mindfull.Respository.ProgramRepository;
-import tn.esprit.mindfull.Respository.UserActivityRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.Respository.GoalRepository;
-import tn.esprit.mindfull.Respository.AchievementRepository;
-import tn.esprit.mindfull.Services.UserActivityService;
+import tn.esprit.mindfull.entity.Group.Program;
+import tn.esprit.mindfull.entity.Group.UserActivity;
+import tn.esprit.mindfull.entity.Group.Goal;
+import tn.esprit.mindfull.entity.Group.Achievement;
+import tn.esprit.mindfull.Repository.GroupRepository.ProgramRepository;
+import tn.esprit.mindfull.Repository.GroupRepository.UserActivityRepository;
+import tn.esprit.mindfull.Repository.GroupRepository.GoalRepository;
+import tn.esprit.mindfull.Repository.GroupRepository.AchievementRepository;
+import tn.esprit.mindfull.Services.GroupService.UserActivityService;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

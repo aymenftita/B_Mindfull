@@ -1,10 +1,10 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.GroupController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.entity.UserActivity;
-import tn.esprit.mindfull.Services.UserActivityService;
+import tn.esprit.mindfull.entity.Group.UserActivity;
+import tn.esprit.mindfull.Services.GroupService.UserActivityService;
 
 import java.util.List;
 

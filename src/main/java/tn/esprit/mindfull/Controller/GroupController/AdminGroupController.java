@@ -1,8 +1,8 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.GroupController;
 
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Dto.GroupAssignmentDTO;
-import tn.esprit.mindfull.Services.GroupService;
+import tn.esprit.mindfull.Services.GroupService.GroupService;
 import lombok.RequiredArgsConstructor;
 
 

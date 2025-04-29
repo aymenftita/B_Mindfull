@@ -1,7 +1,7 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.GroupRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.mindfull.entity.UserActivity;
+import tn.esprit.mindfull.entity.Group.UserActivity;
 
 import java.time.LocalDateTime;
 import java.util.List;

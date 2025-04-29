@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.GroupController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -8,10 +8,10 @@ import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import tn.esprit.mindfull.entity.GroupMembership;
-import tn.esprit.mindfull.entity.Message;
-import tn.esprit.mindfull.Respository.GroupMembershipRepository;
-import tn.esprit.mindfull.Services.MessageService;
+import tn.esprit.mindfull.entity.Group.GroupMembership;
+import tn.esprit.mindfull.entity.Group.Message;
+import tn.esprit.mindfull.Repository.GroupRepository.GroupMembershipRepository;
+import tn.esprit.mindfull.Services.GroupService.MessageService;
 
 import java.time.LocalDateTime;
 import java.util.*;

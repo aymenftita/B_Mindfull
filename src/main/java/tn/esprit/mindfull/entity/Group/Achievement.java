@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.entity;
+package tn.esprit.mindfull.entity.Group;
 
 import lombok.Data;
 import jakarta.persistence.*;
@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "goal")
-public class Goal {
+@Table(name = "achievement")
+public class Achievement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +18,11 @@ public class Goal {
     private User user;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    private LocalDateTime completedAt;
-
-    private boolean completed;
-
-    @Column
-    private Integer priority; // 1 (high) to 3 (low)
+    private LocalDateTime achievedAt;
 }

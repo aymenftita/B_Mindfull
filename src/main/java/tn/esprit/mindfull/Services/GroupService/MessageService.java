@@ -1,13 +1,12 @@
-package tn.esprit.mindfull.Services;
+package tn.esprit.mindfull.Services.GroupService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.GroupMembership;
-import tn.esprit.mindfull.entity.Message;
-import tn.esprit.mindfull.Respository.GroupMembershipRepository;
-import tn.esprit.mindfull.Respository.MessageRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
+import tn.esprit.mindfull.entity.Group.GroupMembership;
+import tn.esprit.mindfull.entity.Group.Message;
+import tn.esprit.mindfull.Repository.GroupRepository.GroupMembershipRepository;
+import tn.esprit.mindfull.Repository.GroupRepository.MessageRepository;
+
 import java.util.List;
 import java.util.Set;
 @Service

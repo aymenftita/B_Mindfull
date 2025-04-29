@@ -1,8 +1,8 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.GroupRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import tn.esprit.mindfull.entity.Message;
+import tn.esprit.mindfull.entity.Group.Message;
 
 import java.util.List;
 import java.util.Set;

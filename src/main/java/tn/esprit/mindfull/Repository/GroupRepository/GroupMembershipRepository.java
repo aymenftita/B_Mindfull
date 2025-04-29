@@ -1,8 +1,8 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.GroupRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tn.esprit.mindfull.entity.GroupMembership;
+import tn.esprit.mindfull.entity.Group.GroupMembership;
 import java.util.Optional;
 
 @Repository
