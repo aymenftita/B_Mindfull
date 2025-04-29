@@ -1,5 +1,6 @@
 package tn.esprit.mindfull.config;
 
+import jakarta.servlet.Filter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -42,28 +43,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter(userService, jwtUtils);
-
-        return http
+        JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter(userService, jwtUtils);        return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                        .requestMatchers("/api/scores").permitAll() // Explicitly allow scores
+                        .requestMatchers("/api/**").permitAll()     // General API permission
+                        .requestMatchers("/forum/**", "/ai", "/send_email_game").permitAll()
+
+                        // Role-based endpoints
                         .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/doctor/**").hasAuthority("DOCTOR")
                         .requestMatchers("/api/patient/**").hasAuthority("PATIENT")
                         .requestMatchers("/api/coach/**").hasAuthority("COACH")
                         .requestMatchers("/api/shared_D_A/**").hasAnyAuthority("ADMIN", "DOCTOR")
-                        .requestMatchers("/api/shared_All/**").permitAll()
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/forum/**").permitAll()
-                        .requestMatchers("/ai").permitAll()
-                        .requestMatchers("/send_email_game").permitAll()
 
-
+                        // Secure all other requests
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -72,8 +69,7 @@ public class SecurityConfig {
                 )
                 .build();
     }
-
-    @Bean
+  /*  @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
@@ -85,7 +81,31 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
+  @Bean
+  protected CorsConfigurationSource corsConfigurationSource() {
+      CorsConfiguration configuration = new CorsConfiguration();
+      configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+      configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+      configuration.setAllowedHeaders(List.of(
+              "Authorization",
+              "Content-Type",
+              "Accept",
+              "X-Requested-With",
+              "Access-Control-Request-Headers",
+              "Access-Control-Request-Method"
+      ));
+      configuration.setExposedHeaders(List.of(
+              "Authorization",
+              "Content-Type",
+              "Access-Control-Allow-Origin"
+      ));
+      configuration.setAllowCredentials(true);
+
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", configuration);
+      return source;
+  }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

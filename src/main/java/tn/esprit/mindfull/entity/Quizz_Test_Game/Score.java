@@ -32,7 +32,15 @@ public class Score {
     @JoinColumn(name="id")
     private User user;
 
-
-
-
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score_id=" + score_id +
+                ", date=" + date +
+                ", name='" + name + '\'' +
+                ", result='" + result + '\'' +
+                ", score_type='" + score_type + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

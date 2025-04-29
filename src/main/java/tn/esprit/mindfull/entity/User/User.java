@@ -143,5 +143,32 @@ public class User implements UserDetails {
         this.sessionToken = sessionToken;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", accountStatus='" + accountStatus + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", resetToken='" + resetToken + '\'' +
+                ", resetTokenExpiry=" + resetTokenExpiry +
+                ", role=" + role +
+                ", sessionToken='" + sessionToken + '\'' +
+                ", createdAt=" + createdAt +
+                ", birth=" + birth +
+                ", lastSessionDate=" + lastSessionDate +
+                ", primaryCarePhysician='" + primaryCarePhysician + '\'' +
+                ", nextAppointment=" + nextAppointment +
+                ", workingHours='" + workingHours + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", specializations='" + specializations + '\'' +
+                ", experienceYears='" + experienceYears + '\'' +
+                ", calendar=" + calendar +
+                '}';
+    }
 }
 
