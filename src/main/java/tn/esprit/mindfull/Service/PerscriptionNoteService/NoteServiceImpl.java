@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.NoteRepository;
@@ -30,7 +31,6 @@ public class NoteServiceImpl implements NoteService {
     private  NoteRepository noteRepository;
 
     @Autowired
-    private  UserRepository userRepository;
     private  MailService mailService;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();

@@ -3,15 +3,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import tn.esprit.mindfull.entity.PerscriptionNote.NotificationMessage;
 import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.PrescriptionRepository;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -23,6 +26,29 @@ public class NotificationService {
 
     // Store active sessions - this would be populated by a SessionListener
     private static final Set<String> activeSessions = ConcurrentHashMap.newKeySet();
+
+
+    private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
+
+    public SseEmitter subscribe() {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        emitters.add(emitter);
+
+        emitter.onCompletion(() -> emitters.remove(emitter));
+        emitter.onTimeout(() -> emitters.remove(emitter));
+
+        return emitter;
+    }
+
+    public void sendNotification(String jsonNotification) {
+        for (SseEmitter emitter : emitters) {
+            try {
+                emitter.send(SseEmitter.event().name("notification").data(jsonNotification));
+            } catch (IOException e) {
+                emitters.remove(emitter);
+            }
+        }
+    }
 
     @Autowired
     public NotificationService(SimpMessagingTemplate messagingTemplate, PrescriptionRepository prescriptionRepository) {

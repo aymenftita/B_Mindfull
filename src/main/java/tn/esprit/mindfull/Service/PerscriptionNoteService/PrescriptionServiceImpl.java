@@ -8,7 +8,9 @@ import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.MedicationReposi
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.PrescriptionRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -133,9 +135,9 @@ public HashMap<String, Float> getMedicationStatistics() {
         List<Prescription> prescriptions = prescriptionRepository.findAll();
 
         for (Prescription prescription : prescriptions) {
-            if (prescription.getPatient() != null && prescription.getPatient().getDateDeNaissance() != null) {
-                LocalDate birthDate = prescription.getPatient().getDateDeNaissance();
-                int age = Period.between(birthDate, LocalDate.now()).getYears();
+            if (prescription.getPatient() != null && prescription.getPatient().getBirth() != null) {
+                String birthDate = prescription.getPatient().getBirth().toString();
+                int age = Period.between(LocalDate.parse(birthDate), LocalDate.now()).getYears();
 
                 if (age < 12) {
                     infants++;

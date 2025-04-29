@@ -9,7 +9,7 @@ import tn.esprit.mindfull.dto.Forumdto.PostCommentStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.Service.UserService.UserService;
-
+import tn.esprit.mindfull.Service.PerscriptionNoteService.NotificationService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
