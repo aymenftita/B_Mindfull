@@ -270,6 +270,10 @@ public class UserService implements UserDetailsService {
         return (int) userRepository.countByRole(Role.DOCTOR);
     }
 
+    public List<User> getUsersByRole(Role role) {
+        return userRepository.findByRole(role);
+    }
+
     public int countPatients() {
         return (int) userRepository.countByRole(Role.PATIENT);
     }
@@ -346,5 +350,6 @@ public class UserService implements UserDetailsService {
         {
             return (int) userRepository.countByRole(Role.COACH);
         }
+
     }
 }
