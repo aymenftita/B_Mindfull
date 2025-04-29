@@ -2,6 +2,7 @@ package tn.esprit.mindfull.entity.Coaching;
 
 import jakarta.persistence.*;
 import lombok.*;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDateTime;
 

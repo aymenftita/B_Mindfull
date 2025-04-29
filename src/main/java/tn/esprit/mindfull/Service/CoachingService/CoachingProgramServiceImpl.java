@@ -3,7 +3,10 @@ package tn.esprit.mindfull.Service.CoachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
+import tn.esprit.mindfull.entity.User.Role;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.List;
 

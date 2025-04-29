@@ -9,7 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
 import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
-import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.Service.UserService.EmailService;
 import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 

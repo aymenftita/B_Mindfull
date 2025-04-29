@@ -10,9 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
 import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
-import tn.esprit.mindfull.Service.CoachingService.EmailService;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.Service.UserService.EmailService;
 import tn.esprit.mindfull.Service.CoachingService.IProgramContentService;
+import tn.esprit.mindfull.Service.UserService.UserService;
 import tn.esprit.mindfull.entity.Coaching.ProgramContent;
+import tn.esprit.mindfull.entity.User.Role;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +59,7 @@ public class ProgramContentController {
         System.out.println("Content ID généré : " + saved.getContentId());
 
         // Récupérer l'utilisateur ayant le rôle 'PATIENT'
-        List<User> patients = userService.findUserByRole("PATIENT");
+        List<User> patients = userService.getUsersByRole(Role.PATIENT);
 
         if (!patients.isEmpty()) { // Vérifier que la liste n'est pas vide
             User patient = patients.get(0); // Maintenant c'est sûr qu'il y a au moins un patient

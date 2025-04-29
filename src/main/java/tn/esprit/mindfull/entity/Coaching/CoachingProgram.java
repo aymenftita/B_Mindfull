@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.Date;
 import java.util.List;

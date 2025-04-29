@@ -13,7 +13,7 @@ public interface CoachingProgramRepository  extends JpaRepository<CoachingProgra
     List<CoachingProgram> findByStartDateBetween(Date start, Date end);
 
 
-        @Query("SELECT COUNT(p) FROM CoachingProgram p WHERE p.user.userId = :coachId")
+        @Query("SELECT COUNT(p) FROM CoachingProgram p WHERE p.user.id = :coachId")
         long countByCoachId(@Param("coachId") Long coachId);
 
         @Query("SELECT p.title, p.participants FROM CoachingProgram p")

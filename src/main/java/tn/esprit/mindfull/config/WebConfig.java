@@ -27,14 +27,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");  // Autoriser tous les en-têtes
 
     }
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer
-                .defaultContentType(MediaType.APPLICATION_JSON)
-                .mediaType("json", MediaType.APPLICATION_JSON);
-        registry.addMapping("/**") // allow all endpoints
-                .allowedOrigins("*") // Angular app
-                .allowedMethods("*")
-                .allowedHeaders("*");
-    }
 }

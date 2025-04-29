@@ -51,7 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .requestMatchers("/api/scores").permitAll() // Explicitly allow scores
                         .requestMatchers("/api/**").permitAll()     // General API permission
-                        .requestMatchers("/forum/**", "/ai", "/send_email_game").permitAll()
+                        .requestMatchers("/forum/**", "/ai", "/send_email_game","/send_email","/program-contents/**","/coaching-programs/**").permitAll()
 
                         // Role-based endpoints
                         .requestMatchers("/api/admin/**").hasAuthority("ADMIN")

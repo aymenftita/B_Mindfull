@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.*;
 
@@ -71,7 +72,7 @@ public class ProgramContent {
     // Assurez-vous que l'utilisateur est bien défini pendant la désérialisation ou lors de la définition de l'objet
     @JsonProperty("user_id")
     public Long getUserId() {
-        return user != null ? user.getUserId() : null;
+        return user != null ? user.getId() : null;
     }
     // Définir l'utilisateur par user_id (utilisé pour la désérialisation ou la définition de l'utilisateur)
     @JsonProperty("user_id")
@@ -79,7 +80,7 @@ public class ProgramContent {
         if (this.user == null) {
             this.user = new User(); // Assurez-vous que l'utilisateur est instancié
         }
-        this.user.setUserId(userId); // Définit userId dans l'entité User
+        this.user.setId(userId); // Définit userId dans l'entité User
     }
     public Long getContentId() {
         return contentId;

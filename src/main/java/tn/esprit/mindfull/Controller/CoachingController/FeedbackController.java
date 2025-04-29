@@ -18,12 +18,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200") // 🔥 Pour autoriser Angular localhost:4200
 public class FeedbackController {
 
-    @Autowired
+
     private FeedbackService feedbackService;
   //  @Autowired
    // private final NotificationService notificationService;
 
-    @Autowired
+
     private AIService aiService;
     private FeedbackRepository feedbackRepository;
 

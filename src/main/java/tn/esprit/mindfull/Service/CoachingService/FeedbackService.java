@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import tn.esprit.mindfull.Repository.CoachingRepository.FeedbackRepository;
 import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
-import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.entity.Coaching.Feedback;
 import tn.esprit.mindfull.entity.Coaching.ProgramContent;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class FeedbackService {
     private AIService aiService;
     public Feedback addFeedback(Feedback feedback, Long patientId, Long contentId) {
         if (feedback.getPatient() == null) {
-            User defaultPatient = userRepository.findById(1L)
+            User defaultPatient = userRepository.findById(patientId)
                     .orElseThrow(() -> new RuntimeException("Patient par défaut non trouvé."));
             feedback.setPatient(defaultPatient);
         }

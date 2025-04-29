@@ -4,6 +4,7 @@ package tn.esprit.mindfull.Service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import org.thymeleaf.context.Context;
 public class EmailService {
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public void sendPasswordResetEmail(String to, String resetToken) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
@@ -29,5 +32,14 @@ public class EmailService {
         helper.setText(htmlContent, true);
 
         mailSender.send(message);
+    }
+
+    public void sendEmail(String to, String subject, String content) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        javaMailSender.send(message);
     }
 }

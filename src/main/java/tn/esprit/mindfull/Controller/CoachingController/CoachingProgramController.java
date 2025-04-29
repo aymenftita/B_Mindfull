@@ -8,10 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
-import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 import tn.esprit.mindfull.Service.CoachingService.ICoachingProgramService;
-
+import tn.esprit.mindfull.entity.User.User;
 import java.util.List;
 
 @RestController

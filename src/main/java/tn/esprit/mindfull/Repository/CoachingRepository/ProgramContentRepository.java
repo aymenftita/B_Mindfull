@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 import tn.esprit.mindfull.entity.Coaching.ProgramContent;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.util.List;
 import java.util.Optional;
