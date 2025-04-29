@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 public class NoteServiceImpl implements NoteService {
     @Autowired
     private  NoteRepository noteRepository;
-
     @Autowired
     private  MailService mailService;
     private final RestTemplate restTemplate = new RestTemplate();
