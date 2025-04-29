@@ -1,11 +1,11 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.Medication;
-import tn.esprit.mindfull.entity.Prescription;
-import tn.esprit.mindfull.repository.MedicationRepository;
-import tn.esprit.mindfull.repository.PrescriptionRepository;
+import tn.esprit.mindfull.entity.PerscriptionNote.Medication;
+import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.MedicationRepository;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.PrescriptionRepository;
 
 import java.time.LocalDate;
 import java.time.Period;

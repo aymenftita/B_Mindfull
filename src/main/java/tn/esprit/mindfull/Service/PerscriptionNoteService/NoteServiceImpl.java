@@ -1,9 +1,8 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import tn.esprit.mindfull.entity.Note;
+import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 
-import tn.esprit.mindfull.repository.NoteRepository;
-import tn.esprit.mindfull.repository.UserRepository;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.NoteRepository;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.UserRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

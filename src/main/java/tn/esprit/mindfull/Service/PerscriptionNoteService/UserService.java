@@ -1,7 +1,7 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.Role;
+import tn.esprit.mindfull.entity.PerscriptionNote.User;
+import tn.esprit.mindfull.entity.PerscriptionNote.Role;
 
 import java.util.List;
 

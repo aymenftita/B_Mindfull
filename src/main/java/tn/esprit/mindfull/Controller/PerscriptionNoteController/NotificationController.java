@@ -1,12 +1,10 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tn.esprit.mindfull.service.NotificationService;
+import tn.esprit.mindfull.Service.PerscriptionNoteService.NotificationService;
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {

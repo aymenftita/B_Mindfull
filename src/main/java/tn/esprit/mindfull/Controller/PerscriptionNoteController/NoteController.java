@@ -1,11 +1,11 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.entity.Note;
-import tn.esprit.mindfull.service.NoteService;
+import tn.esprit.mindfull.entity.PerscriptionNote.Note;
+import tn.esprit.mindfull.Service.PerscriptionNoteService.NoteService;
 
 import java.util.List;
 import java.util.Map;

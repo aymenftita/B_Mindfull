@@ -1,11 +1,11 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.NotificationMessage;
-import tn.esprit.mindfull.entity.Prescription;
-import tn.esprit.mindfull.repository.PrescriptionRepository;
+import tn.esprit.mindfull.entity.PerscriptionNote.NotificationMessage;
+import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.PrescriptionRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

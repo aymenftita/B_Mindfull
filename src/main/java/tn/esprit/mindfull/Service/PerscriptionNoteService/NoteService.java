@@ -1,6 +1,6 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
-import tn.esprit.mindfull.entity.Note;
+import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 
 import java.util.List;
 

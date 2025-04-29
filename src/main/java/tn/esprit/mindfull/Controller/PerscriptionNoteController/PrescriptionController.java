@@ -1,9 +1,9 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.entity.Prescription;
-import tn.esprit.mindfull.service.PrescriptionService;
+import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
+import tn.esprit.mindfull.Service.PerscriptionNoteService.PrescriptionService;
 
 import java.util.HashMap;
 import java.util.List;

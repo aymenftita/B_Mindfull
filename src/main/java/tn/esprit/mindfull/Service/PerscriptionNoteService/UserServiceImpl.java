@@ -1,10 +1,10 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.Role;
-import tn.esprit.mindfull.repository.UserRepository;
+import tn.esprit.mindfull.entity.PerscriptionNote.User;
+import tn.esprit.mindfull.entity.PerscriptionNote.Role;
+import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.UserRepository;
 
 import java.util.List;
 

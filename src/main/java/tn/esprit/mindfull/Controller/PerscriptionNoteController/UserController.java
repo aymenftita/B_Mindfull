@@ -1,10 +1,10 @@
-package tn.esprit.mindfull.controller;
+package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.entity.User;
-import tn.esprit.mindfull.entity.Role;
-import tn.esprit.mindfull.service.UserService;
+import tn.esprit.mindfull.entity.PerscriptionNote.User;
+import tn.esprit.mindfull.entity.PerscriptionNote.Role;
+import tn.esprit.mindfull.Service.PerscriptionNoteService.UserService;
 
 import java.util.List;
 

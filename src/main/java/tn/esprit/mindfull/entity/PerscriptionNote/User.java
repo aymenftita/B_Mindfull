@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.entity;
+package tn.esprit.mindfull.entity.PerscriptionNote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

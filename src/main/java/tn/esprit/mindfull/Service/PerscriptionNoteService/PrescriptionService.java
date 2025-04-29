@@ -1,6 +1,6 @@
-package tn.esprit.mindfull.service;
+package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
-import tn.esprit.mindfull.entity.Prescription;
+import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
 
 import java.util.HashMap;
 import java.util.List;
