@@ -33,7 +33,7 @@ public class NoteServiceImpl implements NoteService {
     private  MailService mailService;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();
-    @Value("${openrouter.api.key}")
+    @Value("${openrouter.api.key_nour}")
     private String OPENROUTER_API_KEY;
 
     private static final String OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";

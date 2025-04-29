@@ -9,7 +9,7 @@ import java.util.*;
 @Service
 public class AiDoctorNoteService {
 
-    @Value("${openrouter.api.key}")
+    @Value("${openrouter.api.key_jawher}")
     private String apiKey;
 
     private static final String API_URL = "https://openrouter.ai/api/v1/chat/completions";
