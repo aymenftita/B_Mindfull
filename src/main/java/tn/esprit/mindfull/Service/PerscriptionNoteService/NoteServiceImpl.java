@@ -30,7 +30,6 @@ public class NoteServiceImpl implements NoteService {
     private  NoteRepository noteRepository;
 
     @Autowired
-    private  UserRepository userRepository;
     private  MailService mailService;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();
