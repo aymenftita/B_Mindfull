@@ -58,8 +58,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/coach/**").hasAuthority("COACH")
                         .requestMatchers("/api/shared_D_A/**").hasAnyAuthority("ADMIN", "DOCTOR")
                         .requestMatchers("/api/shared_All/**").permitAll()
-                        .requestMatchers("/api/*").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/forum/**").permitAll()
+                        .requestMatchers("/ai").permitAll()
+                        .requestMatchers("/send_email_game").permitAll()
 
 
                         .anyRequest().authenticated()
