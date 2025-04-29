@@ -46,5 +46,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     // Find all patients by the doctor's name
     @Query("SELECT u FROM User u WHERE u.primaryCarePhysician = :doctorName")
     List<User> findPatientsByDoctorName(@Param("doctorName") String doctorName);
+    List<User> findByRole(Role role);
 }
 

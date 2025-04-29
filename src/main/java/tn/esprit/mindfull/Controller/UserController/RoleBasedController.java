@@ -169,4 +169,8 @@ public class RoleBasedController {
     public List<User> getPatientsPerDoctor(@RequestParam String doctorName) {
         return userService.getPatientsForDoctor(doctorName);  // Implement this method in your service
     }
+    @GetMapping("/users/role/{role}")
+    public List<User> getUsersByRole(@PathVariable Role role) {
+        return userService.getUsersByRole(role);
+}
 }
