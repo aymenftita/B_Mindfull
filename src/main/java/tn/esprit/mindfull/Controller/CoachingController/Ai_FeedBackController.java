@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.CoachingController;
 
 import org.json.JSONObject;
 import org.springframework.http.*;

@@ -1,13 +1,12 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.CoachingRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import tn.esprit.mindfull.entity.CoachingProgram;
-import tn.esprit.mindfull.entity.ProgramContent;
-import tn.esprit.mindfull.entity.User;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
+import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 
 import java.util.List;
 import java.util.Optional;

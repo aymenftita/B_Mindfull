@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.CoachingController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,11 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.CoachingProgramRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.entity.CoachingProgram;
-import tn.esprit.mindfull.Service.ICoachingProgramService;
-import tn.esprit.mindfull.entity.User;
+import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
+import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
+import tn.esprit.mindfull.Service.CoachingService.ICoachingProgramService;
 
 import java.util.List;
 

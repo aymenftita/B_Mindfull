@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.entity;
+package tn.esprit.mindfull.entity.Coaching;
 
 import jakarta.persistence.*;
 import lombok.*;

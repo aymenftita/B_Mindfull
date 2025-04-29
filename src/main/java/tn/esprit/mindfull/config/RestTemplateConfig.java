@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.configuration;
+package tn.esprit.mindfull.config;
 
 
 

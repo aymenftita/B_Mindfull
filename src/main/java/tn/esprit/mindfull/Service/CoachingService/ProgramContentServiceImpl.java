@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
 import jakarta.transaction.Transactional;
 
@@ -7,10 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.CoachingProgramRepository;
-import tn.esprit.mindfull.Respository.ProgramContentRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.entity.*;
+import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
+import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
+import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
+import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 
 import java.util.List;
 

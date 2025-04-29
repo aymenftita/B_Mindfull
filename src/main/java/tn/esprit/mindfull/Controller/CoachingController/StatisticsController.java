@@ -1,8 +1,8 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.CoachingController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.CoachingProgramRepository;
+import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
 
 import java.util.*;
 

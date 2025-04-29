@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

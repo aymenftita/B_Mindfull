@@ -1,13 +1,13 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.CoachingController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.FeedbackRepository;
-import tn.esprit.mindfull.Service.AIService;
-import tn.esprit.mindfull.entity.Feedback;
-import tn.esprit.mindfull.Service.FeedbackService;
+import tn.esprit.mindfull.Repository.CoachingRepository.FeedbackRepository;
+import tn.esprit.mindfull.Service.CoachingService.AIService;
+import tn.esprit.mindfull.entity.Coaching.Feedback;
+import tn.esprit.mindfull.Service.CoachingService.FeedbackService;
 
 import java.util.ArrayList;
 import java.util.List;

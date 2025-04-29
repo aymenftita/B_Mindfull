@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.Controller;
+package tn.esprit.mindfull.Controller.CoachingController;
 
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.mindfull.Respository.CoachingProgramRepository;
-import tn.esprit.mindfull.Respository.ProgramContentRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.Service.EmailService;
-import tn.esprit.mindfull.Service.IProgramContentService;
-import tn.esprit.mindfull.Service.UserService;
-import tn.esprit.mindfull.entity.CoachingProgram;
-import tn.esprit.mindfull.entity.ProgramContent;
-import tn.esprit.mindfull.entity.User;
+import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
+import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
+import tn.esprit.mindfull.Service.CoachingService.EmailService;
+import tn.esprit.mindfull.Service.CoachingService.IProgramContentService;
+import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.CoachingRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.mindfull.entity.Feedback;
+import tn.esprit.mindfull.entity.Coaching.Feedback;
 
 import java.util.List;
 

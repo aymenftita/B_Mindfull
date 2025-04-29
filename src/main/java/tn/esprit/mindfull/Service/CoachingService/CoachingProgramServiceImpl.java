@@ -1,17 +1,11 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.Respository.CoachingProgramRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
-import tn.esprit.mindfull.entity.CoachingProgram;
-import tn.esprit.mindfull.entity.Role;
-import tn.esprit.mindfull.entity.User;
+import tn.esprit.mindfull.Repository.CoachingRepository.CoachingProgramRepository;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CoachingProgramServiceImpl implements ICoachingProgramService {

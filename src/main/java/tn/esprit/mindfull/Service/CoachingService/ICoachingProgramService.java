@@ -1,6 +1,6 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
-import tn.esprit.mindfull.entity.CoachingProgram;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 
 import java.util.List;
 

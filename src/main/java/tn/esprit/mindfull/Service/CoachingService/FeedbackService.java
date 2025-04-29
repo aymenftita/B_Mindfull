@@ -1,14 +1,15 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import tn.esprit.mindfull.entity.*;
-import tn.esprit.mindfull.Respository.FeedbackRepository;
-import tn.esprit.mindfull.Respository.ProgramContentRepository;
-import tn.esprit.mindfull.Respository.UserRepository;
+import tn.esprit.mindfull.Repository.CoachingRepository.FeedbackRepository;
+import tn.esprit.mindfull.Repository.CoachingRepository.ProgramContentRepository;
+import tn.esprit.mindfull.Repository.UserRepository;
+import tn.esprit.mindfull.entity.Coaching.Feedback;
+import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 
 import java.util.HashMap;
 import java.util.List;

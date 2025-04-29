@@ -1,9 +1,9 @@
-package tn.esprit.mindfull.Respository;
+package tn.esprit.mindfull.Repository.CoachingRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import tn.esprit.mindfull.entity.CoachingProgram;
+import tn.esprit.mindfull.entity.Coaching.CoachingProgram;
 
 import java.util.Date;
 import java.util.List;

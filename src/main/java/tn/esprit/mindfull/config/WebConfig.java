@@ -1,4 +1,4 @@
-package tn.esprit.mindfull.configuration;
+package tn.esprit.mindfull.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

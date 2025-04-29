@@ -1,8 +1,7 @@
-package tn.esprit.mindfull.Service;
+package tn.esprit.mindfull.Service.CoachingService;
 
-import jakarta.mail.MessagingException;
 import org.springframework.data.domain.Page;
-import tn.esprit.mindfull.entity.ProgramContent;
+import tn.esprit.mindfull.entity.Coaching.ProgramContent;
 
 import java.util.List;
 
