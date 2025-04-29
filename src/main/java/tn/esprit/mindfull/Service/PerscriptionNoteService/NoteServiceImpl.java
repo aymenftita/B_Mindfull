@@ -16,7 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.NoteRepository;
-import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.UserRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
