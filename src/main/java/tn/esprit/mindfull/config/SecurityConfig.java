@@ -53,7 +53,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/notes").permitAll()
                         .requestMatchers("/api/prescriptions").permitAll()// Explicitly allow scores
                         .requestMatchers("/api/**").permitAll()     // General API permission
-                        .requestMatchers("/forum/**", "/ai", "/send_email_game").permitAll()
+                        .requestMatchers("/forum/**", "/ai", "/send_email_game","/send_email","/program-contents/**","/coaching-programs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
 
                         // Role-based endpoints
                         .requestMatchers("/api/admin/**").hasAuthority("ADMIN")

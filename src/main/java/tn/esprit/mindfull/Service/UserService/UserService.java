@@ -36,6 +36,8 @@ public class UserService implements UserDetailsService {
     private final EmailService emailService;
 
 
+
+
     public User getCurrentUser() {
         int staticUserId = 1;
         User existingUser = userRepository.findById((long) staticUserId).orElse(null);
