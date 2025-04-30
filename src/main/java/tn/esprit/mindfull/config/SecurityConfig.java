@@ -49,7 +49,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                        .requestMatchers("/api/scores").permitAll() // Explicitly allow scores
+                        .requestMatchers("/api/scores").permitAll()
+                        .requestMatchers("/api/notes").permitAll()
+                        .requestMatchers("/api/prescriptions").permitAll()// Explicitly allow scores
                         .requestMatchers("/api/**").permitAll()     // General API permission
                         .requestMatchers("/forum/**", "/ai", "/send_email_game").permitAll()
 

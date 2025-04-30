@@ -2,11 +2,16 @@ package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.mindfull.dto.PrescriptionNotedto.NoteDTO;
+import tn.esprit.mindfull.dto.PrescriptionNotedto.NoteResponseDTO;
 import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 import tn.esprit.mindfull.Service.PerscriptionNoteService.NoteService;
+import tn.esprit.mindfull.entity.User.User;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +38,10 @@ public class NoteController {
         return noteService.getNoteById(id);
     }
 
-    @PostMapping
-    public Note createNote(@RequestBody Note note) {
-        return noteService.createNote(note);
+    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) {
+        Note note = noteService.createNote(noteDTO);
+        return ResponseEntity.ok(note);
     }
 
     @PutMapping("/{id}")
@@ -51,6 +57,7 @@ public class NoteController {
     @GetMapping("/summarize-ai/{patientId}")
     public ResponseEntity<Map<String, String>> summarizePatientNotesAI(@PathVariable int patientId) {
         try {
+            System.out.println("hello");
             String description = noteService.summarizeWithAI(patientId);
             return ResponseEntity.ok(Map.of("message", description));
         } catch (Exception e) {
