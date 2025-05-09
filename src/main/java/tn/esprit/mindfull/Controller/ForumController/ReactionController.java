@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.mindfull.Repository.ForumRepository.PostRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.dto.Forumdto.ReactionStatsDTO;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.forum.Reaction;
 import tn.esprit.mindfull.entity.forum.ReactionType;
 import tn.esprit.mindfull.Service.ForumService.ReactionService;
 import tn.esprit.mindfull.entity.User.User;
-import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 
 import java.util.List;
 

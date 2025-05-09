@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 public class JwtUtils {
     private final String SECRET_KEY = "ZrbA0vVddNSLK0rk3L//Cpch/TBvpYiUx4NY126peoc=";
 
+    // Expose SECRET_KEY for parsing in WebSocketConfig
+    public String getSecretKey() {
+        return SECRET_KEY;
+    }
+
     public List<String> extractRoles(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -23,29 +28,22 @@ public class JwtUtils {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-
-            // Extract roles from the "roles" claim in the token
             return (List<String>) claims.get("roles");
         } catch (Exception e) {
-            return Collections.emptyList(); // Return empty list if roles are missing/invalid
+            return Collections.emptyList();
         }
     }
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-
         claims.put("roles", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority) // Directly "ADMIN", "DOCTOR", etc.
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
-
-
-        // Add user ID to claims (cast UserDetails to your custom User class)
-        if (userDetails instanceof User) { // Replace 'User' with your actual class
+        if (userDetails instanceof User) {
             claims.put("userId", ((User) userDetails).getId());
         } else {
             throw new IllegalArgumentException("Unsupported UserDetails type");
         }
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
@@ -62,9 +60,9 @@ public class JwtUtils {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            return claims.getSubject(); // Returns null if subject is missing
+            return claims.getSubject();
         } catch (Exception e) {
-            return null; // Token is invalid or expired
+            return null;
         }
     }
 
@@ -72,7 +70,7 @@ public class JwtUtils {
         try {
             return parseToken(token).getBody().getExpiration().before(new Date());
         } catch (Exception e) {
-            return true; // Treat invalid tokens as expired
+            return true;
         }
     }
 
@@ -83,12 +81,17 @@ public class JwtUtils {
                 && username.equals(userDetails.getUsername())
                 && !isTokenExpired(token);
     }
-    private Jws<Claims> parseToken(String token) {
-        return Jwts.parserBuilder()                // Use parserBuilder() for JJWT 0.11.x+
-                .setSigningKey(SECRET_KEY)          // SECRET_KEY must be a Key object, not a String
-                .build()
-                .parseClaimsJws(token);             // Parses and validates the token
-    }
-    public record TokenAndExpiry(String token, Date expiry) {}
 
+    public boolean validateTokenchat(String token) {
+        return !isTokenExpired(token);
+    }
+
+    private Jws<Claims> parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token);
+    }
+
+    public record TokenAndExpiry(String token, Date expiry) {}
 }

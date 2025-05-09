@@ -33,7 +33,7 @@ public class NoteServiceImpl implements NoteService {
     @Autowired
     private  MailService mailService;
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();
     @Value("${openrouter.api.key_nour}")

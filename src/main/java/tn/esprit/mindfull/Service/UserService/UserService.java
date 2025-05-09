@@ -132,8 +132,15 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public List<User> getAllUserschat() throws AccessDeniedException {
 
-  public String deleteUser(Long userId) throws AccessDeniedException {
+            return userRepository.findAll();
+
+    }
+
+
+
+    public String deleteUser(Long userId) throws AccessDeniedException {
         // Get the current authenticated user's role
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserRole = authentication.getAuthorities().iterator().next().getAuthority();

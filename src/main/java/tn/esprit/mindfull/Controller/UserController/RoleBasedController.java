@@ -30,6 +30,10 @@ public class RoleBasedController {
     public ResponseEntity<List<User>> getAllUsers() throws AccessDeniedException {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+    @GetMapping("/chat/getAllUsers")
+    public ResponseEntity<List<User>> getAllUserschat() throws AccessDeniedException {
+        return ResponseEntity.ok(userService.getAllUserschat());
+    }
     @DeleteMapping("/shared_D_A/deleteUserById/{userId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
