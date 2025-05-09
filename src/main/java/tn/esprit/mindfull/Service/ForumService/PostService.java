@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import tn.esprit.mindfull.Repository.ForumRepository.CommentRepository;
 import tn.esprit.mindfull.Repository.ForumRepository.PostRepository;
 import tn.esprit.mindfull.Repository.ForumRepository.ReportRepository;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.dto.Forumdto.PostStatsDTO;
 import tn.esprit.mindfull.entity.forum.Comment;
 import tn.esprit.mindfull.entity.forum.Post;
 import tn.esprit.mindfull.entity.User.User;
-import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
 import tn.esprit.mindfull.Service.UserService.UserService;
 
 import java.util.List;

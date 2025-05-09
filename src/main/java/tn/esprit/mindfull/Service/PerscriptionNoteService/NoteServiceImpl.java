@@ -2,6 +2,7 @@ package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +11,20 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.dto.PrescriptionNotedto.NoteDTO;
 import tn.esprit.mindfull.entity.PerscriptionNote.Note;
 
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.NoteRepository;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
-
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -31,6 +32,8 @@ public class NoteServiceImpl implements NoteService {
     private  NoteRepository noteRepository;
     @Autowired
     private  MailService mailService;
+    @Autowired
+    private UserRepository userRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper mapper = new ObjectMapper();
     @Value("${openrouter.api.key_nour}")
@@ -56,9 +59,29 @@ public class NoteServiceImpl implements NoteService {
         return noteRepository.findById(id).orElseThrow(() -> new RuntimeException("Note not found"));
     }
 
+
+    // NoteService.java
     @Override
-    public Note createNote(Note note) {
+    public Note createNote(NoteDTO noteDTO) {
+        // Fetch authenticated doctor from Spring Security
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User doctor = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+
+        // Fetch patient from DTO
+        User patient = userRepository.findById(noteDTO.getPatientId())
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+
+        Note note = new Note();
+        note.setDiagnosis(noteDTO.getDiagnosis());
+        note.setNotes(noteDTO.getNotes());
+        note.setGuidance(noteDTO.getGuidance());
+        note.setExpirationDate(noteDTO.getExpirationDate());
+        note.setPatient(patient);
+        note.setDoctor(doctor); // Set doctor from security context
         note.setCreationDate(LocalDate.now());
+
         return noteRepository.save(note);
     }
     @Override
@@ -81,7 +104,7 @@ public class NoteServiceImpl implements NoteService {
 
     // @Scheduled(cron = "0 0 8 * * ?")
    // @Scheduled(cron = "*/30 * * * * ?")
-    public void executeDailyTask() {
+   /* public void executeDailyTask() {
         List<Note> listHackathons = noteRepository.findAll();
 
         Date currentDate = new Date();
@@ -99,7 +122,7 @@ public class NoteServiceImpl implements NoteService {
                this.mailService.sendEmail(note.getPatient().getEmail(), "Expiration de la note", note.getDiagnosis());
             }
         }
-    }
+    }*/
 
     public String summarizePatientNotes(int patientId) {
         // fetch notes for the given patient

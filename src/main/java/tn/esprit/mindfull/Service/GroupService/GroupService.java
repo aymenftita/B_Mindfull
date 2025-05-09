@@ -1,8 +1,8 @@
 package tn.esprit.mindfull.Service.GroupService;
 
 import org.springframework.stereotype.Service;
-import tn.esprit.mindfull.dto.Groupdto.GroupAssignmentDTO;
 import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.dto.Groupdto.GroupAssignmentDTO;
 
 import java.util.HashMap;
 import java.util.List;

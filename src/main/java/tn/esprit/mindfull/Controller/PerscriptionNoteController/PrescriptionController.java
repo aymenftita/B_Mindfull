@@ -1,7 +1,11 @@
 package tn.esprit.mindfull.Controller.PerscriptionNoteController;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.mindfull.dto.PrescriptionNotedto.PrescriptionRequestDTO;
 import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
 import tn.esprit.mindfull.Service.PerscriptionNoteService.PrescriptionService;
 
@@ -16,9 +20,23 @@ public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;
 
-    @PostMapping
+   /* @PostMapping
     public Prescription createPrescription(@RequestBody Prescription prescription) {
         return prescriptionService.createPrescription(prescription);
+    }*/
+
+    /*   @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) {
+        Note note = noteService.createNote(noteDTO);
+        return ResponseEntity.ok(note);
+    }
+*/
+    @PostMapping(value = "/createpres", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Prescription> createPrescription(
+            @Valid @RequestBody PrescriptionRequestDTO dto) {
+
+        Prescription created = prescriptionService.createPrescription(dto);
+        return ResponseEntity.ok((created));
     }
 
     @GetMapping

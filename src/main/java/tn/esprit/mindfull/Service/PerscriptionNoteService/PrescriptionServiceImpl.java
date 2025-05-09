@@ -1,16 +1,19 @@
 package tn.esprit.mindfull.Service.PerscriptionNoteService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.mindfull.Repository.UserRepository.UserRepository;
+import tn.esprit.mindfull.dto.PrescriptionNotedto.PrescriptionRequestDTO;
 import tn.esprit.mindfull.entity.PerscriptionNote.Medication;
 import tn.esprit.mindfull.entity.PerscriptionNote.Prescription;
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.MedicationRepository;
 import tn.esprit.mindfull.Repository.PerscriptionNoteRepository.PrescriptionRepository;
+import tn.esprit.mindfull.entity.User.User;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +23,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private final PrescriptionRepository prescriptionRepository;
     private final MedicationRepository medicationRepository;
-    @Override
+    @Autowired
+    private UserRepository userRepository;
+   /* @Override
     public Prescription createPrescription(Prescription prescription) {
         // ensure medication list is not null
         if (prescription.getListMedicaton() == null || prescription.getListMedicaton().isEmpty()) {
@@ -38,7 +43,45 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         // Save the prescription with its medications
         return prescriptionRepository.save(prescription);
     }
+*/
+   public Prescription createPrescription(PrescriptionRequestDTO dto) {
+       Prescription prescription = new Prescription();
 
+       // Get patient (required)
+       User patient = userRepository.findById(Long.valueOf(dto.getPatientId()))
+               .orElseThrow(() -> new EntityNotFoundException("Patient not found with ID: " + dto.getPatientId()));
+       prescription.setPatient(patient);
+
+       // Get doctor (required)
+       User doctor = userRepository.findById(Long.valueOf(dto.getDoctorId()))
+               .orElseThrow(() -> new EntityNotFoundException("Doctor not found with ID: " + dto.getDoctorId()));
+       prescription.setDoctor(doctor);
+
+       // Get coach (optional)
+       if (dto.getCoachId() != null) {
+           User coach = userRepository.findById(Long.valueOf(dto.getCoachId()))
+                   .orElseThrow(() -> new EntityNotFoundException("Coach not found with ID: " + dto.getCoachId()));
+           prescription.setCoach(coach);
+       }
+
+       // Map other fields
+       prescription.setAuthorName(dto.getAuthorName());
+       prescription.setDiagnosis(dto.getDiagnosis());
+       prescription.setNotes(dto.getNotes());
+       prescription.setExpirationDate(dto.getExpirationDate());
+       prescription.setCreationDate(LocalDate.now());
+
+       // Add medications
+       dto.getMedications().forEach(medDto -> {
+           Medication medication = new Medication();
+           medication.setMedicationName(medDto.getMedicationName());
+           medication.setDirections(medDto.getDirections());
+           medication.setDuration(medDto.getDuration());
+           prescription.addMedication(medication);
+       });
+
+       return prescriptionRepository.save(prescription);
+   }
     @Override
     public List<Prescription> getAllPrescriptions() {
         return prescriptionRepository.findAll();
@@ -48,6 +91,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public Prescription getPrescriptionById(int id) {
         return prescriptionRepository.findById(id).orElse(null);
     }
+
+
 
     @Override
     public void deletePrescription(int id) {

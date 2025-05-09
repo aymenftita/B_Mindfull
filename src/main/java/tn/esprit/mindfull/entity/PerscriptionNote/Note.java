@@ -20,11 +20,11 @@ public class Note {
     @JoinColumn(name = "doctor_id")
     private User doctor;
 
-    @ManyToOne
-    @JoinColumn(name = "coach_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coash_id")
     private User coach;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
     private User patient;
 
@@ -39,6 +39,24 @@ public class Note {
 
     private LocalDate creationDate;
     private LocalDate updateDate;
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", doctor=" + doctor +
+                ", coach=" + coach +
+                ", patient=" + patient +
+                ", authorName='" + authorName + '\'' +
+                ", diagnosis='" + diagnosis + '\'' +
+                ", notes='" + notes + '\'' +
+                ", guidance='" + guidance + '\'' +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                ", expirationDate=" + expirationDate +
+                '}';
+    }
+
     private LocalDate expirationDate;
 
     // Getters and Setters

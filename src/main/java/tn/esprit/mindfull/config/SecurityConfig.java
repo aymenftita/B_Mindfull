@@ -47,9 +47,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                        .requestMatchers("/api/scores").permitAll() // Explicitly allow scores
+                        .requestMatchers("/api/scores").permitAll()
+                        .requestMatchers("/api/notes").permitAll()
+                        .requestMatchers("/api/prescriptions").permitAll()// Explicitly allow scores
                         .requestMatchers("/api/**").permitAll()     // General API permission
                         .requestMatchers("/forum/**", "/ai", "/send_email_game","/send_email","/program-contents/**","/coaching-programs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
