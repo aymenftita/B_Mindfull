@@ -89,22 +89,21 @@ public class SecurityConfig {
   @Bean
   protected CorsConfigurationSource corsConfigurationSource() {
       CorsConfiguration configuration = new CorsConfiguration();
-      configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-      configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-      configuration.setAllowedHeaders(List.of(
-              "Authorization",
-              "Content-Type",
-              "Accept",
-              "X-Requested-With",
-              "Access-Control-Request-Headers",
-              "Access-Control-Request-Method"
-      ));
+
+      // Allow specific origins (recommended for production)
+      configuration.setAllowedOriginPatterns(List.of("*")); // Spring Boot 2.4+
+      // Or for older versions: configuration.setAllowedOrigins(List.of("*"));
+
+      configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+      configuration.setAllowedHeaders(List.of("*"));
       configuration.setExposedHeaders(List.of(
               "Authorization",
+              "Content-Disposition",
               "Content-Type",
               "Access-Control-Allow-Origin"
       ));
       configuration.setAllowCredentials(true);
+      configuration.setMaxAge(3600L); // Cache preflight response for 1 hour
 
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       source.registerCorsConfiguration("/**", configuration);

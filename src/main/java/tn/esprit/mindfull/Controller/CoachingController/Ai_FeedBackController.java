@@ -10,7 +10,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/ai")
-@CrossOrigin(origins = "*")
 public class Ai_FeedBackController {
     @PostMapping("/diagnose-feedback")
     public ResponseEntity<Map<String, String>> diagnoseFeedback(@RequestBody Map<String, String> payload) {

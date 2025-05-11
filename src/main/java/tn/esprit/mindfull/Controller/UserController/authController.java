@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class authController {
     private final UserService userService;
@@ -40,6 +41,7 @@ public class authController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        System.out.println("login...........");
         try {
             String token = userService.loginUser(request.getUsername(), request.getPassword());
             return ResponseEntity.ok(Map.of("token", token));

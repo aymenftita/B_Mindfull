@@ -11,7 +11,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/choices")
 @RequiredArgsConstructor
-@CrossOrigin
 public class ChoiceController {
     private final ChoiceService choiceService;
 
