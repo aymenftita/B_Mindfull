@@ -6,7 +6,6 @@ import tn.esprit.mindfull.Service.AppointmentsService.AiDoctorNoteService;
 
 @RestController
 @RequestMapping("/api/notes")
-@CrossOrigin(origins = "http://localhost:4200") // Allow Angular dev server
 public class DoctorNoteController {
 
     @Autowired

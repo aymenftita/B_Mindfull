@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/questions")
 @RequiredArgsConstructor
-@CrossOrigin
 public class QuizzQuestionController {
     private final QuizzQuestionService quizzQuestionService;
 

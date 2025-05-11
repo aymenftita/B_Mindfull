@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/mood-tracker")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200") // Added to allow frontend requests
 public class UserActivityController {
 
     private final UserActivityService userActivityService;

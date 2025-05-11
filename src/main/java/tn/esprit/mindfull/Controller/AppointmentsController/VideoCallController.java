@@ -10,7 +10,6 @@ import tn.esprit.mindfull.entity.Appointment.VideoStatus;
 import tn.esprit.mindfull.Service.AppointmentsService.VideoCallService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/video-calls")
 @RequiredArgsConstructor
 @Slf4j

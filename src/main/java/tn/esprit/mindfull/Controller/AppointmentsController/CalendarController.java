@@ -18,7 +18,6 @@ import java.util.Map;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/calendars")
 @Transactional
 public class CalendarController {

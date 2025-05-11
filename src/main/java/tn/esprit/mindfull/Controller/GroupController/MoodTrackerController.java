@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/mood-tracker")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class MoodTrackerController {
 
     private final UserActivityRepository userActivityRepository;

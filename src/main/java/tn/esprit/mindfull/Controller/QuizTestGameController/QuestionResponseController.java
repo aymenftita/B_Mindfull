@@ -11,7 +11,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/question_response")
 @RequiredArgsConstructor
-@CrossOrigin
 public class QuestionResponseController {
     private final QuestionResponseService questionResponseService;
 

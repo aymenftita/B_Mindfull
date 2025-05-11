@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/scores")
 @RequiredArgsConstructor
-@CrossOrigin
 public class ScoreController {
     private final ScoreService scoreService;
 

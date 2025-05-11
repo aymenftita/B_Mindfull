@@ -9,8 +9,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/shared_All")
-@CrossOrigin(origins = "http://localhost:4200")
-
 public class GrammarController {
 
     @PostMapping("/grammar/correct")

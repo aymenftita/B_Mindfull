@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/prescriptions")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;

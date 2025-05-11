@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/feedback")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200") // 🔥 Pour autoriser Angular localhost:4200
 public class FeedbackController {
 
 
